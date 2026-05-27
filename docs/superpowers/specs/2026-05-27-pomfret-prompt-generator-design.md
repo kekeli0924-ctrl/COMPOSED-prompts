@@ -8,7 +8,7 @@
 
 Pomfret students using LLMs to study typically paste an assignment and write "help me review this." They get generic, low-effort responses. A small amount of upfront prompt engineering — informed by the course, the assessment type, the time available, and the student's actual confusion — would produce much better study sessions.
 
-The solution: a guided web wizard that takes a few minutes of student input and produces a high-quality, LLM-and-model-tuned prompt the student can paste into ChatGPT, Claude, or Gemini.
+The solution: a guided web wizard that takes a few minutes of student input and produces a high-quality, LLM-and-model-tuned prompt the student can paste into ChatGPT, Claude, or Gemini. The system uses deterministic templates as the backbone and calls Claude Sonnet 4.6 internally to generate the most context-specific section of the prompt.
 
 ## 2. Goals
 
@@ -16,8 +16,8 @@ The solution: a guided web wizard that takes a few minutes of student input and 
 - Be Pomfret-specialized via course catalog awareness (not generic)
 - Tune output to the specific (LLM, model) the student is using
 - Support five study modes: cram review, multi-day plan, practice questions, concept clarification, essay/project prep
-- Ship a v1 fast — Next.js + Vercel + Anthropic Haiku as the internal LLM
-- Keep operational cost under ~$5/month with sane rate limits
+- Ship a v1 fast — Next.js + Vercel + Anthropic Sonnet 4.6 as the internal LLM
+- Keep operational cost under ~$15/month with sane rate limits
 
 ## 3. Non-Goals (v1)
 
@@ -42,7 +42,7 @@ The generated prompt has **7 sections**, in order:
 6. **Output Spec** — Exact deliverable shape (e.g., "10 questions: 6 MC + 4 short answer, with answers in a separate section so I can self-test first")
 7. **Self-Check & Iteration** — Quality gates and a closing "did this hit what you needed?" loop
 
-Section bodies are filled by the deterministic template assembler, except Section 5 (Interaction Style, including the misconceptions hint), which is produced by the internal Claude Haiku call.
+Section bodies are filled by the deterministic template assembler, except Section 5 (Interaction Style, including the misconceptions hint), which is produced by the internal Claude Sonnet 4.6 call.
 
 ## 5. LLM/Model Tuning
 
@@ -96,14 +96,14 @@ Validated input
     ↓
 Deterministic template assembler   ← reads templates/, courses.json, model-profiles.json
     ↓
-Anthropic Haiku call               ← generates "Interaction Style" + "Anticipated Misconceptions"
+Anthropic Sonnet 4.6 call          ← generates "Interaction Style" + "Anticipated Misconceptions"
     ↓                                (system prompt is static and prompt-cached)
 Final prompt (formatted per model profile: xml / markdown / numbered-steps)
     ↓
 Return JSON { prompt, metadata }
 ```
 
-If the Haiku call fails or the daily Anthropic budget cap is hit, the pipeline falls back to a deterministic-only assembly and the result page shows a banner: "Smart sections unavailable, used defaults."
+If the Sonnet call fails or the daily Anthropic budget cap is hit, the pipeline falls back to a deterministic-only assembly and the result page shows a banner: "Smart sections unavailable, used defaults."
 
 ### 7.4 Data files (committed to repo)
 
@@ -145,14 +145,14 @@ Each `lib/` module is single-purpose; consumers depend on its exported interface
 
 ## 8. Privacy
 
-- Pasted material is sent to `/api/generate`, used in the Haiku call, and **not persisted** anywhere (no database writes, no logs). Any error logs that capture request bodies redact the material field to `"[material redacted]"`.
+- Pasted material is sent to `/api/generate`, used in the Sonnet 4.6 call, and **not persisted** anywhere (no database writes, no logs). Any error logs that capture request bodies redact the material field to `"[material redacted]"`.
 - Local history stores wizard inputs but **not** the pasted material — protects students who share devices.
 - Feedback stored against `SHA-256(promptText)`, never against student identifier (there is no identifier).
 
 ## 9. Rate Limiting + Budget
 
 - **Per IP:** 20 generations per rolling 24h window (Vercel KV sliding window)
-- **Global daily budget (safety ceiling):** soft cap on Anthropic spend at $1.00/day. When crossed, all subsequent requests degrade to deterministic-only assembly. Cap resets daily. This is a safety ceiling, **not** the expected spend — at portfolio scale (a handful of users) expected spend is pennies/day.
+- **Global daily budget (safety ceiling):** soft cap on Anthropic spend at $3.00/day. When crossed, all subsequent requests degrade to deterministic-only assembly. Cap resets daily. This is a safety ceiling, **not** the expected spend — at portfolio scale (a handful of users) expected spend is ~$0.30–0.50/day.
 - Limits are configurable env vars; v1 starts strict and loosens as needed.
 
 ## 10. Error Handling
@@ -187,10 +187,11 @@ Each `lib/` module is single-purpose; consumers depend on its exported interface
 
 - Hosting: Vercel hobby tier — $0
 - Vercel KV: hobby tier — free under low usage
-- Anthropic Haiku 4.5: ~$1 per 1M input tokens, ~$5 per 1M output tokens (approximate — confirm at implementation time)
-  - Per generation: ~2k input tokens (system + wizard inputs), ~800 output tokens → ~$0.006/generation
-  - Expected portfolio-scale usage (≤10 daily users averaging 2 prompts each): ~20 gens/day → ~$0.12/day → ~$3.60/month
-  - Safety ceiling: $1/day = $30/month maximum before fallback kicks in
+- Anthropic Sonnet 4.6: ~$3 per 1M input tokens, ~$15 per 1M output tokens (approximate — confirm at implementation time)
+  - Per generation: ~2k input tokens (system + wizard inputs), ~800 output tokens → ~$0.018/generation
+  - Expected portfolio-scale usage (≤10 daily users averaging 2 prompts each): ~20 gens/day → ~$0.36/day → ~$11/month
+  - Safety ceiling: $3/day = ~$90/month maximum before fallback kicks in
+  - Prompt caching on the static system prompt should cut effective cost ~30–50% once warm
 
 ## 14. Open Questions for Implementation Phase
 
