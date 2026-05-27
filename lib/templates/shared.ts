@@ -22,10 +22,10 @@ const courseContext = (inputs: WizardInputs): string => {
 };
 
 const personaFor = (confidence: number | undefined): string => {
-  if (confidence === undefined) return 'experienced';
+  if (confidence === undefined) return 'thoughtful';
   if (confidence <= 2) return 'patient';
   if (confidence >= 4) return 'rigorous';
-  return 'experienced';
+  return 'thoughtful';
 };
 
 export function buildRoleSection(inputs: WizardInputs): string {
