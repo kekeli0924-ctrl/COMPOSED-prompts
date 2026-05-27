@@ -41,7 +41,7 @@ describe('POST /api/generate', () => {
     mockCheckAndRecord.mockResolvedValue({ allowed: true, remaining: 19 });
     mockRunPipeline.mockResolvedValue({
       prompt: 'fake prompt',
-      metadata: { sonnetUsed: false, promptHash: 'a'.repeat(64) },
+      metadata: { generator: 'deterministic', promptHash: 'a'.repeat(64), fallbackReason: 'api-error' },
     });
   });
 
@@ -51,6 +51,7 @@ describe('POST /api/generate', () => {
     const json = await res.json();
     expect(json.prompt).toBe('fake prompt');
     expect(json.metadata.promptHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(json.metadata.generator).toBe('deterministic');
   });
 
   it('returns 400 on invalid input', async () => {

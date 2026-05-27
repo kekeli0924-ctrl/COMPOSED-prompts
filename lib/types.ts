@@ -42,9 +42,9 @@ export type WizardInputs = {
 export type GenerateResponse = {
   prompt: string;
   metadata: {
-    sonnetUsed: boolean;
-    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
     promptHash: string;
+    generator: 'opus' | 'deterministic';
+    fallbackReason?: 'budget-exhausted' | 'api-error';
   };
 };
 

@@ -9,7 +9,11 @@ import { FeedbackForm } from '@/components/FeedbackForm';
 
 type LastResult = {
   prompt: string;
-  metadata: { sonnetUsed: boolean; promptHash: string; fallbackReason?: string };
+  metadata: {
+    promptHash: string;
+    generator: 'opus' | 'deterministic';
+    fallbackReason?: 'budget-exhausted' | 'api-error';
+  };
   entryId: string;
 };
 
@@ -36,10 +40,10 @@ export default function ResultPage() {
         Copy it, paste it into your LLM, and run a real study session.
       </p>
 
-      {!data.metadata.sonnetUsed && (
+      {data.metadata.generator === 'deterministic' && (
         <Alert className="mt-4">
           <AlertDescription>
-            Smart sections were unavailable for this generation — we used the deterministic templates instead. The prompt is still solid, but the personalized interaction style is a fallback.
+            We couldn&apos;t reach Opus 4.7 for this generation — used the deterministic templates instead. The prompt is still solid, but lacks the topic-specific tailoring Opus would have added.
           </AlertDescription>
         </Alert>
       )}
