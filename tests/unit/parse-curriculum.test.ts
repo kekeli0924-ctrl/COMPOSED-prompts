@@ -70,4 +70,11 @@ describe('parseCurriculum', () => {
     const acting = result.find((c) => c.name === 'Acting and Improv');
     expect(acting!.id).toBe('arts-acting-and-improv');
   });
+
+  it('strips italic asterisks around cross-listed annotation from cleaned description', () => {
+    const result = parseCurriculum(SAMPLE);
+    const playwriting = result.find((c) => c.name === 'Eng: Playwriting');
+    expect(playwriting!.description).not.toContain('*');
+    expect(playwriting!.description).not.toMatch(/Cross-listed/i);
+  });
 });

@@ -34,7 +34,7 @@ const detectLevel = (name: string): Course['level'] => {
 
 const COURSE_HEADER_RE = /^\*\*(.+?)\s+\(([^)]+)\)[^*]*\*\*/;
 const DEPT_HEADER_RE = /^#\s+\*\*([^*]+?)\*\*/;
-const CROSS_LIST_RE = /Cross-listed with ([^.\n*]+)/i;
+const CROSS_LIST_RE = /\*?Cross-listed with ([^.\n*]+)\.?\*?/i;
 const PREREQ_RE = /PREREQUISITE:\s*([^\n]+)/i;
 
 export function parseCurriculum(md: string): Course[] {
