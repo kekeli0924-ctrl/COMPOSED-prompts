@@ -1,0 +1,1563 @@
+[
+  {
+    "id": "arts-acting-and-improv",
+    "name": "Acting and Improv",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Perform with and without a script in this introductory acting course designed for anyone interested in developing their self-confidence, collaboration and communication skills in a fun and stress-free environment. Students learn how to say “yes, and…” to their peers through games, exercises and short scenes. Students interested in exploring their inner performer will acquire a foundation of movement and voice technique to build upon in future theater courses."
+  },
+  {
+    "id": "arts-acting-comedy",
+    "name": "Acting: Comedy",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Learn how to make an audience laugh through this exploration of comedic performance. Through a survey of improvisation, sketch comedy, and clowning techniques, actors will understand the “formula” of great comedy, then develop the confidence to make bold comic choices of their own. Students will collaborate with their classmates to develop an original (and hilarious) sketch comedy show as their final project."
+  },
+  {
+    "id": "arts-acting-directing",
+    "name": "Acting: Directing",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This introductory course gives students the opportunity to explore the comprehensive role of the director as creative lead. Students will analyze a script, develop an artistic vision for a mock production and practice communicating that vision to designers through “inspo” research. Students will learn how directors prepare for rehearsal by exploring composition theory, beat analysis and staging notation. Finally, each student will exercise their leadership, communication and visual literacy skills by directing their peers in a scene from their mock production."
+  },
+  {
+    "id": "arts-acting-scene-lab",
+    "name": "Acting: Scene Lab",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "This intermediate acting course provides a practical exploration of partner work in dramatic scenes. Working in teams of two to three, students will engage in thorough beat analysis, deconstruct their characters’ objectives, tactics and given circumstances, and practice how to make their findings visible to an audience. This focus on the give and take of performance, designed to create a more generous and open performer, will enhance students’ communication and collaboration skills."
+  },
+  {
+    "id": "arts-adv-ceramics",
+    "name": "ADV Ceramics",
+    "department": "Arts",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This is a year long course for students who have demonstrated through both dedication and skill level their commitment to creating in clay. Students will spend the year designing their pieces, keep a detailed sketch book either digitally or on paper. They will build an extensive portfolio of work to be showcased at the end of the year in an Advanced Art Showcase.",
+    "prerequisites": "Students must apply for this class and must have completed Ceramics I, II, and at least one other term of ceramics to be considered.  Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-adv-dance-composition",
+    "name": "ADV Dance & Composition",
+    "department": "Arts",
+    "level": "Advanced",
+    "term": "Term long-Fall",
+    "description": "Advanced Dance is a fast-paced dance composition and performance workshop for highly motivated and experienced young artists. Students are expected to create original dance work within a variety styles and techniques, and to deepen their ability to teach, create, learn, perform and discuss dance in a nuanced way. The term concludes with students performing original work in a community-wide showcase. Students are assessed on citizenship and engagement, creativity, analytical skills and positive contributions to the class environment. Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-adv-performance-studies",
+    "name": "ADV Performance Studies",
+    "department": "Arts",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This year-long, advanced-level course, designed for dedicated theater enthusiasts, provides a thorough exploration of performance analysis and technique. Students will progress through three performance electives—Comedy (fall), Directing (winter), and Scene Lab (spring)—at an advanced level, culminating in a public performance. Throughout the year, students will refine their creative process, develop confidence in their acting abilities, and learn techniques for approaching performance material of contrasting style, structure and context. Departmental approval is required for enrollment in this advanced course."
+  },
+  {
+    "id": "arts-adv-photography-master-portfolio",
+    "name": "ADV Photography: Master Portfolio",
+    "department": "Arts",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Embark on a transformative journey in Advanced Photography, a comprehensive year-long endeavor tailored for passionate photography enthusiasts. Delve deep into the art form as you meticulously craft and refine a personal series throughout the academic year. With a focus on your chosen subject, you'll hone your skills through regular exploration and experimentation. Collaborative opportunities with Honors-level peers will enhance your understanding of series development, teamwork dynamics, and the invaluable practice of peer teaching. Leveraging advanced camera controls, you'll masterfully capture, critique, and evolve your narrative, whether through 35mm film, digital composites, or a fusion of both mediums. Your creative journey will culminate in the submission of a polished portfolio at the end of each term. Immersive lectures, dynamic discussions, and hands-on assignments will guide your learning experience, ensuring a well-rounded education in photography.",
+    "prerequisites": "Successful completion of Honors Photography or equivalent.  Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-adv-studio-art-painting-and-drawing",
+    "name": "ADV Studio Art: Painting and Drawing",
+    "department": "Arts",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "The Advanced Painting and Drawing course is specifically designed for our most talented students who possess a deep passion for art and aspire to elevate their skills to an advanced level. This program is tailored for responsible, creative, and self-motivated students who have already established proficient drawing and painting skills. A significant degree of independence and maturity is essential, and expectations are equivalent to those of any other honors course offered at Pomfret School. Students are expected to spend additional time in the studio outside of class, maintain a sketchbook, and meet all deadlines for assignments. The primary objective of this course is to cultivate a portfolio that showcases mastery in painting and drawing. Evaluation criteria include attendance, classroom participation, exploration and time management. Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-arts-immersion",
+    "name": "Arts Immersion",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Pomfret freshmen participate in an exciting, fast paced course that integrates multiple programs in the arts. Designed as a full immersion into creativity in varied disciplines, students will develop their imagination as a necessary life-long resource to problem solving, as well as hone their skills in written and oral presentation. Armed with this experience in self-expression, reflection and metacognition, our freshman will make more informed choices about their course of study for their remaining three years at Pomfret."
+  },
+  {
+    "id": "arts-astronomy-ii",
+    "name": "Astronomy II",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "***Nebulae, Galaxies, & Astrophotography*** This astronomy course is the second in a series of three, any of which can be taken individually. This term, the class will investigate the beautiful and bizarre objects that exist in the Universe. If you've seen the amazing images taken by the Hubble Space Telescope, you know how strange and mysterious these objects can look. In this course, you'll join in an examination of these nebulae, pulsars, globular clusters, black holes, supernovae, and other types of exotic objects. You'll learn about their origins, the ways that astronomers have decoded the light coming from them, and their importance in the continuing evolution of the Universe. During the day, you'll do lab activities using a computer-based virtual observatory, but the true highlight of the class will take place at night. You'll learn how to operate Pomfret's observatory to see these unusual objects firsthand through a variety of instruments. In the end, you'll have a clear picture of these 'stranger than fiction' components of the Universe and the science behind their beauty. Each astronomy elective is a distinct course and can be taken as a one-time experience or as a series of connected classes. Students currently enrolled in the Astronomy I elective will be given enrollment priority when new courses are selected each term.",
+    "crossListedWith": [
+      "Science"
+    ]
+  },
+  {
+    "id": "arts-ceramics-i",
+    "name": "Ceramics I",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "This is an introductory course in working with clay and glazes. Students will learn hand building techniques and create 3-4 pieces that range from functional pottery to more sculptural pieces. There are no prerequisites for this class."
+  },
+  {
+    "id": "arts-ceramics-ii",
+    "name": "Ceramics II",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Ceramics II builds upon the foundational skills learned in Ceramics 1, challenging students to refine their craftsmanship and expand their creative approach to working with clay. Through guided prompts, students will have the freedom to choose their preferred handbuilding techniques while exploring more advanced construction methods, surface treatments, and glazing processes. This course also introduces wheel throwing, where students will learn the fundamentals of centering clay and creating functional forms such as mugs and bowls. Emphasis is placed on artistic exploration, problem-solving, and developing a personal voice through clay."
+  },
+  {
+    "id": "arts-ceramics-ii-handbuilding",
+    "name": "Ceramics II: Handbuilding",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This course will allow students who have already completed Ceramics I to dive deeper into the creative process and put their hand building skills to the test. Students will be given prompts for each piece they are expected to create, however they will have the freedom to create it using their choice of hand building techniques.",
+    "prerequisites": "must have completed Ceramics I."
+  },
+  {
+    "id": "arts-ceramics-ii-intro-to-the-potters-wheel",
+    "name": "Ceramics II: Intro to the Potter’s Wheel",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Students will learn how to throw on the potter's wheel. This class works through 4-5 different pieces. Students will learn how to center clay, make mugs, bowls, plates, and lidded jars.",
+    "prerequisites": "Students must have completed Ceramics I."
+  },
+  {
+    "id": "arts-dance-around-the-world",
+    "name": "Dance Around the World",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter & Spring",
+    "description": "This course introduces students to a wide variety of indigenous and multicultural dance/movement practices, across time and from around the world. Through readings, screenings, research, writing, and hands-on movement practice, students will discover the ways in which humanity across the globe is linked through dance practice. Areas of focus may include West African dance, Chinese tai chi, classical Indian dance, Andalusian flamenco, Brazilian capoeira, Chinese traditional dance, American step and rhythm styles, and Latin American social dances. Open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "History"
+    ]
+  },
+  {
+    "id": "arts-drawing-painting-from-direct-observation",
+    "name": "Drawing & Painting from Direct Observation",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "The aim of this course is to develop your ability to draw from direct observation, rather than relying on preconceived notions. Through a combination of sighting and drawing techniques, we will focus on improving your observational skills with an emphasis on intentional mark-making. We will also experiment with a range of drawing techniques. This course is perfect for beginners or individuals looking to refine their drawing and painting skills. While most assignments will be completed in class, the studio will be accessible to you at all times."
+  },
+  {
+    "id": "arts-drawing-painting-from-references",
+    "name": "Drawing & Painting from References",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "In this drawing and painting class, you will learn the art of creating stunning paintings or drawings using good reference materials. These reliable resources include the internet, magazines, and your photo gallery. By learning how to use these resources effectively, you will add depth and meaning to your work, enabling you to express yourself better through art. We will also discuss the proper application of these resources, keeping in mind the importance of avoiding plagiarism. This class is best suited for those with a strong technical foundation who wish to convey their ideas and emotions through their artwork."
+  },
+  {
+    "id": "arts-drawing-painting-from-your-imagination",
+    "name": "Drawing & Painting from Your Imagination",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "In this course, you will have the opportunity to unleash your creativity and bring your imaginative ideas to life through unique works of art. With a range of prompts, you'll hone your creative problem-solving abilities and put your conceptual skills to the test. The primary objective of this class is to teach you how to communicate and express yourself through your art in an original, captivating, and personal manner. Your artwork will have depth and significance, making this class perfect for individuals who possess a solid technical and conceptual foundation and are eager to enhance their skills even further."
+  },
+  {
+    "id": "arts-eng-acting-shakespeare",
+    "name": "Eng: Acting Shakespeare",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Shakespeare is meant to be experienced on stage, and his plays are, in fact, how-to manuals for actors. This hands-on, “no fear” approach to the enduring works of William Shakespeare will provide students with the proper tools to analyze, prepare and successfully perform the Bard’s iconic characters. This language- and performance-based approach will provide students with a deep appreciation for the profound humanity and continued relevance of these great works. Open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "English"
+    ]
+  },
+  {
+    "id": "arts-eng-dramaturgy",
+    "name": "Eng: Dramaturgy",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Learn what makes plays work through this deep-dive into the discipline of dramaturgy– the study of the craft of drama. In the professional world, dramaturgs are the essential backbone of any creative team– they are critics, curators, show runners, adaptors and editors for playwrights. In Dramaturgy class, students will learn how to identify the structure, theme and intention of classic and modern plays, then practice applying this knowledge to a production. Open to Juniors and Seniors*",
+    "crossListedWith": [
+      "English"
+    ]
+  },
+  {
+    "id": "arts-eng-playwriting",
+    "name": "Eng: Playwriting",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Students will discover the makings of a great play, then try their hand at creating one of their own. Each student playwright will find their creative voice and personal POV through writing exercises and a thorough study of the art form– from Aristotle’s ancient structural model, to the “well-made play” of the Western canon, to the wild time- and mind-bending approaches of the modern day. Students will craft an original one-act play as their final project. This course may count toward the fulfillment of either a student's English or Art graduation requirement. Open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "English"
+    ]
+  },
+  {
+    "id": "arts-eng-public-speaking-with-power",
+    "name": "Eng: Public Speaking with Power",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Develop essential communication skills to express ideas confidently and effectively. Through engaging exercises and presentations, students will learn techniques to overcome fears of standing in front of a group, craft compelling messages, and connect with their audience. This course is about empowering young speakers to articulate their thoughts to make an impact beyond the classroom. Open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "English"
+    ]
+  },
+  {
+    "id": "arts-hon-ceramics",
+    "name": "HON Ceramics",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Students will spend the term building a portfolio of work while continuing to further their skills, either through hand building or the potters wheel, or both.",
+    "prerequisites": "Students must apply for this class and must have completed Ceramics I and II to be considered. Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-hon-chamber-ensemble",
+    "name": "HON Chamber Ensemble",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Honors Chamber Ensemble will explore the world of instrumental chamber music of all genres and musical time periods. This is open to all string, brass, and woodwind instruments."
+  },
+  {
+    "id": "arts-hon-contemporary-music",
+    "name": "HON Contemporary Music",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "This honors level ensemble builds upon the skills developed in Contemporary Music Performance. Students will drive song selection and arrangement, though jazz standards and other music selected by the instructor will be studied to help broaden the students' musical background. This course focuses heavily on improvisation and composition. The material is rehearsed during classroom time and performed at a variety of venues, including a final concert each term. Students will be required to understand the basics of standard Western musical notation and have an intermediate level of skill on their primary instrument. Vocalists will be considered and may be requested to audition for the various groups."
+  },
+  {
+    "id": "arts-hon-painting-and-drawing",
+    "name": "HON Painting and Drawing",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "The Honors Painting and Drawing class is tailored to high-achieving and ambitious students who possess a strong passion for art and seek to elevate their skills to the next level. While this is a term long class, students may enroll in all three terms. The curriculum is designed for responsible, creative, and self-motivated students who have already established a solid foundation in drawing and painting skills. Honors-level artists in this course are encouraged to utilize their creative abilities as a means of expression and communication and to explore various mediums and techniques. The course is structured to challenge students and motivate them to take creative risks beyond their comfort zones. Evaluation is based on attendance, classroom participation, creativity, and the completion of a sketchbook. Students are expected to devote their best efforts to each artwork and effectively articulate the inspiration behind their creations in thoughtful and engaging ways. Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-hon-photography-portfolio-build",
+    "name": "HON Photography: Portfolio Build",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Embark on a transformative journey in Honors Photography, a semester-long exploration tailored to elevate your foundational photography skills while crafting a personal photographic series. Throughout the term, participants will adeptly capture, process, and curate a cohesive body of work aligned with their unique passions and interests. Emphasizing iterative refinement, students will meticulously develop, critique, and reshape their narrative of choice. Collaborating alongside Advanced Photography peers, students will tackle group assignments, fostering skills in series development, collaborative teamwork, and the art of peer instruction. Culminating in a portfolio showcasing their final series, students will demonstrate mastery through a blend of lectures, discussions, critiques, and immersive hands-on projects.",
+    "prerequisites": "successful completion of at least two prior formal photography courses. Departmental approval is required for this course."
+  },
+  {
+    "id": "arts-hon-vocal-chamber-ensemble---grifftones",
+    "name": "HON Vocal Chamber Ensemble - “GriffTones”",
+    "department": "Arts",
+    "level": "Honors",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "In Honors Vocal Chamber Ensemble, we will explore a wide range of vocal music from contemporary acapella works to more traditional repertoire... and everything in between\\! Students will be asked to prepare music for special events including Chapel, Candlelight, Fall Family Weekend Arts Showcase, Revisit Day, Spring Music Concert, and Commencement. Members of the GriffTones are expected to enroll in this course every term of their Pomfret career upon joining the ensemble."
+  },
+  {
+    "id": "arts-intro-to-coding-digital-design",
+    "name": "Intro to Coding: Digital Design",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Coding courses are an opportunity for students to learn both the art and science of modern coding with powerful AI-enabled tools to produce digital artwork and programs. Students will survey the wide variety of tools at their disposal and learn to create small applications, web sites, games, and useful tools. They earn art credit for their portfolio of designs and projects and are graded on the development of their style and aesthetics as well as their skill with the digital tools. Projects include white board marker murals using a programmed robot, generative computer art pieces, and functioning applications that are both useful and beautiful.",
+    "crossListedWith": [
+      "Science"
+    ]
+  },
+  {
+    "id": "arts-intro-to-coding-game-design",
+    "name": "Intro to Coding: Game Design",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Coding courses are an opportunity for students to learn both the art and science of modern coding with powerful AI-enabled tools to produce digital artwork and programs. In this term, students will focus on the complex process of designing digital games for the web, computers, and mobile devices. They'll survey the great number of game engines and libraries available before collaborating on one or more larger games. Projects include simple web-based challenges, games useful for school work to benefit other classes, the style and aesthetics of mobile platform games, and a final multi-level game to complete a portfolio. Students earn art credit for their portfolio of designs and projects and are graded on the development of their style and aesthetics as well as their skill with the digital tools.",
+    "crossListedWith": [
+      "Science"
+    ]
+  },
+  {
+    "id": "arts-intro-to-coding-web-design",
+    "name": "Intro to Coding: Web Design",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Coding courses are an opportunity for students to learn both the art and science of modern coding with powerful AI-enabled tools to produce digital artwork and programs. In this term, students will focus on creating a series of web pages and websites that include layout, typography, navigation, embedded multimedia, and cascading stylesheets (CSS). They earn art credit for their portfolio of designs and projects and are graded on the development of their style and aesthetics as well as their skill with the digital tools. Projects include classic website design, creating for mobile devices, developing interactive experiences, and the final portfolio of all previous work.",
+    "crossListedWith": [
+      "Science"
+    ]
+  },
+  {
+    "id": "arts-intro-to-guitar-ukulele",
+    "name": "Intro to Guitar & Ukulele",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Intro to Guitar & Ukulele is an introductory course—no previous guitar or ukulele experience is required. This class will introduce students to the anatomy, best practices, techniques, and performance on guitar and ukulele. We will explore reading music notation, lead sheets, and chord charts for both instruments by performing literature for ensembles: duets, trios, quartets, and larger groups. This literature will include compositions written for guitar and ukulele ensembles, and arrangements of pieces originally written for other settings (including solo instruments, orchestras, and popular music). We will look to develop students’ individual skills while working towards a collaborative effort (public performance and/or recording). Ownership of a nylon string guitar and/or ukulele is strongly encouraged, but not required. Pomfret School will supply a nylon string guitar and/or ukulele for this class as needed."
+  },
+  {
+    "id": "arts-intro-to-interior-design",
+    "name": "Intro to Interior Design",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "In this introductory art and design course, students will explore the ways that the aesthetics of interior spaces influence and affect our everyday lives. This course introduces how concepts like color theory, mixing materials, and purposeful lighting design influence a room's mood. Students will draft floor plans to prioritize flow and function, utilizing industry-standard software. By the end of this course, students will discover their own unique interior design style, and will be able to utilize a wide range of tools and concepts to create spaces that are functional, artful and full of life."
+  },
+  {
+    "id": "arts-movement-for-athletes",
+    "name": "Movement for Athletes",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall & Winter",
+    "description": "Movement for Athletes explores dance as it relates to overall fitness, strength and conditioning. Students explore foundational dance technique and dance-based exercise such as yoga-dance, pilates, Latin-American Zumba, barre conditioning, introductory ballet and jazz technique, and dance therapy. Regardless of athletic background, students in this class build a foundation in strength and fitness that carries over into other creative and athletic pursuits."
+  },
+  {
+    "id": "arts-music-production",
+    "name": "Music Production",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Music Production is an intro course where students will study contemporary electronic music composition, technique, performance, and recording using synthesis, computer sequencing, and recording technology. Through projects and instruction, students will learn the basic process of producing a piece of music by editing MIDI and Audio data, using active listening to analyze productions of any genre, and applying basic techniques to manipulate sounds within the Digital Audio Workstation using Balance, Panning, EQ, Compression, Delay and Reverb."
+  },
+  {
+    "id": "arts-photography-darkroom-to-digital",
+    "name": "Photography: Darkroom to Digital",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Journey back in time to the roots of photography with our exploration of classic black-and-white darkroom techniques. Through hands-on experience, we'll capture subjects using diverse tools including 35mm cameras, Pinhole cameras, and Holga cameras."
+  },
+  {
+    "id": "arts-photography-iphoneography",
+    "name": "Photography: IPhoneography",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall & Spring",
+    "description": "Unlock the creative potential hidden within your smartphone with our innovative class, where what's in your mind matters more than what's in your hands. In today's world, your smartphone is more than just a device – it's a powerhouse of inspiration, versatility, and imaging capabilities."
+  },
+  {
+    "id": "arts-photography-people-places-things",
+    "name": "Photography: People, Places & Things",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall & Winter",
+    "description": "Embark on a captivating exploration of Photography: People, Places & Things, a term-long course into the art of photographically capturing varying subjects. From pinhole photography to intricate digital composites, students will traverse the digital landscape, mastering composition, exposure, motion, and depth of field."
+  },
+  {
+    "id": "arts-podcasting",
+    "name": "Podcasting",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "A project based course that introduces students to professional podcast creation. This course provides conceptual and hands-on experience for your individual idea of a podcast. Students will learn to develop a concept, record themselves and/or interview. Students then do all the audio post production needed to create a professional sounding podcast."
+  },
+  {
+    "id": "arts-private-music-instruction",
+    "name": "Private Music Instruction",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "One-on-one lessons with accomplished musicians. The private music instruction program at Pomfret offers students an exciting opportunity to explore the world of music through 45-minute weekly lessons. Lessons are scheduled during the academic day (lunch, free block), during afternoons or evenings, and on weekends. Scheduling is determined by the instructor and student. There is an additional lesson fee ($495) per term, but financial aid is available. While consistent instruction is strongly encouraged, it is not required."
+  },
+  {
+    "id": "arts-recording-techniques",
+    "name": "Recording Techniques",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "The Recording Techniques course offers a practical approach to contemporary recording, editing, mixing, and post-production methods aimed at musicians who wish to record themselves and others in a personal recording setup. By completing hands-on projects, including a final recording and mixing project, students will gain an understanding of audio technology basics, microphone usage, recording methods, audio signal routing, working with a DAW, file exchange, signal processing, editing, and mixing skills."
+  },
+  {
+    "id": "arts-sonic-storytelling-foley-for-film",
+    "name": "Sonic Storytelling: Foley for Film",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Foley \\- The art of creating sound effects for film, television, and other media using everyday objects and techniques. From footsteps to clothing rustle, you'll discover how to create realistic and engaging soundscapes that bring scenes to life. Through practical exercises and demonstrations, you'll develop the skills and knowledge needed to enhance storytelling with sound."
+  },
+  {
+    "id": "arts-the-alchemists-lens",
+    "name": "The Alchemist’s Lens",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "This hands-on exploration of analog photography allows students to become more familiar with the tactile magic of 19th-century photography. Working with light-sensitive emulsions, students will explore processes like cyanotypes, chlorophyll prints, and wet plate photography. This course bridges the gap between fine art and laboratory science, challenging students to master the physics of light while embracing the beautiful unpredictability of handmade analog imagery. By the end of the term, students will have moved beyond “taking” pictures to making beautiful pieces of art through completely analog, historical processes. Students will have a portfolio of finished mixed-media work by the end of the term.",
+    "crossListedWith": [
+      "Science"
+    ]
+  },
+  {
+    "id": "arts-the-art-of-creativity",
+    "name": "The Art of Creativity",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall & Winter",
+    "description": "Where does Creativity come from? How do we define it? Why do children play so easily, but as we get older, we find it so challenging? What prevents us from simply letting go? How can we rediscover our inner artist?"
+  },
+  {
+    "id": "arts-the-art-and-craft-of-filmmaking",
+    "name": "The Art and Craft of Filmmaking",
+    "department": "Arts",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "This course introduces students to the craft and theory of filmmaking. By taking on the roles of director, screenwriter, technical director, actor, editor, and audio engineer to produce a series of short films, students have a hands-on experience in storytelling for the screen. Students will work both collaboratively and individually on projects that include first ideas/concepts, storyboarding, visual vocabulary, soundscape, and capturing/framing movement on camera. Premiere Pro introduces students to post-production techniques to produce films that are clear, compelling, and evocative. Group film screenings, readings, discussions, and feedback sessions further develop and deepen students’ perspectives on their own work."
+  },
+  {
+    "id": "english-eng-19th-century-russian-literature",
+    "name": "Eng: 19th Century Russian Literature",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course begins with the quiet revolutions of Anton Chekhov, his plays and stories of stalled lives, missed chances, unspoken longing, and expands outward into the rich and often unsettling world of nineteenth-century Russian literature. Alongside Chekhov, students will read short fiction by writers such as Leo Tolstoy, Nikolai Gogol, and Ivan Turgenev, exploring how Russian authors grappled with moral responsibility, social change, spiritual crisis, and the search for meaning in a rapidly shifting world. Through close reading, discussion, and analytical writing, students will examine what makes Russian literature distinct: its psychological depth, moral intensity, dark humor, and profound attention to the inner life. By situating Chekhov within this literary tradition, the course invites students to see Russian literature not simply as a historical movement, but as an ongoing conversation about how to live."
+  },
+  {
+    "id": "english-eng-a-secret-history",
+    "name": "Eng: *A Secret History*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "​​Donna Tartt's first novel, *A Secret History*, is a compelling and thought-provoking work of fiction that has captivated readers since its publication in 1992\\. The novel is a complex exploration of classical literature, ancient Greek philosophy, and human nature. Students will also have the opportunity to explore the historical and cultural context of the novel, including the academic environment of a small liberal arts college in New England, and the influence of ancient Greek philosophy on modern Western thought. Students will be encouraged to analyze the novel from different perspectives, including gender, race, and class, to gain a deeper understanding of the text. Assignments will likely include short response writing, essays, Harkness discussions, and active class participation."
+  },
+  {
+    "id": "english-eng-a-tale-of-two-cities",
+    "name": "Eng: *A Tale of Two Cities*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Charles Dickens was celebrated for his circuitous tales that seemed to capture all aspects of the human experience. *A Tale of Two Cities* is no exception. The novel compares the predictable stability of 18th-Century London and the chaotic turmoil of Paris in the throes of the French Revolution. There is espionage and bloodshed, loyalty and romance. In addition to enjoying that drama, we will consider the curiosity of publishing a work of historical fiction in serialized segments. Dickens released *A Tale of Two Cities* in weekly installments of a literary journal, occasionally tweaking things to allude to contemporary news and respond to the desires of his audience. As we read, we will keep an eye out for how that publication method impacted the final work."
+  },
+  {
+    "id": "english-eng-absurdism",
+    "name": "Eng: Absurdism",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "What does it all mean? Is there any purpose? The 20th-Century movement of Absurdism attempts to answer those questions. Absurdist authors attempt to find some reason or purpose behind the human experience, using humor, impossible events, and questioning (oh, so much questioning), to push their audiences towards introspection without making them too uncomfortable. If you are in search of meaning in modern life, these authors may not necessarily have the answers for you but they will help you on your way."
+  },
+  {
+    "id": "english-eng-acting-shakespeare",
+    "name": "Eng: Acting Shakespeare",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Shakespeare is meant to be experienced on stage, and his plays are, in fact, how-to manuals for actors. This hands-on, “no fear” approach to the enduring works of William Shakespeare will provide students with the proper tools to analyze, prepare and successfully perform the Bard’s iconic characters. This language- and performance-based approach will provide students with a deep appreciation for the profound humanity and continued relevance of these great works. Open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "english-eng-all-about-adaptation",
+    "name": "Eng: All About Adaptation",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This elective serves as a natural progression for students of stagecraft, shifting the analytical focus from the live stage to the silver screen. Students will engage in the rigorous close reading of highly acclaimed prose works before analyzing their transformations into Oscar-worthy films. With copies of Sklar's *Movie Made America* and Bordwell's *Film Art* close at hand, we will explore the mechanics of adaptation across media by pairing Chiang's \"Story of Your Life\" and Kesey’s *One Flew Over the Cuckoo’s Nest* with their cinematic counterparts. The curriculum also examines the tonal shifts and structural changes found in the filmed versions of Stephen King’s \"Rita Hayworth and the Shawshank Redemption\" and McCarthy’s *No Country for Old Men*. By investigating what is gained, lost, or reimagined in the adaptation process, students will develop a sophisticated vocabulary for both literary and film criticism. This course challenges students to better understand the unique artistic demands of visual storytelling, and practice the art of adaptation themselves in a culminating creative project."
+  },
+  {
+    "id": "english-eng-americans-in-paris",
+    "name": "Eng: Americans in Paris",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course is anchored by what is widely regarded as Ernest Hemingway’s defining expatriate novel, *The Sun Also Rises*, a portrait of disillusioned Americans drifting through 1920s Paris and Spain in the aftermath of World War I. Hemingway was a central figure of the so-called “Lost Generation,” a circle of American writers who left the United States in search of artistic freedom and personal reinvention abroad. In addition to Hemingway’s novel, students will read selected works by writers such as F. Scott Fitzgerald, Gertrude Stein, and James Baldwin, exploring how Paris shaped their understanding of identity, ambition, race, gender, and what it meant to be American. This course is ideal for students interested in literature, history, and cultural change, and who are prepared to engage deeply with themes of exile, reinvention, and artistic modernism. Throughout the course, students will be encouraged to develop critical reading, analytical writing, and discussion skills."
+  },
+  {
+    "id": "english-eng-british-romantic-poetry",
+    "name": "Eng: British Romantic Poetry",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "The Age of British Romanticism occupies a long stretch of English literary history from the late seventeenth- to early-eighteenth centuries. Over that period, many of England’s greatest poets innovated existing poetic forms and created new ones. Major authors in this course may include (but are not limited to) Smith, Barbauld, Wordsworth, Coleridge, Blake, Hemans, Shelley, Keats, Byron, and Landon. The course will examine the structural elements of poetry, the ode, epic, and lyrical forms, and the historical and philosophical context of Romanticism. Students will have opportunities to create their own poems using course texts as a model."
+  },
+  {
+    "id": "english-eng-capotes-in-cold-blood",
+    "name": "Eng: Capote’s In Cold Blood",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "**Eng: True Crime Writing: An Exploration of Truman Capote’s In Cold Blood** This course will delve into the fascinating and often unsettling world of true crime writing, with the central text being Truman Capote's *In Cold Blood*. The book, published in 1966, is a seminal work of true crime literature and a masterpiece of narrative journalism. The book, a ‘nonfiction novel,’ tells the story of the brutal murder of the Clutter family in rural Kansas in 1959 and the subsequent investigation and trial of their killers. In addition to our primary text, we will engage in short-form true crime articles (and likely podcasts, too\\!). This course is ideal for students interested in literature, journalism, history, and criminology."
+  },
+  {
+    "id": "english-eng-creative-writing",
+    "name": "Eng: Creative Writing",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "American flash fiction master Lydia Davis begins her short story--“The Center of the Story”--this way: “A woman has written yet another story that is not interesting, though it has a hurricane in it, and a hurricane usually promises to be interesting.” In this course, we will closely examine a wide selection of (mainly) contemporary short stories and try to find what makes them interesting, urgent, and relevant to society. In addition, students will write original stories (from suggested prompts) that we will discuss in an open workshop format in class. They will be required to submit a revised manuscript of their stories (based on the suggestions of their peers and the instructor) for the final project, and to participate in a public reading."
+  },
+  {
+    "id": "english-eng-david-foster-wallace",
+    "name": "Eng: David Foster Wallace",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Students enrolling in this course will learn about one of the most enigmatic writers of the late 20th and early 21st century. A graduate of Amherst College and adjunct professor at Emerson College, David Foster Wallace embodies what it means to be a modern thinker. A polymath whose obsessions ranged from Kafka to English language usage, lobster to tennis, the media to politics, Wallace’s writing is as wide-ranging in style as it is in content. Students will read selected essays and short stories, in addition to the author’s teaching notes from *The David Foster Wallace Reader* in order to try to tap into what made the author tick, and to better hone their own fiction and essay writing skills."
+  },
+  {
+    "id": "english-eng-dramaturgy",
+    "name": "Eng: Dramaturgy",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Learn what makes plays work through this deep-dive into the discipline of dramaturgy– the study of the craft of drama. In the professional world, dramaturgs are the essential backbone of any creative team– they are critics, curators, show runners, adaptors and editors for playwrights. In Dramaturgy class, students will learn how to identify the structure, theme and intention of classic and modern plays, then practice applying this knowledge to a production.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "english-eng-ernest-hemingway",
+    "name": "Eng: Ernest Hemingway",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Forget the dusty portraits of a \"classic\" author; Hemingway lived a life of high-stakes adrenaline, dodging shrapnel in world wars, hunting for U-boats off the coast of Cuba, and surviving back-to-back plane crashes in the African wilderness. Through his work, we will study the man who was obsessed with testing his own limits, whether he was facing down charging bulls in Spain or outrunning the FBI in his final days. This course hunts for the truth behind the legend, learning a little of that legendary style along the way. Join us as we cross-examine his legendary life and spare, rhythmic prose to see what happens when a writer’s reality is more dangerous than his fiction."
+  },
+  {
+    "id": "english-eng-flannery-oconnor",
+    "name": "Eng: Flannery O'Connor",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "During her brief career, Flannery O'Connor capitalized on her unique perspective on the South of the '50s and '60s to produce some of American literature's wildest and most entertaining short stories. In this course, we'll read a large collection of O'Connor's work, picking apart their colorful characters, creative imagery, and macabre plotlines to appreciate this sometimes overlooked master of the American Gothic. We'll also consider O'Connor's background, its impact on her work, and her enduring legacy."
+  },
+  {
+    "id": "english-eng-into-the-wild",
+    "name": "Eng: Into the Wild",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "During our time together, we will explore this idea of a fundamental connection between self, community, and place. Our attention to the major practices, beliefs, figures, and stories that are integral to each tradition will help guide our questioning, thinking, learning, and discovery about the ways in which both wilderness and community are concepts and realities at the heart of our human experience. We will explore some of the following questions: What are our obligations to the natural world, and how do those obligations inform–or conflict with–our obligations to one another? What constitutes a sense of place, and what role does this concept play in developing a sustainable and spiritual relationship with the land and the community around us? This class will frequently take us outside and out into the field where we will explore, reflect, observe, connect, and seek to experience the true shape of wilderness and community.",
+    "crossListedWith": [
+      "Wellbeing"
+    ]
+  },
+  {
+    "id": "english-eng-jane-austen",
+    "name": "Eng: Jane Austen",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "**Eng: Jane Austen: Socialization and Society** Explore the world of Jane Austen, one of England’s most brilliant literary minds and social commentators. In this course, we will read two of her novels, *Pride and Prejudice* and *Emma/Persuasion* (subject to course length), focusing on questions of gender, class, relationships, and the historical period in which Austen wrote. We will pay close attention to Austen’s writing style, including her masterful use of free indirect discourse. Some of Austen’s letters and minor writing also may feature in the course, as well as viewings of film adaptations of the major texts."
+  },
+  {
+    "id": "english-eng-from-page-to-stage",
+    "name": "Eng: From Page to Stage",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course explores the kinetic transition of drama from static page to multidimensional stage. Tracing 150 years of theatrical evolution, students will engage in a comparative literature approach, pairing close readings of seminal texts with the analysis of live productions. With a trusty copy of Fisher's *How to Write About Theater* for reference, we begin with the Victorian wit of Wilde’s *The Importance of Being Earnest* and the clockwork precision of Christie’s *The Mousetrap*, before diving into the raw emotional landscape of Williams’ *Cat on a Hot Tin Roof*. The curriculum then pivots to contemporary works where smaller student groups can study *The Laramie Project*, *Water by the Spoonful*, or *Father Comes Home From the Wars*. Students will oscillate from auteur theory, studying the playwright's singular vision, to the collaborative necessities of stagecraft, where the shared efforts of producers, directors, and actors redefine the work and bring it to life. By the end of term, students will hone their close reading and analytical writing, take on various acting personas, and draft an original one-act play for good measure\\!"
+  },
+  {
+    "id": "english-eng-literature-of-wilderness",
+    "name": "Eng: Literature of Wilderness",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "The Great Books chronicle prophets and seers journeying into the deserts or climbing atop mountains to behold their visions and receive their divine messages. Henry David Thoreau escaped to the woods at Walden Pond to live deliberately. Max sailed around the world in “Where the Wild Things Are” to calm his mind, in order to return home a changed boy. In fiction and in real life, humans have been doing this for ages \\-- retreating into the wilderness, venturing into wild landscapes away from the hustle and bustle of the human world, to find peace, truth, adventure, beauty, but mostly to find ourselves. This course will examine literature written about the wild places of the American landscape and, more broadly, explore the significance of the wilderness to the human imagination and spirit. We will read a variety of personal narratives, poetry, and pieces of fiction and non-fiction written about these wilderness landscapes. Though a variety of voices and works will inform this class, Robin Wall Kimmerer's book, \"Braiding Sweetgrass,\" will serve as a key text. This class will frequently venture outside."
+  },
+  {
+    "id": "english-eng-northern-gothic-haunted-new-england",
+    "name": "Eng: Northern Gothic: Haunted New England",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Although it is not as well-known or studied as its Southern counterpart, New England has a gothic literary tradition of its own. We’ll trace that tradition from the mid-19th century through the present day, studying authors including Nathaniel Hawthorne, H.P. Lovecraft, Shirley Jackson, and Stephen King. We’ll ask ourselves what about the culture, ecology, and history of New England — our surroundings here in Pomfret — brings about and expresses itself through this literary aesthetic. What ghosts haunt the forested landscape? What cultural habits lend themselves to isolation and fear? What horrors hide below the surface of a family’s — or a town’s — history? Students will have the opportunity to read, discuss, analyze, and to try their own hand at this form."
+  },
+  {
+    "id": "english-eng-pandemic-literature",
+    "name": "Eng: Pandemic Literature",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "The CoVid-19 pandemic drastically changed how most people envision their place in the world. This course will try to capture the impact the pandemic had on how people express themselves in the written word. We will study a variety of literature inspired by, or written during, the pandemic. Our ultimate goal will be to appreciate how artistic expression shifted during this major contemporary event that we all lived through."
+  },
+  {
+    "id": "english-eng-paradise-lost",
+    "name": "Eng: *Paradise Lost*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course introduces students to Milton’s *Paradise Lost*, perhaps the greatest epic poem originally written in the English language. Harkness-style discussions of *Paradise Lost* will explore poetic forms, Judeo-Christian cosmology, and Milton’s own life. The course will juxtapose Milton’s text with material from the Old and New Testaments to enrich our reading. Students will complete analytical writing assignments and have the opportunity to perform creative poetry writing that emulates Milton’s work. One of the final assessments will be a short-form epic poem of the student’s own creation."
+  },
+  {
+    "id": "english-eng-philosophy-asin-literature",
+    "name": "Eng: Philosophy as/in Literature",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "We create art for a multitude of purposes: entertainment, education, communication, etc. In this class, we will examine the way philosophers use literary strategies to transmit their ideas. Through an examination of Plato, Descartes, Aquinas, Kant, Hume, and Mill, among others — we’ll learn how to read philosophy, and how to write about it. Students will have to craft essays in which they attempt to answer some of the same questions these philosophers spent their lives working on. Along the way, we will introduce ourselves to some of the major topics in analytic philosophy: from epistemology, to ethics, to philosophy of religion, and beyond."
+  },
+  {
+    "id": "english-eng-philosophy-rhetoric-and-politics",
+    "name": "Eng: Philosophy, Rhetoric, and Politics",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "This course explores some of the foundational texts in political thought through the lens of rhetoric. From Plato’s dialogues to The Prince, the Federalist Papers to the modern theories of John Rawls, we will examine how argument, style, and audience shape political and ethical philosophy. Students will practice close reading, structured debate, and analytical writing, culminating in persuasive essays that engage enduring questions about liberty, equality, and the state."
+  },
+  {
+    "id": "english-eng-playwriting",
+    "name": "Eng: Playwriting",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Students will discover the makings of a great play, then try their hand at creating one of their own. Each student playwright will find their creative voice and personal POV through writing exercises and a thorough study of the art form– from Aristotle’s ancient structural model, to the “well-made play” of the Western canon, to the wild time- and mind-bending approaches of the modern day. Students will craft an original one-act play as their final project.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "english-eng-post-colonial-literature",
+    "name": "Eng: Post-Colonial Literature",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This elective course explores the complicated legacies of both the rise and fall of imperial powers, the stories of subjugation and liberation in collective memory, and the efforts to reclaim and rewrite lost culture and history. Moving beyond the traditional Western canon, which tells the stories of expanding empires and dominance, this class will focus on the perspectives of those whose voices were silenced and who were often “otherized.” We will examine literature from places where the imperial powers were eventually dismantled, leaving a power vacuum and offering narratives with complex themes of resistance, displacement, hybridity, loss, liberation, chaos, and the desire to write a new national identity. We will specifically investigate how the act of storytelling serves as a vital tool for decolonization and self-actualization."
+  },
+  {
+    "id": "english-eng-public-speaking-with-power",
+    "name": "Eng: Public Speaking with Power",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Develop essential communication skills to express ideas confidently and effectively. Through engaging exercises and presentations, students will learn techniques to overcome fears of standing in front of a group, craft compelling messages, and connect with their audience. This course is about empowering young speakers to articulate their thoughts to make an impact beyond the classroom. Open to Juniors and Seniors.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "english-eng-satire",
+    "name": "Eng: Satire",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Beneath every joke lies a hidden weapon, and this course will expose you to many, and teach you how to use them to your advantage. We will trace the evolution of the world's most dangerous art form, from the savage insults of ancient Rome to the viral takedowns of the digital age. You will learn to decode the double-speak of those in power, mastering the subtle arts of irony and hyperbole to expose the absurdity of the world around you. Join us to discover how the sharpest minds use laughter as a shield and a sword, proving that sometimes the only way to tell the truth is to lie through your teeth."
+  },
+  {
+    "id": "english-eng-the-fountainhead",
+    "name": "Eng: *The Fountainhead*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "*The Fountainhead* is Ayn Rand's homage to the American idea of individualism, and is featured greatly in a movement she called \"Objectivism.\" Students in this advanced course will read Rand's work and grapple with the philosophy of Rand, trying to understand the merits and deficits of said philosophy in the 21st century. We will entertain ideas of what sustains humans, and how self-sufficiency plays an important role for modern society. Come join us as we meet Howard Roark who \"struggles for the integrity of his creative work against every form of social opposition.\""
+  },
+  {
+    "id": "english-eng-the-gothic-novel",
+    "name": "Eng: The Gothic Novel",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "**Eng: The Gothic Novel: Frankenstein and Dorian Gray** What horrors and monstrosities hide within the pages of Gothic literature? In this course, we will read Mary Shelley’s *Frankenstein* and Oscar Wilde’s *The Picture of Dorian Gray*, examining the Gothic as a literary genre and mode. Harkness-style discussions of these texts will focus on questions of gender, race, justice, class, and aesthetics. We also will study the historical contexts in which these novels were written and the impact on their authors’ lives. The course will include adaptations of the core texts, including select film excerpts from the long history of *Frankenstein* media."
+  },
+  {
+    "id": "english-eng-the-grateful-dead-poets-society",
+    "name": "Eng: The Grateful Dead Poets Society",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "\"The Grateful Dead Poets Society\" is an interdisciplinary English course that explores the rich lyrical tradition of the Grateful Dead as poetry and cultural commentary. Students will analyze the band’s lyrics as works of literature, examining themes of love, loss, identity, freedom, and community. We will draw connections between the Grateful Dead’s lyrics and works of canonical poets such as Walt Whitman, Emily Dickinson, Robert Frost, and William Blake.The course will integrate traditional literary analysis with music appreciation, inviting students to uncover the poetic depth behind one of America’s most iconic musical groups."
+  },
+  {
+    "id": "english-eng-the-last-samurai",
+    "name": "Eng: *The Last Samurai*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "How is it possible that “the best book of the century (for now)” was out of print for over a decade? Take a tumble into Helen DeWitt’s dense, but rewarding, *The Last Samurai*. This novel, ripe with intertextual references and allusions, is sure to require plenty of discourse and discovery, outside of the nightly reading. DeWitt’s work is a contemporary epic that builds, very specifically, on ideas from *The Odyssey* and *The Iliad*. Students will also watch and analyze Kurosawa’s *Seven Samurai* in order to better understand DeWitt’s work, while also enduring a crash course in several languages and mathematics, whose inclusion threaten to question what a novel has been, is, and can be."
+  },
+  {
+    "id": "english-eng-the-shakespearean-tragicomedy",
+    "name": "Eng: The Shakespearean Tragicomedy",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This course offers a survey of two of Shakespeare’s plays: *Othello* and *Much Ado About Nothing*. These two plays, sharing similar themes but differing in plot trajectories, will introduce students to the tragedy and comedy genres of Shakespeare’s oeuvre. The course will address questions of race, gender, class, and the historical-geographical context of each play. Students will learn and practice techniques for reading and understanding Elizabethan English and Shakespeare’s writing conventions. In addition to writing assignments, students will have multiple oral presentations to act out scenes from the plays they read."
+  },
+  {
+    "id": "english-eng-the-wonderful-wizard-of-oz",
+    "name": "Eng: *The Wonderful Wizard of Oz*",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "First published as a children’s story in 1900, L. Frank Baum’s *The Wonderful Wizard of Oz* has never fully faded from popular culture. The story has been told and retold in novels, musicals, and feature films, each with their own spin on Baum’s original tale. Using this beloved childhood classic as a starting point, this course will ponder how literature gets rewritten, revised, and adapted to meet the goals of its new creators and the culture in which it is produced."
+  },
+  {
+    "id": "english-eng-toni-morrison",
+    "name": "Eng: Toni Morrison",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "On a short list of American Nobel Prize winners, Toni Morrison left an indelible impact on our literary history. She accomplished that by crafting a rich collection of stories packed with unforgettable characters, macabre occurrences, and emotional impact. Morrison is likely best known for celebrating the complications of the black experience in America in her work but she also demanded to be appreciated as an artist beyond the expectations placed on her because of her race. We will consider how her title as one of America’s greatest authors is both because of her race and independent from it."
+  },
+  {
+    "id": "english-eng-writing-as-a-professional-critic",
+    "name": "Eng: Writing as a Professional Critic",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Soundbite culture seems to have found a holding pattern, so we should find a way to inject careful and objective observation, analysis, and style into our writing within a compact and efficient space. For this course, be prepared to develop the instincts of a critical reviewer, establishing a calculated and useful criteria for each medium we investigate. Just what types of material will catalyze our evaluations? We will read or experience: short fiction, a live performance, television episodes, art exhibits, studio recordings, consumer products, and more. Class time will be supplemented by a curated selection of content for a series of *Flash Reviews* where students can sharpen their critical thinking and writing skills in real time. Students’ efforts will culminate in a portfolio featuring a broad range of original reviews. This course has a strong emphasis on thoughtful discussion, and iterative writing including draft stages, peer review, refinement, and expansion."
+  },
+  {
+    "id": "english-eng-writing-poetry",
+    "name": "Eng: Writing Poetry",
+    "department": "English",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "In 1862, Emily Dickinson wrote to the author, literary critic, abolitionist, and minister Thomas Wentworth Higginson to ask him, \"Are you too deeply occupied to say if my Verse is alive?\" In this course, we will explore poetry through a survey of (some of) the various forms it can take. Every week, students will read, reflect upon, and discuss poems selected by the instructor. In addition, they will each draft a minimum of one new poem per week and present it to the class in an open, workshop setting. Revision--based on feedback both from instructors and peers--will play an important part in preparing end-of-term portfolios. Students may also be required to participate in a public reading."
+  },
+  {
+    "id": "english-humanities-i-english",
+    "name": "Humanities I: English",
+    "department": "English",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Third-form writers hone their narrative-writing skills and by the end of the year are exploring the fundamentals of essay writing. Working first on sentence- and paragraph- level writing skills, students end the year by writing one- to three-page essays. Throughout the third form year, students explore the question, \"How do I disturb the universe?\" In tackling this question, students examine closely issues surrounding identity, race, gender, and social class. As they explore others' voices through short stories, essays, poetry, plays, and novels, students strive to acquire fundamental writing, close-reading, and oral skills. The focus of written work is the development of exposition, observation, and description skills. Students discover and develop their respective voices through continuous narrative and expository writing assignments. Critical-reading skills are stressed daily. The concrete elements of writing, from word to phrase to clause to sentence to paragraph to completed work—whether taking the form of a three-part critical essay, a descriptive passage, an emulation, a journal entry, a story, or a poem—receive consistent attention. Grammar and vocabulary are also staples of the third-form curriculum. Texts may include Jesymn Ward's Salvage the Bones, Marjane Sartrapi's Persepolis as well as a collection of short stories and essays chosen by faculty."
+  },
+  {
+    "id": "english-humanities-ii-english",
+    "name": "Humanities II: English",
+    "department": "English",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Pomfret School’s Humanities II: English course offers a student-centered American studies curriculum that fosters a love of reading through close analysis and critical thinking. Students will continue to develop the skills needed to communicate effectively in various writing forms and in public speaking. Our curriculum seeks to uncover social issues that impact students’ everyday lives. As we move into an increasingly diverse community, our curriculum makes connections to contemporary works and issues, particularly as they relate to diverse perspectives, with mainstream texts. Additionally, other genres will complement the written texts, including but not limited to film, social media, graphic novels, television shows, podcasts, and works of visual and performing art. Working in tandem with Humanities II: American Studies, students will uncover issues surrounding civil rights and identity in coming of age stories, consider voices from marginalized groups, and understand the role of the media past and present in describing the culture and compass of the United States. Ultimately, Humanities II: English seeks to prepare students as engaging citizens in an interconnected society."
+  },
+  {
+    "id": "history-and-social-sciences-adv-african-american-studies",
+    "name": "ADV African American Studies",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "“Black” history is American history. In Advanced African American Studies, we will examine the history of race relations in the United States. The ideas of race, ethnicity, and culture are complex, ambiguous, and ever-changing. We will explore how the Americas have historically defined and redefined “race”, focusing on how evolving ideas have effectively shaped American laws, institutions, belief systems, and defined the experiences of African Americans and other ethnic groups. The course will take an interdisciplinary, thematic approach and topics will include class, color, civil disobedience, legislation, the dynamics of reform, and contemporary black nationalism. This class is a yearlong advanced level history course, open to juniors and seniors, which provides an introduction to African American history. Departmental approval is required for this course."
+  },
+  {
+    "id": "history-and-social-sciences-adv-american-studies",
+    "name": "ADV American Studies",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This is a survey of U.S. History from the eve of the American Revolution to the present day, focusing on the political, social, economic, diplomatic, and cultural trends that have existed over the past three centuries. While the principal focus of the course will be on the birth, development, and growth of the United States, we will also look at the interaction between the United States and the world. Through the extensive study of primary sources (speeches, documents, Supreme Court decisions, political cartoons, paintings, photographs, advertisements, songs, newspaper articles, etc.), as well as a thorough and varied historiography (textbook and secondary sources), each member of the class will become a historian who develops his or her own original ideas and arguments about the past. Assessments in this course cultivate discussion, public speaking, research and time management more than they cultivate memorization and recitation of facts. Perspective-taking and healthy discourse are the pillars of this fast-paced Advanced U.S. History class. Furthermore, and perhaps most significantly, through an analysis of the past, we will become more informed citizens and begin to develop a clearer understanding of the world we live in today. Departmental approval is required for this course."
+  },
+  {
+    "id": "history-and-social-sciences-adv-criminal-justice",
+    "name": "ADV Criminal Justice",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "For many Americans, the main interaction with the criminal justice system is through television; *Cops*, *Law & Order, The Wire,* and *Orange is the New Black* are just a few of the dozens of shows that dramatize the criminal justice system. However, for too many people, particularly those who are poor, immigrants, or BIPOC, the criminal justice system plays an outsize role in their lives in ways that are often overlooked by the dramas we watch on our small screens."
+  },
+  {
+    "id": "history-and-social-sciences-adv-gender-us-society",
+    "name": "ADV Gender & U.S. Society",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course explores American history, culture, and politics through the lens of gender. Using gender as a framework for analysis, students will engage with case studies, scholarly texts, and examine both past and contemporary events to better understand how gender shapes social institutions, historical narratives, and lived experiences. The course incorporates methodologies from multiple disciplines, including history, political science, education studies, sociology, and anthropology. This course is open to juniors and seniors. Departmental approval is required for this course."
+  },
+  {
+    "id": "history-and-social-sciences-adv-psychology",
+    "name": "ADV Psychology",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "The Advanced Psychology course introduces students to the scientific examination of the causes and intricacies of human behavior. Students will learn how psychological research is conducted and the ethical standards applied to such research. Human behavior will be examined through the biological, cognitive and social lenses. The evolution of psychological perspectives will lay the groundwork for in-depth examinations of the psychology of development, learning and memory, personality, motivation, human relationships, health and abnormal behaviors. Students will apply the principles of psychological research by designing and conducting their own experiments. Emphasis will be placed on the development of skills used to understand and execute psychological research, including reading psychological research and experiments, identifying and replicating research methodologies and applying psychological patterns and phenomenon to data analysis. Departmental approval is required for this course. This course is open to SENIORS only.*",
+    "crossListedWith": [
+      "Wellbeing"
+    ]
+  },
+  {
+    "id": "history-and-social-sciences-adv-global-studies",
+    "name": "ADV Global Studies",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course takes a thematic approach to analyze important points in world history throughout Asia, Africa, the Middle East, Europe, and the Americas. The fall term emphasizes features of early civilizations. The winter term explores the clashing of civilizations. The spring term explores the scrambling of civilizations in a globalized world. Students evaluate what features of civilization have been most influential in shaping modern governments, cultures, economies, and societies around the world. The course focuses on developing higher-level thinking, reading and writing skills as the main assessments are research papers, presentations, and discussions. Departmental approval is required for this course. *This course is open to juniors and seniors.*"
+  },
+  {
+    "id": "history-and-social-sciences-adv-us-government-politics",
+    "name": "ADV U.S. Government & Politics",
+    "department": "History and Social Sciences",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course teaches students to understand and critically analyze the fundamental concepts of United States politics through an in-depth study of the American government, its constitutional foundations, and contemporary discourse. Moving beyond basic civics, students explore the history and evolution of the three branches of government, the pivotal role of the federal judiciary, and the complex mechanics of campaigns and elections. A central theme of the curriculum is the exploration of partisanship and polarization. Students will examine the historical roots and modern drivers of political division, analyzing how these forces shape legislative gridlock, public opinion, and the stability of democratic institutions. Through exposure to a diverse array of primary and secondary sources, alongside a continuous examination of current events, students will gain a comprehensive understanding of the historic and modern American political system. This course is open to juniors and seniors, by departmental approval."
+  },
+  {
+    "id": "history-and-social-sciences-caribbean-studies",
+    "name": "Caribbean Studies",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall & Spring",
+    "description": "In this elective course, we will explore the diverse histories, cultures, and forms of thinking of Caribbean societies. We will begin with a study of the geographical and sociocultural aspects of the Caribbean and an overview of its history. We will examine contact between European colonial powers and indigenous peoples, Africans, and Asians within the contexts of colonialism and slavery. We will then strive to understand the modern Caribbean through different topics, such as globalization and inequality; migration and diaspora; the legacies of slavery and colonialism; race and racism; and tourism. We’ll also explore various artistic, intellectual, and religious traditions, including the music styles of calypso, kadans, soca, reggae, and salsa, as well as literature, film, social movements, and contemporary politics."
+  },
+  {
+    "id": "history-and-social-sciences-current-events-i-ii-iii",
+    "name": "Current Events I, II, III",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Current Events I, II, III: Contemporary World History & Current Events is a 3 term long elective series, media-focused history course that teaches students how to understand, analyze, and evaluate the news shaping today’s world. Organized into three terms—U.S. Politics, Global Affairs, and Human Rights—the course emphasizes media literacy, source evaluation, and evidence-based reasoning. These electives do not need to be taken in sequential order. *Open to juniors and seniors.*"
+  },
+  {
+    "id": "history-and-social-sciences-dance-around-the-world",
+    "name": "Dance Around the World",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Winter & Spring",
+    "description": "This course introduces students to a wide variety of indigenous and multicultural dance/movement practices, across time and from around the world. Through readings, screenings, research, writing, and hands-on movement practice, students will discover the ways in which humanity across the globe is linked through dance practice. Areas of focus may include West African dance, Chinese tai chi, classical Indian dance, Andalusian flamenco, Brazilian capoeira, Chinese traditional dance, American step and rhythm styles, and Latin American social dances. This course earns a credit in Art and History & Social Sciences. This course is open to Juniors and Seniors.*",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "history-and-social-sciences-microeconomics",
+    "name": "Microeconomics",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Building off ten key principles of economics (Principle \\# 4: People respond to incentives), students will delve into the market forces of supply and demand, elasticity, government intervention, and study a variety of market models from competitive to monopolistic. The course will also ask students to critically explore: costs of production, equilibrium in the labor market, earnings and discrimination, and income inequality. A big fundamental question to this course as well as the Macroeconomics elective will be: What is growth and how is it measured? Students will be asked to consider their own personal values as a consumer, as well as those behind the businesses they purchase goods and services from. Discussion and structured debates will be the primary format for this class. This course is open to juniors and seniors or by departmental approval. *",
+    "crossListedWith": [
+      "Math"
+    ]
+  },
+  {
+    "id": "history-and-social-sciences-macroeconomics",
+    "name": "Macroeconomics",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "In this course, students will begin exploring how a nation’s income is measured, carefully analyze Gross Domestic Product and debate whether it’s an outdated measurement for growth. Next, a look into costs of living will segway into inflation and its relationship with unemployment. Understanding measurements for savings and investment will guide students into a look at the basic tools of finance. Open-economy concepts of trade balance, exchange rate, and aggregate supply/demand will broaden the lens of the class and initiate a look into developing nations and their economies. Lastly, students will play a stock game that will allow them to buy and short sell stocks on an on-line platform, tracking their portfolio over the course of the term. Short writing assignments, quizzes, and tests will be the primary forms of assessment in this class. This course is open to juniors and seniors or by departmental approval.*",
+    "crossListedWith": [
+      "Math"
+    ]
+  },
+  {
+    "id": "history-and-social-sciences-economics-and-entrepreneurship",
+    "name": "Economics and Entrepreneurship",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "In this course, students will learn about starting and managing a small business. Readings, viewings of the show “Shark Tank,” and class discussion will guide our learning. Students will complete numerous “practice pitches” where they have a short window of time to pitch an idea to an audience of stakeholders while also considering a variety of marketing strategies. Inquiries into local businesses and learning from successful Pomfret alumni will be interspersed throughout the course. By the end of the term, students will develop their own ideas for a business and write a detailed business plan. This course is open to juniors and seniors or by departmental approval. *",
+    "crossListedWith": [
+      "Math"
+    ]
+  },
+  {
+    "id": "history-and-social-sciences-europe-in-the-interwar-years",
+    "name": "Europe in the Interwar Years",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "We will explore what are perhaps the two most tumultuous decades in European political and cultural history—the period after World War I and before World War II. We will examine how the first world war contributed to the second, focusing on the consequences of the Treaty of Versailles for Germany, France, and the United Kingdom. We will also learn about the economic collapse of Weimar, the so-called “Weimar Decadence”, the “Golden Era” of Gustav Stresemann, Hitler’s rise to and consolidation of power, the organization of the Nazi state. We will study the reasons for Mussolini’s rise to power in Italy, and the rapid political developments in Spain leading to the Spanish Civil War in 1936\\. Throughout the course, we will analyze political cartoons, paintings, literature, and music from the era that will help us to better understand the cultural climate of the interwar years in Europe."
+  },
+  {
+    "id": "history-and-social-sciences-global-issues-i-ii-iii",
+    "name": "Global Issues I, II, & III",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "This course explores major global issues through a historical lens, examining how past events, decisions, and movements have shaped the world we live in today. Emphasis will be placed on understanding the interconnectedness of global societies and the historical roots of contemporary challenges. Through case studies from various regions, students will critically analyze the causes and consequences of global developments and consider diverse perspectives across time and cultures. The course encourages critical thinking, discussion, and research, equipping students with the tools to engage thoughtfully with today’s most pressing global concerns."
+  },
+  {
+    "id": "history-and-social-sciences-history-of-food-insecurity",
+    "name": "History of Food Insecurity",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In this yearlong experiential learning course students get involved in solving real-world problems that focus on food insecurity in America: understanding the complexities of the problem and educating our school community on these issues."
+  },
+  {
+    "id": "history-and-social-sciences-humanities-ii-american-studies",
+    "name": "Humanities II: American Studies",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In this course we will examine ‘we the people’ in United States History and how this group has expanded and contracted over time. The focus of the fall term will be exploring American identity. The focus of the winter term will be exploring marginalized groups within America. The focus of the spring term will be America's role in the world. This course focuses on a broad array of skills, while paying particular attention to critical analysis, oral and written communication, research and writing, collaborative work, and understanding self and others. Students examine different themes through the study of pivotal events in United States history. Through their consideration of power, citizenship, identity, and culture, students will investigate the evolution of the United States of America and what it means to be an informed and engaged citizen. Ultimately, students will gain a more nuanced understanding of the reality of the American identity. This is a required course for sophomores and satisfies the graduation requirement for United States History."
+  },
+  {
+    "id": "history-and-social-sciences-social-psychology",
+    "name": "Social Psychology",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Our social interactions can influence our individual behavior, perceptions, and beliefs in unpredictable ways. This course will examine classic experiments in social psychology that have demonstrated how humans think, feel, and behave in social situations. Students will have opportunities to recognize social psychology concepts in their own lives, in current events, and in the media. Additionally, the course aims to give students a more empathetic framework for interpreting the actions and experiences of others. Major topics will include cognitive biases, conformity, group behavior, persuasion, and stereotypes. Social Psychology is a one-term elective open to all juniors and seniors."
+  },
+  {
+    "id": "history-and-social-sciences-substance-use-in-us-history",
+    "name": "Substance Use in U.S. History",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall & Winter",
+    "description": "This course will explore the history of drug use, abuse, and policy across cultures and throughout eras, with a special focus on the United States in the modern era (1900-present). We will study the pharmaceutical industry, legal scheduling of drugs, and multiple prohibitions throughout the years. We will read primary documents, news articles, analyze political cartoons, and watch excerpts of relevant documentaries and films to better understand the impact of mind-altering substances on societies and individuals and how they have responded to the challenges presented by them."
+  },
+  {
+    "id": "history-and-social-sciences-the-american-presidency",
+    "name": "The American Presidency",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "This course will begin with an introduction to American civics as an entry point to further explore the various roles and responsibilities of the office of the president. The course will include an introduction to each of the country's presidents, including the general historical context of their time in office. This course will also investigate current events, asking students to consider media literacy as a critical skill for development while also reading a text that brings humanity to the office of the president and those who have held it. *This course is open to juniors and seniors with priority given to seniors.*"
+  },
+  {
+    "id": "history-and-social-sciences-the-gilded-age",
+    "name": "The Gilded Age",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Winter & Spring",
+    "description": "This elective will examine political, economic, and cultural developments in the United States from approximately 1873 to 1920\\. The Gilded Age (1873-1900) and Progressive Era (1890s-1920) witnessed the rise of the United States as an industrial and world power. We will explore the reasons for and consequences of America’s rapid economic growth (paying particular attention to railroads, the factory system, mining, labor unions, and the evolution of the finance sector), increased immigration, and urbanization. We will read examples of primary and secondary literature, including case studies, newspaper articles, and essays, and we will study the roles of magnates including J.P. Morgan, Andrew Carnegie, and J.D. Rockefeller in influencing American banking and heavy industry."
+  },
+  {
+    "id": "history-and-social-sciences-topics-in-american-government",
+    "name": "Topics in American Government",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Workshop studying significant problems in contemporary U.S. politics and policy. Over the course of the term, students will identify political issues facing the United States at the Federal, State and Local levels of government. Particular focus will be paid to the role of Congress and the President at the national level and the current issues facing the Connecticut General Assembly. Students are expected to attend a weekly workshop and complete weekly assignments. *This course is only offered for seniors.*"
+  },
+  {
+    "id": "history-and-social-sciences-us-elections-and-campaigns",
+    "name": "U.S. Elections and Campaigns",
+    "department": "History and Social Sciences",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course examines what it takes to effectively campaign for, and win, a democratic election. Students will study the United States democratic process and develop an understanding of different campaign strategies and their impact on the outcomes of elections. Through a critical analysis of historical case studies and current events, students will develop a firm understanding of what it means to be elected “by and for the people.” Throughout the term students will hold town halls and debates to raise awareness about current issues in America, and the term will culminate with students participating in a hands-on project including working on a political campaign of their choosing, or engaging in non-partisan \"get out the vote initiatives\" in the greater community. *This course is open to juniors and seniors with priority given to seniors.*"
+  },
+  {
+    "id": "mathematics-adv-calculus-i",
+    "name": "ADV Calculus I",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course will include limits and continuity; the Fundamental Theorem of Calculus; definition of the derivative of a function and techniques of differentiation; applications of the derivative to maximizing or minimizing a function; the chain rule, mean value theorem, and rate of change problems; curve sketching; definite and indefinite integration of algebraic, trigonometric, and transcendental functions, with an application to calculation of areas and volumes of revolution. *",
+    "prerequisites": "* *Advanced Pre-calculus or its equivalent and departmental recommendation.*"
+  },
+  {
+    "id": "mathematics-adv-calculus-ii",
+    "name": "ADV Calculus II",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This second year Advanced Calculus course will include a review of the methods of washers, disks and shells.The derivatives and integrals of inverse trigonometric functions are studied along with the method of integration by parts. Parametric and polar equations are studied. Many topics in sequences and series, including the Taylor Series are explored. During the spring term, multi-variable calculus is studied including the directional derivative, gradients and the critical points of surfaces. *",
+    "prerequisites": "Advanced Calculus I or its equivalent and departmental recommendation.*"
+  },
+  {
+    "id": "mathematics-adv-calculus-iii",
+    "name": "ADV Calculus III",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Term long-Fall",
+    "description": "Advanced Calculus III is a course in Differential Equations. It covers the techniques of solving: such differential equations as: separable, exact, homogenous and linear. Other types of equations and techniques are explored, including the technique of differential operators, the technique of Laplace transforms and Step functions. Students will set up and solve many problems that cover mechanical and electrical systems. *",
+    "prerequisites": "Advanced Calculus II or its equivalent and departmental recommendation.*"
+  },
+  {
+    "id": "mathematics-adv-calculus-iv",
+    "name": "ADV Calculus IV",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Term long-Winter",
+    "description": "Calculus IV is a continuation of the ADV Calculus III course. It mostly covers topics in simultaneous differential equations. The techniques of differential operators, Laplace transforms, eigenvalues and eigenvectors are learned to help solve these systems of equations. In addition, topics in matrix algebra are learned. Electrical, mechanical and \"fluids mixing between tanks\" are commonly solved problems. Other topics such as the Gamma function, hyperbolic functions and matrix exponentiation are explored. *",
+    "prerequisites": "Advanced Calculus III or its equivalent and departmental recommendation.*"
+  },
+  {
+    "id": "mathematics-adv-pre-calculus",
+    "name": "ADV Pre-calculus",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This fast-paced course provides students with an in-depth investigation of linear, quadratic, polynomial, rational, exponential, logarithmic, and trigonometric functions. The pace and rigor of this course allows for a greater breadth and depth analysis of the material. Additional topics include vectors, parametric equations, polar coordinate system, and limits. This course provides the analytical foundation and framework for Advanced Calculus. *",
+    "prerequisites": "High achievement in Honors Algebra II or its equivalent and departmental recommendation. *"
+  },
+  {
+    "id": "mathematics-adv-statistics",
+    "name": "ADV Statistics",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course is equivalent to an introductory, non-calculus based college course in statistics. Since statistics is a key element of many courses of study in college, any student interested in psychology, sociology, humanities, business, economics, biology/life sciences, medicine, mathematics/statistics, engineering, etc. would benefit from this course. The purpose of the advanced course in statistics is to introduce students to the major concepts and tools for collecting, analyzing, and drawing conclusions from data. Students are exposed to four broad conceptual themes: exploratory analysis, planning a study, probability, and statistical inference. Students must have their own graphing calculator, which has a full menu of statistical functions. Science, engineering, business, and mathematics majors usually take an upper division calculus based course in statistics, for which the Advanced Statistics course will be an effective preparation. *Prerequisites: Algebra II, strong mathematical background and departmental recommendation.*"
+  },
+  {
+    "id": "mathematics-adv-topics-in-math",
+    "name": "ADV Topics in Math",
+    "department": "Mathematics",
+    "level": "Advanced",
+    "term": "Term long-Spring",
+    "description": "The Advanced Topics in Mathematics covers material that is not typically covered in Pomfret's other calculus courses. Topics include: Centroids, Center of Mass, Second Moment of Inertia, Pressure and work done in pumping fluids. Double and triple integrals are explored in rectangular, polar, cylindrical and spherical coordinate systems. Other topics might include Green's Theorem, Stokes' Theorem and classical proofs of Archimedes and Euclid. Other more modern problems from Euler, Newton and other similar mathematicians are typically explored."
+  },
+  {
+    "id": "mathematics-algebra-ii",
+    "name": "Algebra II",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Algebra II builds on the foundation in Algebra I and Geometry, reinforcing prior knowledge while introducing more advanced algebraic concepts. Students begin with a review of skills before progressing to more complex topics. These include polynomial operations, factoring, rational and radical expressions, complex numbers, and quadratic functions in greater depth. Throughout the course, students develop their skills through a combination of problem-solving, graphing, and analytical reasoning. Emphasis is placed on understanding multiple approaches to solving problems and selecting appropriate methods. By the end of the course, students should have strengthened their algebraic fluency and problem-solving abilities, preparing them to transition into Precalculus in the following year."
+  },
+  {
+    "id": "mathematics-calculus-i",
+    "name": "Calculus I",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "This is an introductory course to First Year College Calculus. Topics covered: review of functions, limits, continuity, rates of change of function and the derivative, and integration. *",
+    "prerequisites": "High achievement in Pre-calculus or its equivalent with recommendation from the Mathematics Department.*"
+  },
+  {
+    "id": "mathematics-microeconomics",
+    "name": "Microeconomics",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Building off ten key principles of economics (Principle \\# 4: People respond to incentives), students will delve into the market forces of supply and demand, elasticity, government intervention, and study a variety of market models from competitive to monopolistic. The course will also ask students to critically explore: costs of production, equilibrium in the labor market, earnings and discrimination, and income inequality. A big fundamental question to this course as well as the Macroeconomics elective will be: What is growth and how is it measured? Students will be asked to consider their own personal values as a consumer, as well as those behind the businesses they purchase goods and services from. Discussion and structured debates will be the primary format for this class. This course is open to juniors and seniors or by departmental approval. *",
+    "crossListedWith": [
+      "History"
+    ]
+  },
+  {
+    "id": "mathematics-macroeconomics",
+    "name": "Macroeconomics",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "In this course, students will begin exploring how a nation’s income is measured, carefully analyze Gross Domestic Product and debate whether it’s an outdated measurement for growth. Next, a look into costs of living will segway into inflation and its relationship with unemployment. Understanding measurements for savings and investment will guide students into a look at the basic tools of finance. Open-economy concepts of trade balance, exchange rate, and aggregate supply/demand will broaden the lens of the class and initiate a look into developing nations and their economies. Lastly, students will play a stock game that will allow them to buy and short sell stocks on an on-line platform, tracking their portfolio over the course of the term. Short writing assignments, quizzes, and tests will be the primary forms of assessment in this class. This course is open to juniors and seniors or by departmental approval.*",
+    "crossListedWith": [
+      "History"
+    ]
+  },
+  {
+    "id": "mathematics-economics-and-entrepreneurship",
+    "name": "Economics and Entrepreneurship",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "In this course, students will learn about starting and managing a small business. Readings, viewings of the show “Shark Tank,” and class discussion will guide our learning. Students will complete numerous “practice pitches” where they have a short window of time to pitch an idea to an audience of stakeholders while also considering a variety of marketing strategies. Inquiries into local businesses and learning from successful Pomfret alumni will be interspersed throughout the course. By the end of the term, students will develop their own ideas for a business and write a detailed business plan. This course is open to juniors and seniors or by departmental approval. *",
+    "crossListedWith": [
+      "History"
+    ]
+  },
+  {
+    "id": "mathematics-geometry",
+    "name": "Geometry",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Geometry focuses first on a review of the fundamental concepts covered in Algebra to ensure a strong algebraic base that will be used throughout the rest of the year. This is followed by the core concepts of Geometry including work with segments, angles, areas, volumes, and many other figures. These are learned through problems requiring calculations as well as through proofing statements with a set of given information. Students will be provided with repeatable problem sets to ensure understanding of the concepts. Students will also be given worked examples and explanations that support students in better understanding both the concept being taught and how to build an accurate process to get to a solution. Upon completion of Geometry, students should be prepared to start Algebra II the following year."
+  },
+  {
+    "id": "mathematics-hon-algebra-ii",
+    "name": "HON Algebra II",
+    "department": "Mathematics",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Topics covered in this course are similar to those found in the regular section of Algebra II, but the pace and academic rigor allows for the greater breadth and depth analysis of material. Additional topics include exponential and logarithmic functions, right angle triangle trigonometry, circular functions, sequence and series, and might include elementary probability and statistics. Departmental approval is required for this course. *",
+    "prerequisites": "High achievement in both Algebra I and Honors Geometry and department recommendation.*"
+  },
+  {
+    "id": "mathematics-hon-geometry",
+    "name": "HON Geometry",
+    "department": "Mathematics",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Topics covered in this course are similar to those that are found in a regular section of Geometry, but the pace and academic rigor allows for the greater breadth and depth analysis of material. This course is for students possessing a strong understanding of Algebra I concepts, high mathematical aptitude, and good reasoning skills. Departmental approval is required for this course. *",
+    "prerequisites": "High achievement in Algebra I and department recommendation.*"
+  },
+  {
+    "id": "mathematics-hon-precalculus",
+    "name": "HON Precalculus",
+    "department": "Mathematics",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "This course closely investigates the functions taught in Honors Algebra II. This course provides students with a more extensive examination of linear, quadratic, polynomial, rational, exponential, logarithmic, and trigonometric functions. Additional topics covered include vectors, matrices, sequences and series, and conic sections. Emphasis is placed on mathematical modeling and problem solving. Departmental approval is required for this course. *",
+    "prerequisites": "High achievement in Honors Algebra II or its equivalent and department recommendation.*"
+  },
+  {
+    "id": "mathematics-pre-calculus",
+    "name": "Pre-calculus",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "This is an intermediate course designed for students who have completed our Integrated Mathematics sequence and wish to strengthen their mathematical background. This course investigates linear, quadratic, polynomial, rational, exponential, logarithmic, and trigonometric functions. Additional topics covered include vectors, matrices, sequences and series, and conic sections. Emphasis is placed on mathematical modeling and problem solving. *",
+    "prerequisites": "Algebra 2  or its equivalent.*"
+  },
+  {
+    "id": "mathematics-stats-i-descriptive",
+    "name": "Stats I: Descriptive",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Statistics I: Descriptive Statistics covers the basic principles of one-variable topics including graphical representations of data, measures of central tendency, and measures of variability. Two-variable data analysis is based on linear regression and correlation. This course will also introduce sampling and experimentation: planning and conducting a study, including sample surveys, observational studies, and experiments. Descriptive statistics are distinguished from inferential statistics (or inductive statistics), in that descriptive statistics aim to summarize a data set, rather than use the data to learn about the population that the data are thought to represent."
+  },
+  {
+    "id": "mathematics-stats-ii-probability",
+    "name": "Stats II: Probability",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Stats II: Probability and Probability Distributions introduces probability spaces, expectation values, and conditional expectations. It develops the basic tools of probability theory, such fundamental results as the weak and strong laws of large numbers, and the central limit theorem. This course covers the basic principles of the theories of probability and its applications. Topics include combinatorial analysis used in computing probabilities, the axioms of probability, conditional probability and independence of events; discrete and continuous random variables; binomial, geometric, univariate, and bivariate normal distributions. *",
+    "prerequisites": "Stats I or departmental permission.*"
+  },
+  {
+    "id": "mathematics-stats-iii-inferential",
+    "name": "Stats III: Inferential",
+    "department": "Mathematics",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "In statistics, statistical inference is the process of drawing conclusions from data that are subject to random variation, for example, observational errors or sampling variation. More substantially, the terms statistical inference, statistical induction, and inferential statistics are used to describe systems of procedures that can be used to draw conclusions from data sets arising from systems affected by random variation.*",
+    "prerequisites": "Stats I and II or departmental permission.*"
+  },
+  {
+    "id": "science-adv-biology",
+    "name": "ADV Biology",
+    "department": "Science",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Advanced Biology is a laboratory-centered course focused on teaching students the art of scientific investigation while also providing them with a solid grasp of the fundamentals of biological science at a level consistent with a first-year college (AP level) class. Through laboratory investigations, modeling, case studies, and analysis of authentic scientific data, students will hone their investigative skills. Emphasis is placed on collaboration, inquiry-based experimental design, quantitative data collection, application of inferential statistics, and clear written and visual communication. While developing and using models to explain biological processes, students build a deep understanding of molecular biology, cellular processes, heredity, biotechnology, ecology, and physiology. Students are expected to read primary and secondary scientific literature, construct evidence-based explanations, and communicate scientific ideas clearly. Students work in teams to design, conduct, and analyze the results of controlled experiments, ultimately presenting their findings in a polished poster akin to that used to share undergraduate research. In collaboration with the Advanced Regenerative Manufacturing Institute (ARMI), students will explore regenerative medicine and biofabrication through a problem-based learning model. The unit includes conceptualizing a tissue-engineered medical product to solve a real-world problem and designing a business model to quantify, finance, and market the product. *Departmental approval is required for this class. It is open to juniors and seniors who have exceeded expectations in honors biology and honors chemistry.*"
+  },
+  {
+    "id": "science-adv-chemistry",
+    "name": "ADV Chemistry",
+    "department": "Science",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "The Advanced Chemistry course is designed as a second-year course in chemistry, building on the foundation mastered in Honors Chemistry at Pomfret – this course is not appropriate as a first-year course in chemistry. Students will be introduced to topics covered in college-level chemistry (thermodynamics, kinetics, equilibrium, etc.) while experiencing a more advanced treatment of material explored in Honors Chemistry. This class will use a lecture-discussion format, and students are expected to keep up with the accelerated pace. This class will emphasize the laboratory-based nature of chemistry, with students completing labs every week; students will learn to work safely and effectively in the laboratory setting. Finally, success in Advanced Chemistry will require students to be knowledgeable and have a strong understanding of both the lecture and laboratory material. *Open to juniors and seniors who have excelled in honors chemistry.*"
+  },
+  {
+    "id": "science-adv-environmental-science",
+    "name": "ADV Environmental Science",
+    "department": "Science",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Using a hands-on approach to the study of the environment, Advanced Environmental Science involves the study of the interaction between ecosystems and humanity. Environmental science is an interdisciplinary endeavor—it pulls on ideas learned in the three core sciences—and often it incorporates economics, politics, psychology, statistics and ethics into the decision-making matrix. The course will stress scientific writing and communication skills through presentations, video projects, large writing assignments, and debates. We will harness our 500-acre campus to learn about ecology, and will get off campus to see sustainability in action. The class will focus on natural resource use, forest ecology, sustainable development, energy, climate science, and water resource management. Much of this course will allow students to dive deep into these complicated issues and come to their own conclusions as to how we can best solve the complex problems facing today's generation. *Departmental approval required for this course. This course is only open to Seniors.*"
+  },
+  {
+    "id": "science-adv-physics",
+    "name": "ADV Physics",
+    "department": "Science",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course uses calculus-based mathematical models to introduce the fundamental concepts that describe the physical world. Topics include units and measurement, vector operations, linear kinematics and dynamics, energy, power, momentum, rotational mechanics, periodic motion, and quantum and relativistic physics. Upon completion, students should be able to demonstrate an understanding of the principles involved and display analytical problem-solving ability for the topics covered. Students should expect rigorous mathematical interpretation with extensive use of the TI N-spire calculator and computer software. Laboratory experiments and computer-based simulations and tutorials enhance and consolidate the basic principles discussed in the theoretical section of the course. Departmental approval is required for this course. *The course is open to students who have excelled in a Honors Physics course and who demonstrate the mathematical skills necessary to handle calculus-based material.*"
+  },
+  {
+    "id": "science-astronomy-i",
+    "name": "Astronomy I",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "***Earth to the Milky Way’s Edge*** This astronomy course is the first in a series of three, any of which can be taken individually. This term, the class will focus on a Universe-spanning \"zoom out\". You'll start at our home, Earth, and then zoom out through the Solar System, our Milky Way galaxy, and to the outer edges of the Universe. Along the way, you'll learn about the structure of objects in outer space, including planets, stars, nebulae, and galaxies. You'll participate in lab activities like walking out a scale model of the solar system on campus, but the major piece of the lab time will be spent at night. You'll use Pomfret's observatory to observe planets and stars, both through the eyepiece and digital cameras. In the end, you'll have a grand perspective on the Universe and our place in it."
+  },
+  {
+    "id": "science-astronomy-ii",
+    "name": "Astronomy II",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "***Nebulae, Galaxies, & Astrophotography*** This astronomy course is the second in a series of three, any of which can be taken individually. This term, the class will investigate the beautiful and bizarre objects that exist in the Universe. If you've seen the amazing images taken by the Hubble Space Telescope, you know how strange and mysterious these objects can look. In this course, you'll join in an examination of these nebulae, pulsars, globular clusters, black holes, supernovae, and other types of exotic objects. You'll learn about their origins, the ways that astronomers have decoded the light coming from them, and their importance in the continuing evolution of the Universe. During the day, you'll do lab activities using a computer-based virtual observatory, but the true highlight of the class will take place at night. You'll learn how to operate Pomfret's observatory to see these unusual objects firsthand through a variety of instruments. In the end, you'll have a clear picture of these 'stranger than fiction' components of the Universe and the science behind their beauty. Each astronomy elective is a distinct course and can be taken as a one-time experience or as a series of connected classes. Students currently enrolled in the Astronomy I elective will be given enrollment priority when new courses are selected each term.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "science-astronomy-iii",
+    "name": "Astronomy III",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "***Our Universe & the Human Worldview*** This astronomy course is the third in a series of three, any of which can be taken individually. This term, the class will look at the Universe as a whole, considering the long history of ideas and discoveries about it. You'll ask the biggest questions of all, like \"Where did the Universe come from?\", \"How will it end?\", and \"Do aliens exist?\" You'll be asked to participate in many lively discussions where you'll share your own views while learning about the history of science's understanding of the Universe. Movies, TV documentaries, and other multimedia presentations online will help jump start your inquiring mind, and you’ll work on lab activities that explore some of these big ideas. You’ll be asked to reflect on your personal beliefs, lean into the challenge of having them questioned, and politely consider other students’ points of view. In the end, you’ll have a great understanding of the Universe, its properties and origins, and the new problems that scientists face in our total comprehension of everything around us. Each astronomy elective is a distinct course and can be taken as a one-time experience or as a series of connected classes. Students currently enrolled in the Astronomy II elective will be given enrollment priority when new courses are selected each term. *This course may satisfy a student's science requirement.*"
+  },
+  {
+    "id": "science-biology",
+    "name": "Biology",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Biology is a year-long, skills-based course divided into three separate and distinct terms. In each term, students will investigate relevant and modern topics that drive our learning and permit skill development (technical writing, oral presentation, experimental design, collaboration, independent inquiry and research). Topics during each term will be driven by student interest and teacher expertise. Throughout the course, students will use inquiry-based experimental design to develop a deep understanding of both the scientific method and core themes in biology. Students will engage in debates and discussions related to bioethical issues, and each will become a critical reader and consumer able to distinguish fact from fiction in the media. Past themes have included climate change and conservation biology, marine ecology and resource management, genetic technology and bioethics, food and public health, neuroscience, biological inquiry and extinction."
+  },
+  {
+    "id": "science-chemistry",
+    "name": "Chemistry",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Chemistry is an inquiry-based science course with an emphasis on student-designed laboratory investigations. Through a thematic approach that demonstrates relevant chemical applications, students recognize and understand the importance of chemistry, develop problem-solving strategies, and apply critical thinking skills. Throughout the course, students are challenged to design experiments to answer questions about chemistry. The course content is developed to answer specific questions about the theme for each unit, allowing students to answer questions and learn in the same manner as a scientist. *This course is open to sophomores, juniors, and seniors.*"
+  },
+  {
+    "id": "science-intro-to-coding-web-design",
+    "name": "Intro to Coding: Web Design",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Coding courses are an opportunity for students to learn both the art and science of modern coding with powerful AI-enabled tools to produce digital artwork and programs. In this term, students will focus on creating a series of web pages and websites that include layout, typography, navigation, embedded multimedia, and cascading stylesheets (CSS). They earn art credit for their portfolio of designs and projects and are graded on the development of their style and aesthetics as well as their skill with the digital tools. Projects include classic website design, creating for mobile devices, developing interactive experiences, and the final portfolio of all previous work.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "science-intro-to-coding-game-design",
+    "name": "Intro to Coding: Game Design",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "Coding courses are an opportunity for students to learn both the art and science of modern coding with powerful AI-enabled tools to produce digital artwork and programs. In this term, students will focus on the complex process of designing digital games for the web, computers, and mobile devices. They'll survey the great number of game engines and libraries available before collaborating on one or more larger games. Projects include simple web-based challenges, games useful for school work to benefit other classes, the style and aesthetics of mobile platform games, and a final multi-level game to complete a portfolio. Students earn art credit for their portfolio of designs and projects and are graded on the development of their style and aesthetics as well as their skill with the digital tools.",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "science-adv-computer-coding",
+    "name": "ADV Computer Coding",
+    "department": "Science",
+    "level": "Advanced",
+    "term": "Term long-Fall, Winter & Spring",
+    "description": "Advanced Coding is for students who have leveled up through the previous courses or come to Pomfret with a great deal of coding experience and can code fluently in one or more languages. The class is very open to experimentation and project development, and students are asked to create large projects with many features and dimensions. Success on industry-standard coding challenges, tests, and benchmarks will also be factored into grading. Advanced students are expected to deliver top-level showcase presentations of their work at the level of college or professional programmers. Departmental approval is required for this course."
+  },
+  {
+    "id": "science-engineering-aquaponics",
+    "name": "Engineering: Aquaponics",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter, & Spring",
+    "description": "How can we optimize and better understand the interactions within an aquaponic system to improve nutrient cycling, water quality, and overall productivity? Aquaponics is a method of raising fish and growing plants for food within a single, recirculating system. Rooted in practices dating back to the Aztecs, aquaponics has gained renewed interest among commercial growers, organic gardeners, and sustainability advocates because of its potential as a low-cost, efficient method of producing vegetables and high-protein food in limited space and diverse environments. In this term-long, project-based elective, students will use an aquaponic system engineered by previous students as a living laboratory to investigate ecological systems, nutrient cycling, and sustainable food production. Beyond construction, students will design and conduct experiments to better understand how biological, chemical, and physical factors influence system health and productivity. Students will explore topics such as nitrogen cycling, microbial communities, plant nutrient uptake, fish health, water chemistry, and system efficiency. They will develop testable hypotheses, collect and analyze data, modify variables, and evaluate the impact of their experimental designs. Projects may include testing different growing media, adjusting feeding rates, comparing plant species, monitoring ammonia/nitrite/nitrate dynamics, or exploring methods to improve filtration and nutrient balance. The course emphasizes systems thinking, experimental design, data analysis, and iterative problem-solving. Students will collaborate to identify constraints, analyze system performance, and propose evidence-based improvements. This class is taught using a “one-room schoolhouse model,” where students with varying levels of experience work together on shared investigations. Assignments are differentiated to match each student’s background and experience, allowing students to take the course for multiple terms while deepening their scientific understanding and research skills."
+  },
+  {
+    "id": "science-hon-biology",
+    "name": "HON Biology",
+    "department": "Science",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Honors Biology is a course designed to instill in students an appreciation for the living world and its complexity through direct experiences. It prepares students to take Advanced Biology or a rigorous freshman-level college biology course. An all-class collaborative bioassessment of a local stream or river investigation runs through the fall term; to evaluate the water quality, students collect, identify, and evaluate the significance of a sampled community of riffle-dwelling benthic macroinvertebrates. In the process, with evolution by natural selection as the underlying principle, students develop an understanding of community and population ecology and the importance of biodiversity. Making the invisible visible and tangible is the theme running through the next season of biology where we dive into the essential elements of living organisms, cellular biochemistry and cell structure to provide a foundation for understanding higher levels of biological organization. Insights are wrought by modeling complex cellular processes and learning how to design and conduct controlled experiments involving enzymes and the metabolic processes of respiration and photosynthesis. Finally, the nature of inheritance and the role of DNA in controlling cell functions and organismal traits begins the final stage of the course. The class culminates with the study of plant systems, with students utilizing the surrounding campus to better understand plant growth, reproduction, and propagation. *Students who have achieved a B+ or better in Honors Chemistry are best prepared for this course. Departmental approval is required for this course.*"
+  },
+  {
+    "id": "science-hon-chemistry",
+    "name": "HON Chemistry",
+    "department": "Science",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Chemistry Honors is a fast-paced general chemistry course designed to provide students with the conceptual framework, analytical tools, and research skills necessary for a comprehensive understanding of chemistry. Students engage and explore the fundamental concepts of chemistry, gather and process information in the laboratory setting, and build a robust understanding supported by personal discovery. Students are tasked to document their emerging understanding, infer relationships, make predictions, generate procedures, conduct research, write with authority, and ask the probing questions that lead to a deep understanding of the material and its application. Students will be given the opportunity to design and implement their own chemical research and discover first-hand the properties of matter and the nature of science. The pace will be rapid and students will be expected to actively use math as a tool to arrive at valid conclusions and quantitative answers. This course is designed to prepare students for advanced work in biology and chemistry. *Departmental approval is required for this course. Open to sophomores, juniors, and seniors.*"
+  },
+  {
+    "id": "science-hon-engineering",
+    "name": "HON Engineering",
+    "department": "Science",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "This engineering class, designed by the University of Texas \\- Austin, presents authentic experiences that inspire and teach engineering habits of mind. Engineers identify problems, research approaches and design functional solutions—skills relevant and necessary for all members of modern society. Students in this yearlong elective will build durable problem-solving skills and explore the engineering cycle through a series of collaborative, student-directed projects. Cross discipline concepts (design and invention, mathematics and science, elegance and functionality) are employed to successfully model and construct earthquake-proof buildings, design aerial camera platforms launched from drones, and craft small- and large-scale prototypes that meet customer needs. These challenges (and many others\\!) are socially relevant: they foster collaboration and hone communication and presentation skills, and they demand and build in students the capacity for creative problem solving and critical analysis. Engineering is an accessible, exciting, and relevant field that empowers students to become resilient and empathic problem solvers ready for 21st century challenges. *Departmental approval is required for this course. Open to sophomores, juniors and seniors who are enrolled in Algebra II or beyond.*"
+  },
+  {
+    "id": "science-hon-physics",
+    "name": "HON Physics",
+    "department": "Science",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Physics Honors is designed to equip mathematically able students with a clear understanding of how the Universe operates. The curriculum is well matched for V and VI Form students concurrently enrolled in Geometry Honors or higher. In this course, students will learn and discover some of the basic truths about nature, discovering how to employ observational techniques, experimental design, and data analysis to the task of generating mathematical relationships and uncovering physical laws. Topics are similar to those covered in Physics, but extend to more difficult and mathematically rigorous concepts, including periodic motion, two dimensional kinematics, universal gravitation, work, power, special and general relativity, and particle physics. The course also focuses on the history of science, describing how fundamental laws and relationships were discovered, how they affected the scientific community, and what impact they had on society as a whole. Extensive laboratory work is to be expected, as is a rapid pace. A term-long group project, designed to reinforce many of the practical applications discovered over the course of the year, will cap the class, further strengthening each student’s research, design, and communication skills. *Departmental approval is required for this course. Open to sophomores, juniors and seniors enrolled in honors pre-calc or above.*"
+  },
+  {
+    "id": "science-lab-science-by-design",
+    "name": "Lab Science by Design",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Science By Design is a cornerstone course that links the core disciplines of Physics, Chemistry, and Biology and exposes Form III students to a progressive and integrated model of science. Students will develop foundational skills by exploring design and engineering problems through a scientific lens. Through stewardship of the community garden, sugaring of our maple trees, designing shades to reduce nighttime light pollution, exploring renewable energy on campus, and designing an artificial kidney, students in the course will develop real solutions to real issues, both on campus and beyond. Students will learn and master the skills needed to tackle a new age of science, where problem solving and collaboration are key. This project based, skills driven course is a requirement of all incoming Form III students."
+  },
+  {
+    "id": "science-modern-technology",
+    "name": "Modern Technology",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Are you a technology junkie? Do you crave each new gadget the day it is announced? We are tech-dependent and highly adapted users of technology, but how do these modern marvels work, and what science principles are at the heart of blue-tooth devices and electronic ink? Have you ever wondered why the next generation of iPads seems to come out before you can even get used to using the old one? Why are Blu-Ray discs so much superior to regular DVDs? How does a 3D television really work? Modern Technology is a term science elective that looks to answer all of these questions (and more) by exploring the basic science behind the coolest and newest gadgets out there. In this discussion-based class, you will learn about the inner-workings of the electronic systems that you use on a daily basis while examining the technology that will soon be at your fingertips."
+  },
+  {
+    "id": "science-robotics",
+    "name": "Robotics",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "**Remote Controlled Vehicles** This introductory course is appropriate for students who have no prior science, microcontroller and/or programming experience. Students will learn to use a microcontroller to collect data from various sensors that measure different aspects of the physical universe, and use actuators, such as motors and lights, to manipulate the physical environment. Upon successful completion of this course, students will be able to digitally collect data, program processors to analyze that data, and remotely move vehicles. With luck and new found skills, students may participate in a number of fun competitions to earn prestige for themselves and the School\\!"
+  },
+  {
+    "id": "science-sustainable-campus-energies",
+    "name": "Sustainable Campus Energies",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Sustainable practices are balanced approaches that do not deplete natural resources. The total amount of energy we use, the sources of energy we choose to tap, and how that energy is harnessed and distributed are important components of sustainable energy practice. Sustainable Campus Energies examines the technologies being implemented as Pomfret undergoes major changes to its physical infrastructure and energy systems. The School has the ability to generate its diesel fuel from biological sources and to generate its electricity and heat from natural gas. This course will explore sources of oil for conversion to diesel, the chemistry required to achieve that conversion, and the practicality of engaging in such an endeavor. As the school switches from oil to natural gas, the class will examine the chemistry, physics, and economic factors driving that switch. We will delve into other technologies under consideration for use by the School, including solar, wind, and geothermal. At the forefront of each class will be the idea that student-generated ideas can help Pomfret to run more efficiently and achieve a smaller carbon footprint."
+  },
+  {
+    "id": "science-topics-in-place-based-science-i-ii-iii",
+    "name": "Topics in Place-Based Science I, II, III",
+    "department": "Science",
+    "level": "Standard",
+    "term": "Term long-Fall, Winter, & Spring",
+    "description": "This elective series engages students in the exploration of scientific concepts through direct interaction with the natural world, using the local environment as a living laboratory. Emphasis will be placed on developing observation, inquiry, and analytical skills as students investigate ecological systems and sustainability principles in context. Through field-based experiences, case studies, and experimental design, students will examine the relationships between living organisms, their environments, and the human communities that depend on them. Themes such as marine biology, river ecology, invasive species, conservation biology and sustainable food systems will emerge over the course of the year. The course fosters curiosity, environmental awareness, and scientific thinking, equipping students with the foundational tools to understand and engage with the ecological challenges of our time. These electives do not need to be taken in sequential order."
+  },
+  {
+    "id": "wellbeing-adv-psychology",
+    "name": "ADV Psychology",
+    "department": "Wellbeing",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "The Advanced Psychology course introduces students to the scientific examination of the causes and intricacies of human behavior. Students will learn how psychological research is conducted and the ethical standards applied to such research. Human behavior will be examined through the biological, cognitive and social lenses. The evolution of psychological perspectives will lay the groundwork for in-depth examinations of the psychology of development, learning and memory, personality, motivation, human relationships, health and abnormal behaviors. Students will apply the principles of psychological research by designing and conducting their own experiments. Emphasis will be placed on the development of skills used to understand and execute psychological research, including reading psychological research and experiments, identifying and replicating research methodologies and applying psychological patterns and phenomenon to data analysis. Departmental approval is required for this course. This course is open only to Seniors.*",
+    "crossListedWith": [
+      "History"
+    ]
+  },
+  {
+    "id": "wellbeing-becoming-kinder-the-science-of-generosity-and-gratitude",
+    "name": "Becoming Kinder: The Science of Generosity and Gratitude",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "Rooted in the spiritual wisdom of the Dalai Lama: “Be kind whenever possible, it is always possible”, this course will embark on a deep exploration of loving-kindness as a powerful change agent in individual lives, cultural communities, and global societies. Ranging from contemporary science to ancient spiritual wisdom we will examine how gratitude and generosity change the brain, impact wellbeing, and improve global societies. Kindness is one of our greatest human resources, and we will learn in theory and practice ways to tap into this immeasurable resource to cultivate positive change, growth-oriented mindset, authentic optimism, and enhanced overall health and wellbeing. This course will incorporate a kindness lab which will engage students in experiential learning in the local community, practices, exercises, and experiments, to test learning and more fully realize what is possible. The course will draw upon data and research from Dr. Richard Davidson’s Center for Healthy Minds, Jamil Zaki’s *War for Kindness,* and UC Berkeley’s Greater Good Science Center as some of our primary resources for the work."
+  },
+  {
+    "id": "wellbeing-eng-into-the-wild",
+    "name": "Eng: Into the Wild",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "During our time together, we will explore this idea of a fundamental connection between self, community, and place. Our attention to the major practices, beliefs, figures, and stories that are integral to each tradition will help guide our questioning, thinking, learning, and discovery about the ways in which both wilderness and community are concepts and realities at the heart of our human experience. We will explore some of the following questions: What are our obligations to the natural world, and how do those obligations inform–or conflict with–our obligations to one another? What constitutes a sense of place, and what role does this concept play in developing a sustainable and spiritual relationship with the land and the community around us? This class will frequently take us outside and out into the field where we will explore, reflect, observe, connect, and seek to experience the true shape of wilderness and community.",
+    "crossListedWith": [
+      "English"
+    ]
+  },
+  {
+    "id": "wellbeing-foundations-of-wellbeing",
+    "name": "Foundations of Wellbeing",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-required of all Form IV students-Fall, Winter & Spring",
+    "description": "This course is designed to deliver a Health & Wellness program to our Fourth Form students in a one-term seminar-style course covering the following topics: Six Dimensions of Health and Growth Mindset, Nutrition and Sleep, Mental Health and Stress Management, Healthy Relationships and Sex Ed, and Substance Use and Dependency. Students examine the power of mindset and focus on Dr. Carol Dweck’s work around the advantages of developing beyond a fixed mindset to a growth mindset. Course work also delves into the benefits of positive psychology, specifically, Martin Seligman’s concept of learned optimism. Students have the opportunity to practice how these mindsets and approaches can change their thinking, feelings, and emotions. We will also study the power of food through film, field trip experiences, and personal journaling. The students will have the opportunity to examine stress and learn various stress management practices including mindfulness, meditation, and yoga. We will discuss the range of mental health issues affecting teenagers today, most prevalently depression, bipolar disorder, and anxiety, understanding the brain science and genetic component of these illnesses, how they manifest themselves in our lives, and specific strategies and resources that are available to treat and manage mental illness. We will examine addiction and substance use in terms of vaping, THC, opiates, and alcohol, delving more deeply into how these substances affect our brains, body, and behavior. We will also discuss addiction from both genetic and environmental perspectives. Finally, the course culminates in a discussion on healthy relationships and the necessary components involved in healthy relationships. Students will learn about affirmative consent and sex education in terms of healthy decisions and safe sexual practices, specifically around awareness and prevention of STDs and pregnancy."
+  },
+  {
+    "id": "wellbeing-history-of-food-insecurity",
+    "name": "History of Food Insecurity",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In this yearlong experiential learning course students get involved in solving real-world problems that focus on food insecurity in America: understanding the complexities of the problem and educating our school community on these issues."
+  },
+  {
+    "id": "wellbeing-mindfulness-intro-to-meditative-practice",
+    "name": "Mindfulness: Intro to Meditative Practice",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Winter & Spring",
+    "description": "Meditation is the foundation of many of the world’s religious pathways and spiritual practices. With roots in ancient eastern philosophy, spirituality, and worldview, meditation remains a profound practical discipline that trains the mind and orients the heart toward the present moment and realities of the human body and breath. In this course, students will join in the study of meditation and the practical exploration of how meditative practice has the potential to transform awareness and attention in our daily being as individuals and in community. The course content and experiences will also present strategies for mindful living specific to our lives at Pomfret School. Students should be prepared to engage in intensive meditation practice for the duration of the course. An emphasis will be placed on inspiring students to establish and integrate a personalized routine practice. *Open to sophomores, juniors and seniors.*"
+  },
+  {
+    "id": "wellbeing-the-art-of-creativity",
+    "name": "The Art of Creativity",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Fall & Winter",
+    "description": "Where does Creativity come from? How do we define it? Why do children play so easily, but as we get older, we find it so challenging? What prevents us from simply letting go? How can we rediscover our inner artist? In The Art of Creativity, a new, workshop based course offering, we will explore these questions and the role that creativity plays (and can play) in our everyday life. Whether you consider yourself an artist or not, this course is for everyone, especially you\\!",
+    "crossListedWith": [
+      "Arts"
+    ]
+  },
+  {
+    "id": "wellbeing-the-happiness-project",
+    "name": "The Happiness Project",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Winter",
+    "description": "Can Happiness be a project? Is the pursuit of happiness an intentional endeavor that can be practiced, learned, and discovered, or is happiness something that is simply attained as a byproduct of life, while people are busy making other plans? This course will dive deeper into these big questions as we explore defining happiness and determining how it may be attainable in daily life and throughout a lifetime. By examining the lives of some of the world’s happiest people and conducting research and interviews into the lives of some of the happiest people we know personally, the work of the course will use our learning about happiness to guide this term-long project. This course will incorporate a happiness lab component which will steadily engage students in experiential learning in the local community, developing practices, and conducting experiments to gain more insight into joy, happiness, and the power of relationships and community connection."
+  },
+  {
+    "id": "wellbeing-the-mind-body-connection",
+    "name": "The Mind Body Connection",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course invites an in depth exploration of the mind-body connection and the integral relationship between our thinking and our being. We will study practical neuroscience including the stress response, nervous system regulation, and how stress and psychological factors impact the immune system. We will consider research driven and time honored integrated approaches to retrain the brain through a variety of practices including meditation, visualization, breath work, and everyday real-time tools to help regulate the nervous system, improve the stress response, and enhance overall wellbeing. This course offers students the vital opportunity to cultivate healthy habits of body and mind."
+  },
+  {
+    "id": "wellbeing-yoga-on-and-off-the-mat",
+    "name": "Yoga On and Off the Mat",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Spring",
+    "description": "This holistic class integrates yoga movement, mindfulness, breathwork, and self-inquiry to better transfer the principles, skills, lessons, and tools practiced on the yoga mat into life off the mat. In addition to the regular physical practice of yoga and mindfulness, this course will utilize articles and other scientific research to promote the physical, mental, and emotional benefits of yoga. Through guided reflection and journaling, students will deepen their self-awareness, discover practical tools for emotional regulation, and learn strategies for managing stress and improving their overall wellbeing. Through the physical practice of yoga, students will begin to appreciate the yoga wisdom: “Yoga is not about touching your toes, it is about what you learn on the way down\" (Jigar Go)."
+  },
+  {
+    "id": "wellbeing-yoga-wisdom-in-practice",
+    "name": "Yoga Wisdom in Practice",
+    "department": "Wellbeing",
+    "level": "Standard",
+    "term": "Term long-Fall",
+    "description": "This course offers students a deeper exploration of yoga as both a physical and spiritual practice, grounded in ancient texts and philosophy. Students will study portions of the foundational, sacred texts, such as the *Bhagavad Gita* and the *Yoga Sutras,* to explore the philosophy behind the physical practices of yoga, including its postures, breathwork, habits, and behaviors. Emphasis will be placed on the Eight Limbs of Yoga, using them as a framework to connect movement, ethics, concentration, and self-discovery. Through physical practice and classroom discussion, students will explore how these teachings can inspire more intentional, compassionate living. Journaling and reflective assignments will routinely be part of this class, in addition to the physical practice in class."
+  },
+  {
+    "id": "world-languages-adv-francophone-language-culture",
+    "name": "ADV Francophone Language & Culture",
+    "department": "World Languages",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Students in Advanced Francophone Culture will use their proven linguistic skills to dive deeper into social and cultural issues across the Francophone world. Through studies of history, literature, art, and current events, students will become culturally competent experts in the Francophone region of their choosing. This yearlong course is reserved for students at the highest level of French and will be conducted entirely in French. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-adv-latin-i",
+    "name": "ADV Latin I",
+    "department": "World Languages",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Our advanced Latin course is a year-long course focused on building fluency in Latin translation while reading and analyzing authentic Latin text, both poetry and prose. Our exploration of poetry focuses primarily on Ovid’s *Metamorphoses* and Vergil’s *Aeneid*, and in particular their cultural and historical significance to both Rome and the greater Mediterranean world, as well as their influence on more modern works. Our prose unit focuses on Caesar’s *De Bello Gallico* and the history of Rome’s military, as well as the life and career of Julius Caesar. Throughout the course, students will also review and broaden their understanding of Latin grammar, as well as its connection to modern languages, through Latin composition. Students will also have the opportunity to select and study Roman texts beyond our selected readings to explore as part of an independent project. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-adv-latin-ii",
+    "name": "ADV Latin II",
+    "department": "World Languages",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "Advanced Latin II will be a split-level combined class with AL1 (so they will be together). It will be a course only for students who have completed Advanced Latin I at Pomfret in good standing and wish to continue studying Latin. The student experience will be a combination of: literature study along with AL1, independent projects/research, and the option of acting as a TA to support students in the Latin program. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-adv-spanish-language-and-culture",
+    "name": "ADV Spanish Language and Culture",
+    "department": "World Languages",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "The course is designed to master all the language skills through a variety of activities and projects. The students will be exposed to multiple sources to improve their language skills and they will be able to study some key cultural aspects of multiple Spanish speaking countries. The course will be based on the 6 topics that are the core of the AP Spanish Language and Culture exam: Beauty and Aesthetics, Contemporary life, Families and communities, Global challenges, Personal and public identities and Science and technology. This class will be conducted 100% in Spanish. The teacher will provide extra worksheets for the students who might be interested in taking the AP exam in May. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-adv-spanish-literature-and-culture",
+    "name": "ADV Spanish Literature and Culture",
+    "department": "World Languages",
+    "level": "Advanced",
+    "term": "Year long",
+    "description": "This course is designed to allow our students to dive into selected pieces of Spanish Literature (prose, poetry and plays). The journey will begin in the Middle Ages and will end with contemporary texts. The literary selections will be studied in depth, along with their authors and their historical context. At the beginning of the course we will review literary forms and figures of speech. Readings, comments and discussions in class will be the foundation of the course. The lessons will be held 100% in Spanish. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-french-i",
+    "name": "French I",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "French I introduces students to the basic elements of French vocabulary and grammar. This first year course introduces the learner to the different cultures and civilizations of the Franco-phonic countries around the world. It simultaneously acquaints them with the skills essential to learning a foreign language: listening/comprehension, speaking, reading, and writing. Language laboratory work, in addition to classroom instruction, aids the students in gaining proficiency."
+  },
+  {
+    "id": "world-languages-french-ii",
+    "name": "French II",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "This course is a continuation of material studied in French I. We review the basic components of French grammar and then develop more complex linguistic forms. Our principal aim is to expand students’ ability to use the four linguistic skills. Acting out short skits initiates their explorations of French culture. The language laboratory is also used to enhance skills. This class is conducted in French. An honors section is offered depending upon enrollment."
+  },
+  {
+    "id": "world-languages-french-iv",
+    "name": "French IV",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In this advanced language course, students continue to develop speaking, reading, writing and listening skills acquired during their previous years of French study. Students familiarize themselves with French culture and civilizations through the study of various short texts, movies, articles and other primary resources in French. The grammar is supplemented with lessons from *Imaginez* or *Quant a Moi*. This class is conducted in French."
+  },
+  {
+    "id": "world-languages-hon-french-ii",
+    "name": "HON French II",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "The content of the Honors section is the same as for the regular French II, but the pace will be quicker, the analysis more in depth, and the writing load more substantial. Our principal aim is to expand the students’ ability to use the four linguistic skills. Acting out short skits initiates their exploration of French culture. The language laboratory is also used to enhance skills. This class is conducted in French. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-hon-french-iii",
+    "name": "HON French III",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "This honors course is designed to give linguistically-gifted students the opportunity to learn more diverse materials at a faster pace. Class activities continue to develop listening/comprehension, speaking, reading, and writing. Books such as *Les Aventures du Petit Nicolas* and *Le Petit Prince* familiarize students with aspects of French culture. Language laboratory work further enhances competency. This class is conducted in French. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-hon-french-iv",
+    "name": "HON French IV",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "This advanced honors course is offered for students with proven linguistic skills. Students continue to develop speaking, reading, writing and listening skills acquired during the first three years. Students familiarize themselves with French culture and civilizations through the study of various short texts, movies, articles and other primary resources in French. The grammar is supplemented with lessons from Quant a Moi. This course will prepare students for the continued study of French at the advanced level in the following year. This class is conducted in French. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-hon-spanish-ii",
+    "name": "HON Spanish II",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Taught exclusively in Spanish, the honors section builds upon previously learned material and provides an accelerated approach to mastering the four linguistic skills of reading, writing, speaking, and listening. The honors-level student is expected to possess excellent communication skills and study habits and should feel comfortable participating frequently during class discussions. Students will continue to strengthen their command of the present and preterite tenses and start to work on the imperfect, the subjunctive mood, commands, the future, the conditional, and all “perfect” tenses. Vocabulary and all other lessons are presented in a cultural context, which enables students to learn more about the Spanish-speaking world and to understand its complex cultural relationships. Departmental approval is required for this class."
+  },
+  {
+    "id": "world-languages-hon-spanish-iii",
+    "name": "HON Spanish III",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Spanish III Honors is an intensive course for highly motivated language students who wish to become more linguistically and culturally proficient. The class will study grammatical topics outside the regular third-year curriculum, such as the uses of definite and indefinite articles, the gerund and infinitive, and verbs that require certain prepositions. Although grammar is an integral part of the curriculum, the course will also help students to see grammar as a tool for effective communication rather than simply a set of rules to be memorized. Throughout the course, students will study history, music, food, literature, film, and other offerings from the Spanish-speaking world, helping them to understand and to draw connections between various cultures, practices, and perspectives. Student-led discussion is essential, and the class is conducted exclusively in Spanish. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-hon-spanish-iv",
+    "name": "HON Spanish IV",
+    "department": "World Languages",
+    "level": "Honors",
+    "term": "Year long",
+    "description": "Honors Spanish IV is intended for the strong and proficient language learner who has demonstrated an ear for the language and has authored honors-level grades in prior courses. Students are challenged to review fundamental grammatical concepts and learn some of the subtleties of the language appropriate to this level. Conversation, composition and reading of non-adapted sources are emphasized at this level. This class is conducted in Spanish. Departmental approval is required for this course."
+  },
+  {
+    "id": "world-languages-latin-i",
+    "name": "Latin I",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In our first-year Latin course, students encounter the thriving culture of ancient Rome while developing a methodical approach to translating Latin. The study of the language comes alive as students make connections between the ancient and modern world and begin to understand how ancient Roman culture has shaped Western civilization as we know it today. By participating in the National Latin Exam, using online programs to learn vocabulary and grammar, and studying Roman and Greek mythology, history, and culture, students expand their knowledge of English vocabulary and grammar, develop memorization, problem-solving, and critical thinking skills, and build a foundation for the future study of ancient Roman literature as well as modern Romance languages."
+  },
+  {
+    "id": "world-languages-latin-ii",
+    "name": "Latin II",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Our second-year Latin course begins with a review of the material covered in Latin I and then introduces students to more complex grammatical and syntactical constructions while continuing to explore the fascinating world of ancient Rome. Students use computer programs to aid the learning of vocabulary and grammatical forms and build fluency in their translation of Latin. The class continues to enrich its understanding of ancient Roman culture by studying Roman and Greek mythology, history, and culture, and participating in the National Latin Exam and Classics Day events. In this course, students begin translating authentic Latin passages from ancient authors such as Caesar, Petronius, and Ovid."
+  },
+  {
+    "id": "world-languages-latin-iii",
+    "name": "Latin III",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "In Latin III, students transition from edited text to authentic Latin by exploring the works of some of Rome’s most famous poets, authors, and generals such as Ovid, Caesar, Vergil, and more. Students develop an appreciation of literary devices, meter, and scansion and refine their sight translation skills. Throughout the year, students will also thoroughly review and deepen their understanding of Latin grammar both through passages and Latin composition. All texts are selected to help students continue their study of Roman mythology, culture, and history, with a particular focus on Rome’s fascinating and tumultuous transition from Republic to Empire. This course will prepare students for their continued study of Latin at the advanced level."
+  },
+  {
+    "id": "world-languages-spanish-i",
+    "name": "Spanish I",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Our first-year course introduces students to the basic structures of Spanish grammar, vocabulary, and Spanish and Latin American cultures. From the beginning of their studies, students will work on speaking, reading, listening, and writing. Culture is interwoven into all lessons with the goal of creating culturally competent communicators. This class is conducted mostly in Spanish."
+  },
+  {
+    "id": "world-languages-spanish-ii",
+    "name": "Spanish II",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "Spanish II is a continuation of the grammar, vocabulary and culture studied in Spanish 1\\. The course begins with a review of basic grammar structures and continues with more complex concepts. Vocabulary units are applicable to real life situations. Emphasis is placed on expanding students’ knowledge and understanding of Spanish-speaking cultures. Speaking, reading, writing, listening, and collaboration skills are practiced regularly. This class is conducted exclusively in Spanish."
+  },
+  {
+    "id": "world-languages-spanish-iii",
+    "name": "Spanish III",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "This intermediate course is designed for students in their third year of Spanish learning. Throughout this course, students will continue to develop proficiency in the four skills (speaking, listening, reading and writing) by reviewing the material covered in Spanish 2 and using it as the basis to work on new and more complex content. The students will be exposed to real sources and will produce and analyze materials in the target language. They will also study key cultural aspects of Spanish speaking countries. They are required to use Spanish 100% of the time and they are expected to complete their homework, bring the textbook to class and participate actively in discussions and activities/projects. The class adheres to the learning model of the 5 C’s of foreign language learning: communication, cultures, connections, comparisons and communities, thus this class aims to hit all of these standards in cultivating confident and capable Spanish students."
+  },
+  {
+    "id": "world-languages-spanish-iv",
+    "name": "Spanish IV",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "This course is offered to those students who have completed their third year requirement and wish to continue perfecting their skills, especially their listening and speaking skills. The course will expose the students to multiple cultural realities of different Spanish-speaking countries with the goal of making them more culturally aware. The class is conducted 100% in Spanish."
+  },
+  {
+    "id": "world-languages-spanish-v",
+    "name": "Spanish V",
+    "department": "World Languages",
+    "level": "Standard",
+    "term": "Year long",
+    "description": "The course is designed to master all the language skills (speaking, listening, reading and writing) through a variety of activities and projects. The students will be exposed to real sources and they will study key cultural aspects of Spanish speaking countries. They are required to use Spanish 100% of the time and they are expected to complete their homework and participate actively in discussions and activities/projects. The class adheres to the learning model of the 5 C’s of foreign language learning: communication, cultures, connections, comparisons and communities, thus this class aims to hit all of these standards in cultivating confident and capable Spanish students."
+  }
+]
