@@ -10,9 +10,9 @@ const DAY_KEY = (): string => {
 
 const ceiling = (): number => {
   const raw = process.env.DAILY_BUDGET_CEILING_USD;
-  if (!raw) return 3.0;
+  if (!raw) return 5.0;
   const n = parseFloat(raw);
-  return Number.isFinite(n) ? n : 3.0;
+  return Number.isFinite(n) ? n : 5.0;
 };
 
 export async function budgetAvailable(): Promise<boolean> {
