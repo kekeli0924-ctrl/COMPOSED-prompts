@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-Visit http://localhost:3000.
+Visit http://localhost:3100. (Port 3100 is the project default — port 3000 is reserved for the Pomfret DEI site.)
 
 ## Tests
 

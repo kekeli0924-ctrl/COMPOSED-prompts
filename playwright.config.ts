@@ -11,7 +11,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'ANTHROPIC_API_KEY=fake-for-test npm run dev -- -p 3100',
+    command: 'ANTHROPIC_API_KEY=fake-for-test npm run dev',
     url: 'http://localhost:3100',
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
