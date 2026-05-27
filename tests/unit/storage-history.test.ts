@@ -1,5 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { saveHistoryEntry, listHistory, rateHistoryEntry, clearHistory, MAX_HISTORY } from '@/lib/storage/history';
+import {
+  saveHistoryEntry,
+  listHistory,
+  rateHistoryEntry,
+  clearHistory,
+  MAX_HISTORY,
+  redactMaterialForHistory,
+} from '@/lib/storage/history';
 
 describe('history storage', () => {
   beforeEach(() => {
@@ -56,5 +63,22 @@ describe('history storage', () => {
     const refreshed = listHistory().find((e) => e.id === entry.id);
     expect(refreshed?.rating).toBe(5);
     expect(refreshed?.ratingText).toBe('great');
+  });
+});
+
+describe('redactMaterialForHistory', () => {
+  it('redacts xml-format material', () => {
+    const input = '<role>tutor</role>\n\n<material>SECRET NOTES</material>\n\n<goal>study</goal>';
+    const out = redactMaterialForHistory(input);
+    expect(out).not.toContain('SECRET NOTES');
+    expect(out).toContain('[material redacted');
+    expect(out).toContain('<role>tutor</role>');
+    expect(out).toContain('<goal>study</goal>');
+  });
+
+  it('redacts markdown-format material', () => {
+    const input = '## ROLE\n\ntutor\n\n## MATERIAL\n\nSECRET NOTES\n\n## GOAL\n\nstudy';
+    const out = redactMaterialForHistory(input);
+    expect(out).not.toContain('SECRET NOTES');
   });
 });
