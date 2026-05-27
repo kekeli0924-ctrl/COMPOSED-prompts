@@ -65,6 +65,7 @@ function makeClient(): AnthropicLike {
 export async function generateInteractionStyle(
   inputs: WizardInputs,
 ): Promise<InteractionStyleResult> {
+  const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = makeClient();
   try {
     const response = await client.messages.create({
@@ -83,6 +84,10 @@ export async function generateInteractionStyle(
     });
     const block = response.content.find((b) => b.type === 'text');
     if (!block || block.type !== 'text' || typeof block.text !== 'string') {
+      console.error('[interaction-style] unexpected response shape', {
+        hasKey,
+        blockTypes: response.content.map((b) => b.type),
+      });
       return { ok: false, error: 'api-error' };
     }
     return {
@@ -93,7 +98,15 @@ export async function generateInteractionStyle(
         output_tokens: response.usage.output_tokens,
       },
     };
-  } catch {
+  } catch (err) {
+    console.error('[interaction-style] Anthropic call failed', {
+      hasKey,
+      model: SONNET_MODEL,
+      message: err instanceof Error ? err.message : String(err),
+      name: err instanceof Error ? err.name : undefined,
+      // The SDK puts status/headers on the error object for HTTP-level failures
+      status: (err as { status?: number })?.status,
+    });
     return { ok: false, error: 'api-error' };
   }
 }
