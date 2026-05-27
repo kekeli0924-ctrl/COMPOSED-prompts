@@ -1,0 +1,94 @@
+{
+  "providers": {
+    "anthropic": {
+      "displayName": "Claude (Anthropic)",
+      "models": {
+        "claude-opus-4-7": {
+          "displayName": "Claude Opus 4.7",
+          "format": "xml",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "claude-sonnet-4-6": {
+          "displayName": "Claude Sonnet 4.6",
+          "format": "xml",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "claude-haiku-4-5": {
+          "displayName": "Claude Haiku 4.5",
+          "format": "xml",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        }
+      }
+    },
+    "openai": {
+      "displayName": "ChatGPT (OpenAI)",
+      "models": {
+        "gpt-5": {
+          "displayName": "GPT-5",
+          "format": "markdown",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "gpt-4-1": {
+          "displayName": "GPT-4.1",
+          "format": "markdown",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "o3": {
+          "displayName": "o3",
+          "format": "markdown",
+          "isReasoning": true,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "o1": {
+          "displayName": "o1",
+          "format": "markdown",
+          "isReasoning": true,
+          "longContext": false,
+          "supportsToolUse": false
+        }
+      }
+    },
+    "google": {
+      "displayName": "Gemini (Google)",
+      "models": {
+        "gemini-2-5-pro": {
+          "displayName": "Gemini 2.5 Pro",
+          "format": "numbered-steps",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
+        "gemini-2-5-flash": {
+          "displayName": "Gemini 2.5 Flash",
+          "format": "numbered-steps",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        }
+      }
+    },
+    "other": {
+      "displayName": "Other / Unsure",
+      "models": {
+        "generic": {
+          "displayName": "Any major LLM",
+          "format": "markdown",
+          "isReasoning": false,
+          "longContext": false,
+          "supportsToolUse": false
+        }
+      }
+    }
+  }
+}
