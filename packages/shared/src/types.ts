@@ -38,22 +38,3 @@ export type WizardInputs = {
   understanding?: string;    // max 2000 chars
   confusion?: string;        // max 2000 chars
 };
-
-export type GenerateResponse = {
-  prompt: string;
-  metadata: {
-    promptHash: string;
-    generator: 'opus' | 'deterministic';
-    fallbackReason?: 'budget-exhausted' | 'api-error';
-  };
-};
-
-export type FeedbackPayload = {
-  promptHash: string;
-  provider: string;
-  model: string;
-  mode: StudyMode;
-  courseId: string | null;
-  rating: 1 | 2 | 3 | 4 | 5;
-  text?: string;
-};

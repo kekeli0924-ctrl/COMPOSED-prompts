@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
 import { assembleDeterministicPrompt } from '@composed-prompts/shared';
 import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt';
@@ -19,6 +19,7 @@ const sha256 = (s: string): string => createHash('sha256').update(s).digest('hex
 export async function runPipeline(inputs: WizardInputs): Promise<GenerateResponse> {
   const budgetOk = await budgetAvailable();
   let fallbackReason: GenerateResponse['metadata']['fallbackReason'];
+  const generationId = randomUUID();
 
   if (budgetOk) {
     const opusResult = await generateFullPromptWithOpus(inputs);
@@ -29,6 +30,7 @@ export async function runPipeline(inputs: WizardInputs): Promise<GenerateRespons
         metadata: {
           promptHash: sha256(opusResult.prompt),
           generator: 'opus',
+          generationId,
         },
       };
     }
@@ -44,6 +46,7 @@ export async function runPipeline(inputs: WizardInputs): Promise<GenerateRespons
       promptHash: sha256(prompt),
       generator: 'deterministic',
       fallbackReason,
+      generationId,
     },
   };
 }
