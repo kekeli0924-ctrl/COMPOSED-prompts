@@ -6,19 +6,20 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { listHistory, rateHistoryEntry, type HistoryEntry } from '@/lib/storage/history';
 import { findCourse, STUDY_MODE_LABELS } from '@composed-prompts/shared';
-import { useAuth } from '@/lib/use-auth';
-import { apiGet } from '@/lib/api-client';
+import { useUser } from '@clerk/nextjs';
+import { useApi } from '@/lib/use-api';
 import type { HistoryResponse } from '@composed-prompts/shared';
 
 type DisplayEntry = HistoryEntry & { source: 'local' | 'server' };
 
 export default function HistoryPage() {
-  const auth = useAuth();
+  const { isLoaded, isSignedIn } = useUser();
+  const { apiGet } = useApi();
   const [entries, setEntries] = useState<DisplayEntry[] | null>(null);
 
   useEffect(() => {
-    if (auth.status === 'loading') return;
-    if (auth.status === 'authed') {
+    if (!isLoaded) return;
+    if (isSignedIn) {
       apiGet<HistoryResponse>('/api/me/history')
         .then((res) => {
           setEntries(
@@ -40,9 +41,9 @@ export default function HistoryPage() {
     } else {
       setEntries(listHistory().map((e) => ({ ...e, source: 'local' })));
     }
-  }, [auth.status]);
+  }, [isLoaded, isSignedIn, apiGet]);
 
-  if (auth.status === 'loading' || entries === null) {
+  if (!isLoaded || entries === null) {
     return <main className="mx-auto max-w-3xl px-6 py-12">Loading…</main>;
   }
 
@@ -53,7 +54,7 @@ export default function HistoryPage() {
         <Alert className="mt-4">
           <AlertDescription>
             No saved prompts yet. <Link className="underline" href="/wizard">Generate one</Link>.
-            {auth.status === 'anonymous' && (
+            {!isSignedIn && (
               <> Sign up to save prompts across devices.</>
             )}
           </AlertDescription>
@@ -66,7 +67,7 @@ export default function HistoryPage() {
     <main className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-2xl font-semibold">Past prompts</h1>
       <p className="mt-2 text-sm text-slate-600">
-        {auth.status === 'authed'
+        {isSignedIn
           ? 'Synced from your account. Available on any device.'
           : 'Stored in this browser only. Sign up to sync across devices.'}
       </p>

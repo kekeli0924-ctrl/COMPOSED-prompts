@@ -1,27 +1,29 @@
 'use client';
 
-import Link from 'next/link';
-import { useAuth } from '@/lib/use-auth';
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { useApi } from '@/lib/use-api';
+import type { MeResponse } from '@composed-prompts/shared';
 
 export default function AccountPage() {
-  const auth = useAuth();
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { apiGet } = useApi();
+  const [profileSummary, setProfileSummary] = useState<string | null>(null);
 
-  if (auth.status === 'loading') {
+  useEffect(() => {
+    if (!isSignedIn) return;
+    apiGet<MeResponse>('/api/me')
+      .then((d) => setProfileSummary('profileSummary' in d ? d.profileSummary : null))
+      .catch(() => setProfileSummary(null));
+  }, [isSignedIn, apiGet]);
+
+  if (!isLoaded) {
     return <main className="mx-auto max-w-md px-6 py-16">Loading…</main>;
   }
-  if (auth.status === 'anonymous') {
+  if (!isSignedIn) {
     return (
       <main className="mx-auto max-w-md px-6 py-16">
         <p>You&apos;re not signed in.</p>
-        <div className="mt-4 flex gap-2">
-          <Link href="/login">
-            <Button>Sign in</Button>
-          </Link>
-          <Link href="/signup">
-            <Button variant="outline">Sign up</Button>
-          </Link>
-        </div>
       </main>
     );
   }
@@ -32,20 +34,16 @@ export default function AccountPage() {
       <dl className="mt-6 grid gap-3 text-sm">
         <div>
           <dt className="text-slate-500">Email</dt>
-          <dd className="font-medium">{auth.user.email}</dd>
+          <dd className="font-medium">{user.primaryEmailAddress?.emailAddress}</dd>
         </div>
-        {auth.profileSummary && (
+        {profileSummary && (
           <div>
             <dt className="text-slate-500">What we&apos;ve learned about your study style</dt>
-            <dd className="mt-1 rounded border bg-white p-3 text-xs leading-relaxed">
-              {auth.profileSummary}
-            </dd>
+            <dd className="mt-1 rounded border bg-white p-3 text-xs leading-relaxed">{profileSummary}</dd>
           </div>
         )}
       </dl>
-      <Button variant="outline" className="mt-8" onClick={auth.signOut}>
-        Sign out
-      </Button>
+      <p className="mt-8 text-xs text-slate-500">Manage your account from the avatar menu in the top-right.</p>
     </main>
   );
 }
