@@ -1,4 +1,6 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+// Requests use same-origin relative paths (e.g. "/api/generate"). next.config.mjs
+// rewrites /api/* to the Fly backend, so the browser only ever talks to its own
+// origin — keeping the session cookie first-party. No NEXT_PUBLIC_API_BASE_URL.
 
 export class ApiError extends Error {
   constructor(message: string, public status: number, public body: unknown) {
@@ -8,8 +10,7 @@ export class ApiError extends Error {
 }
 
 export async function apiPost<TRes>(path: string, body: unknown): Promise<TRes> {
-  const url = `${API_BASE}${path}`;
-  const res = await fetch(url, {
+  const res = await fetch(path, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body),
@@ -27,8 +28,7 @@ export async function apiPost<TRes>(path: string, body: unknown): Promise<TRes> 
 }
 
 export async function apiGet<TRes>(path: string): Promise<TRes> {
-  const url = `${API_BASE}${path}`;
-  const res = await fetch(url, { credentials: 'include' });
+  const res = await fetch(path, { credentials: 'include' });
   if (!res.ok) {
     const errBody = await res.json().catch(() => ({}));
     throw new ApiError(
