@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { searchCourses } from '@/lib/courses';
+import { searchCourses, findCourse } from '@/lib/courses';
 
 export function CoursePicker(props: {
   courseId: string | null;
@@ -12,9 +12,48 @@ export function CoursePicker(props: {
   onPick: (id: string | null, freeText?: string) => void;
 }) {
   const [query, setQuery] = useState('');
-  const [showFreeText, setShowFreeText] = useState(props.courseId === null && props.courseFreeText.length > 0);
+  const [showFreeText, setShowFreeText] = useState(
+    props.courseId === null && props.courseFreeText.length > 0,
+  );
   const results = useMemo(() => searchCourses(query, 8), [query]);
+  const selectedCourse = props.courseId ? findCourse(props.courseId) : null;
 
+  // When a course is selected, replace the search UI with a clear
+  // confirmation card so the user knows their click registered.
+  if (selectedCourse) {
+    return (
+      <div className="grid gap-4">
+        <div className="rounded-lg border-2 border-green-500 bg-green-50 p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="text-xs font-medium uppercase tracking-wide text-green-700">
+                Selected class
+              </div>
+              <div className="mt-1 text-lg font-semibold text-slate-900">
+                {selectedCourse.name}
+              </div>
+              <div className="text-sm text-slate-600">
+                {selectedCourse.department} · {selectedCourse.level}
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                props.onPick(null);
+                setQuery('');
+              }}
+            >
+              Change
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // No course selected yet — show search + manual-entry options
   return (
     <div className="grid gap-4">
       <div>
@@ -32,9 +71,7 @@ export function CoursePicker(props: {
               <li key={c.id}>
                 <button
                   type="button"
-                  className={`block w-full px-3 py-2 text-left text-sm hover:bg-slate-100 ${
-                    props.courseId === c.id ? 'bg-slate-100 font-medium' : ''
-                  }`}
+                  className="block w-full px-3 py-2 text-left text-sm hover:bg-slate-100"
                   onClick={() => {
                     props.onPick(c.id);
                     setShowFreeText(false);
@@ -52,7 +89,14 @@ export function CoursePicker(props: {
       </div>
       <div className="border-t pt-4">
         {!showFreeText ? (
-          <Button type="button" variant="ghost" onClick={() => { setShowFreeText(true); props.onPick(null); }}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => {
+              setShowFreeText(true);
+              props.onPick(null);
+            }}
+          >
             Don&apos;t see your class? Enter it manually
           </Button>
         ) : (
