@@ -32,7 +32,9 @@ export function useAuth() {
 
   const signOut = useCallback(async () => {
     await apiPost('/api/auth/logout', {});
-    setState({ status: 'anonymous', user: null });
+    // Hard navigation so every component (header + whatever page you're on,
+    // e.g. /account) reflects the signed-out state, not just this hook instance.
+    window.location.assign('/');
   }, []);
 
   return { ...state, signOut };

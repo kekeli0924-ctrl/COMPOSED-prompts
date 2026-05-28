@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,7 +10,6 @@ import { apiPost, ApiError } from '@/lib/api-client';
 import type { AuthResponse } from '@composed-prompts/shared';
 
 export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -24,8 +22,10 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     try {
       const path = mode === 'login' ? '/api/auth/login' : '/api/auth/signup';
       await apiPost<AuthResponse>(path, { email, password });
-      router.push('/account');
-      router.refresh();
+      // Hard navigation (not router.push) so the whole app re-mounts and the
+      // persistent header's useAuth re-fetches /api/me — otherwise the header
+      // stays on its initial "anonymous" state until a manual refresh.
+      window.location.assign('/account');
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'Something went wrong');
       setSubmitting(false);
