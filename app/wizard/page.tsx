@@ -242,7 +242,7 @@ function ComposingScreen() {
         }}
       />
 
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 mx-auto w-full max-w-xl text-center">
         <h1 className="composing-text font-serif text-6xl italic leading-[1.25] tracking-tight pb-3 sm:text-7xl sm:pb-4">
           composing
           <span className="composing-dot composing-dot-1">.</span>
@@ -252,12 +252,12 @@ function ComposingScreen() {
 
         <p
           key={phase}
-          className="composing-helper mt-8 text-sm font-medium uppercase tracking-[0.2em] text-slate-500"
+          className="composing-helper mt-8 pl-[0.2em] text-sm font-medium uppercase tracking-[0.2em] text-slate-500"
         >
           {COMPOSING_HELPER_MESSAGES[phase]}
         </p>
 
-        <p className="mt-6 max-w-md text-center text-xs leading-relaxed text-slate-400">
+        <p className="mt-6 text-xs leading-relaxed text-slate-400">
           Opus 4.7 is writing all seven sections of your prompt. This usually takes
           about ten seconds — long enough that we made you a nice loading screen.
         </p>
