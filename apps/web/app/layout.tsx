@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: 'Pomfret Study Prompts',
+  title: 'Composed',
   description: 'A guided wizard that produces LLM-tuned study prompts for Pomfret students.',
 };
 
