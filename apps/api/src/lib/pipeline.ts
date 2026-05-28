@@ -5,6 +5,7 @@ import {
 import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
 import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
 import { budgetAvailable, recordSpend } from './budget.js';
+import { fetchRagContext, buildRagContext } from './rag.js';
 
 const OPUS_INPUT_USD_PER_MTOK = 5.0;
 const OPUS_OUTPUT_USD_PER_MTOK = 25.0;
@@ -20,12 +21,17 @@ export type PipelineResult = {
   fallbackReason?: 'budget-exhausted' | 'api-error';
 };
 
-export async function runPipeline(inputs: WizardInputs): Promise<PipelineResult> {
+export async function runPipeline(
+  inputs: WizardInputs,
+  opts: { userId: string | null } = { userId: null },
+): Promise<PipelineResult> {
   const budgetOk = await budgetAvailable();
   let fallbackReason: PipelineResult['fallbackReason'];
 
   if (budgetOk) {
-    const result = await generateFullPromptWithOpus(inputs);
+    const rag = await fetchRagContext({ userId: opts.userId, courseId: inputs.courseId, mode: inputs.mode });
+    const ragText = buildRagContext(rag);
+    const result = await generateFullPromptWithOpus(inputs, ragText);
     if (result.ok) {
       await recordSpend(estimateOpusSpendUsd(result.usage));
       return {

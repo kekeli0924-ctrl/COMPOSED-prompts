@@ -47,14 +47,15 @@ generate.post('/api/generate', async (c) => {
   }
 
   try {
-    const result = await runPipeline(inputs);
+    const userId = c.get('user')?.id ?? null;
+    const result = await runPipeline(inputs, { userId });
 
     const scrubbedPrompt = redactMaterialForHistory(result.prompt);
     const [inserted] = await db
       .insert(schema.generations)
       .values({
         ipHash: hashIp(ip),
-        userId: c.get('user')?.id ?? null,
+        userId,
         inputsJson: redactInputsForStorage(inputs as unknown as Record<string, unknown>),
         promptText: scrubbedPrompt,
         promptHash: result.promptHash,

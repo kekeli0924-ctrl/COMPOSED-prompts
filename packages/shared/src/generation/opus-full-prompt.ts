@@ -143,10 +143,12 @@ function makeClient(): AnthropicLike {
 
 export async function generateFullPromptWithOpus(
   inputs: WizardInputs,
+  ragContext: string = '',
 ): Promise<OpusFullPromptResult> {
   const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = makeClient();
   try {
+    const userMessage = buildUserMessage(inputs) + (ragContext ? `\n\n${ragContext}` : '');
     const response = await client.messages.create({
       model: OPUS_MODEL,
       max_tokens: 4000,
@@ -158,7 +160,7 @@ export async function generateFullPromptWithOpus(
         },
       ],
       messages: [
-        { role: 'user', content: buildUserMessage(inputs) },
+        { role: 'user', content: userMessage },
       ],
     });
     const block = response.content.find((b) => b.type === 'text');
