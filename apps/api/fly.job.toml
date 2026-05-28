@@ -1,0 +1,20 @@
+# fly.toml app configuration for the composed-prompts scheduled jobs runner.
+# Same workspace as the main api, but a separate Fly app + Dockerfile so the
+# update-profiles script can run on a cron schedule without affecting the
+# always-on web service.
+
+app = 'composed-prompts-jobs'
+primary_region = 'iad'
+
+[build]
+  dockerfile = 'apps/api/Dockerfile.job'
+
+[env]
+  NODE_ENV = 'production'
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 256
