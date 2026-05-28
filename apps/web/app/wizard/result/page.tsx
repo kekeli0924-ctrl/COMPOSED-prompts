@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { PromptOutput } from '@/components/PromptOutput';
 import { FeedbackForm } from '@/components/FeedbackForm';
 import { RagPanel } from '@/components/RagPanel';
-import { useAuth } from '@/lib/use-auth';
+import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 
 type LastResult = {
   prompt: string;
@@ -22,7 +22,6 @@ type LastResult = {
 
 export default function ResultPage() {
   const [data, setData] = useState<LastResult | null>(null);
-  const auth = useAuth();
 
   useEffect(() => {
     const raw = sessionStorage.getItem('pomfret.lastResult');
@@ -79,7 +78,7 @@ export default function ResultPage() {
         <Link href="/history"><Button variant="ghost">See past prompts</Button></Link>
       </div>
 
-      {auth.status === 'anonymous' && (
+      <SignedOut>
         <div className="mt-6 rounded-lg border border-indigo-200 bg-indigo-50 p-4">
           <p className="text-sm font-medium text-indigo-900">
             Save this prompt and unlock smarter ones over time
@@ -89,19 +88,19 @@ export default function ResultPage() {
             preferences and uses past high-rated prompts to make new ones even better.
           </p>
           <div className="mt-3 flex gap-2">
-            <Link href="/signup">
+            <SignUpButton mode="modal">
               <button className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700">
                 Sign up
               </button>
-            </Link>
-            <Link href="/login">
+            </SignUpButton>
+            <SignInButton mode="modal">
               <button className="rounded border border-indigo-300 px-3 py-1.5 text-sm font-medium text-indigo-700 hover:bg-indigo-100">
                 Sign in
               </button>
-            </Link>
+            </SignInButton>
           </div>
         </div>
-      )}
+      </SignedOut>
 
       <section className="mt-16 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-6">
         <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
