@@ -29,7 +29,13 @@ export const clerkAuthMiddleware: MiddlewareHandler = async (c, next) => {
       return { email, displayName };
     });
     c.set('user', { id: user.id, email: user.email, displayName: user.displayName });
-  } catch {
+  } catch (err) {
+    // Expected for forged/expired tokens (treat as anonymous). But a
+    // misconfigured CLERK_SECRET_KEY or a Clerk/JWKS outage also lands here and
+    // would silently degrade everyone to anonymous — log it so prod is debuggable.
+    console.warn('clerk token verification failed', {
+      message: err instanceof Error ? err.message : String(err),
+    });
     c.set('user', null);
   }
   return next();
