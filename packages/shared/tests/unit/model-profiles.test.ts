@@ -22,8 +22,8 @@ describe('model-profiles', () => {
     expect(profile.displayName).toBe('Any major LLM');
   });
 
-  it('marks o3 as a reasoning model', () => {
-    const profile = getModelProfile('openai', 'o3');
+  it('marks GPT-5.5 Thinking as a reasoning model', () => {
+    const profile = getModelProfile('openai', 'gpt-5-5-thinking');
     expect(profile.isReasoning).toBe(true);
   });
 });

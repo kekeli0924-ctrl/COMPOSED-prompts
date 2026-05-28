@@ -28,13 +28,13 @@ describe('assembleDeterministicPrompt', () => {
   });
 
   it('uses markdown headings for openai models', () => {
-    const out = assembleDeterministicPrompt({ ...inputs, provider: 'openai', model: 'gpt-5' });
+    const out = assembleDeterministicPrompt({ ...inputs, provider: 'openai', model: 'gpt-5-5' });
     expect(out).toContain('## ROLE');
     expect(out).toContain('## OUTPUT_SPEC');
   });
 
   it('uses numbered steps for gemini models', () => {
-    const out = assembleDeterministicPrompt({ ...inputs, provider: 'google', model: 'gemini-2-5-pro' });
+    const out = assembleDeterministicPrompt({ ...inputs, provider: 'google', model: 'gemini-3-1-pro' });
     expect(out).toMatch(/Step 1 — ROLE/);
   });
 

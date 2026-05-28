@@ -29,48 +29,41 @@
     "openai": {
       "displayName": "ChatGPT (OpenAI)",
       "models": {
-        "gpt-5": {
-          "displayName": "GPT-5",
+        "gpt-5-5": {
+          "displayName": "GPT-5.5",
           "format": "markdown",
           "isReasoning": false,
           "longContext": true,
           "supportsToolUse": true
         },
-        "gpt-4-1": {
-          "displayName": "GPT-4.1",
-          "format": "markdown",
-          "isReasoning": false,
-          "longContext": true,
-          "supportsToolUse": true
-        },
-        "o3": {
-          "displayName": "o3",
+        "gpt-5-5-thinking": {
+          "displayName": "GPT-5.5 Thinking",
           "format": "markdown",
           "isReasoning": true,
           "longContext": true,
           "supportsToolUse": true
         },
-        "o1": {
-          "displayName": "o1",
+        "gpt-5-5-pro": {
+          "displayName": "GPT-5.5 Pro",
           "format": "markdown",
           "isReasoning": true,
-          "longContext": false,
-          "supportsToolUse": false
+          "longContext": true,
+          "supportsToolUse": true
         }
       }
     },
     "google": {
       "displayName": "Gemini (Google)",
       "models": {
-        "gemini-2-5-pro": {
-          "displayName": "Gemini 2.5 Pro",
+        "gemini-3-1-pro": {
+          "displayName": "Gemini 3.1 Pro",
           "format": "numbered-steps",
-          "isReasoning": false,
+          "isReasoning": true,
           "longContext": true,
           "supportsToolUse": true
         },
-        "gemini-2-5-flash": {
-          "displayName": "Gemini 2.5 Flash",
+        "gemini-3-5-flash": {
+          "displayName": "Gemini 3.5 Flash",
           "format": "numbered-steps",
           "isReasoning": false,
           "longContext": true,
