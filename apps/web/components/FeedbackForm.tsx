@@ -4,10 +4,12 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { listHistory, rateHistoryEntry } from '@/lib/storage/history';
+import { apiPost } from '@/lib/api-client';
+import type { FeedbackPayload } from '@composed-prompts/shared';
 
 const STARS = [1, 2, 3, 4, 5] as const;
 
-export function FeedbackForm(props: { promptHash: string; entryId: string }) {
+export function FeedbackForm(props: { promptHash: string; entryId: string; generationId: string }) {
   const [rating, setRating] = useState<number | null>(null);
   const [text, setText] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -19,19 +21,13 @@ export function FeedbackForm(props: { promptHash: string; entryId: string }) {
     if (!entry) return;
     setError(null);
     try {
-      await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          promptHash: props.promptHash,
-          provider: entry.llm,
-          model: entry.model,
-          mode: entry.mode,
-          courseId: entry.courseId,
-          rating,
-          text: text.trim() || undefined,
-        }),
-      });
+      const payload: FeedbackPayload = {
+        generationId: props.generationId,
+        promptHash: props.promptHash,
+        rating: rating as 1 | 2 | 3 | 4 | 5,
+        text: text.trim() || undefined,
+      };
+      await apiPost('/api/feedback', payload);
       rateHistoryEntry(entry.id, rating as 1 | 2 | 3 | 4 | 5, text.trim() || undefined);
       setSubmitted(true);
     } catch (err) {

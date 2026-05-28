@@ -13,7 +13,8 @@ type LastResult = {
   metadata: {
     promptHash: string;
     generator: 'opus' | 'deterministic';
-    fallbackReason?: 'budget-exhausted' | 'api-error';
+    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
+    generationId: string;
   };
   entryId: string;
 };
@@ -66,6 +67,7 @@ export default function ResultPage() {
           <FeedbackForm
             promptHash={data.metadata.promptHash}
             entryId={data.entryId}
+            generationId={data.metadata.generationId}
           />
         </div>
       </div>

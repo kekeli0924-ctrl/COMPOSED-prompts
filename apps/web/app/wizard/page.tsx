@@ -12,8 +12,9 @@ import { AssessmentStep } from '@/components/AssessmentStep';
 import { MaterialStep } from '@/components/MaterialStep';
 import { AboutMeStep } from '@/components/AboutMeStep';
 import { RagPanel } from '@/components/RagPanel';
-import type { WizardInputs } from '@composed-prompts/shared';
+import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
+import { apiPost, ApiError } from '@/lib/api-client';
 
 type PartialWizardState = Partial<WizardInputs> & {
   material: string;
@@ -89,19 +90,16 @@ export default function WizardPage() {
     const MIN_LOADING_MS = 4500;
     const startedAt = Date.now();
 
+    let data: GenerateResponse;
     try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        setError(body.error ?? `Request failed (${res.status})`);
-        setSubmitting(false);
-        return;
-      }
-      const data = await res.json();
+      data = await apiPost<GenerateResponse>('/api/generate', payload);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'unknown error');
+      setSubmitting(false);
+      return;
+    }
+
+    try {
       const entry = await saveHistoryEntry({
         promptText: data.prompt,
         llm: payload.provider,
