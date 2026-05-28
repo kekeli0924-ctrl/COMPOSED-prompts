@@ -7,7 +7,7 @@ const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord } = vi.hoisted(() =>
   mockBudgetRecord: vi.fn(),
 }));
 
-vi.mock('@composed-prompts/shared/src/generation/opus-full-prompt', () => ({
+vi.mock('@composed-prompts/shared/src/generation/opus-full-prompt.js', () => ({
   generateFullPromptWithOpus: mockGenerateOpus,
 }));
 

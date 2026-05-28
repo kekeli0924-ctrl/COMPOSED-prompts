@@ -1,14 +1,14 @@
-import type { WizardInputs } from '../types';
-import { getModelProfile } from '../model-profiles';
-import { templateFor } from '../templates';
+import type { WizardInputs } from '../types.js';
+import { getModelProfile } from '../model-profiles.js';
+import { templateFor } from '../templates/index.js';
 import {
   buildRoleSection,
   buildAboutMeSection,
   buildMaterialSection,
   buildGoalSection,
   buildSelfCheckSection,
-} from '../templates/shared';
-import { formatAssembledPrompt, type Section } from './format-selector';
+} from '../templates/shared.js';
+import { formatAssembledPrompt, type Section } from './format-selector.js';
 
 export type AssembleOptions = {
   // Inject a custom interaction style (e.g., from Sonnet); falls back to deterministic if absent

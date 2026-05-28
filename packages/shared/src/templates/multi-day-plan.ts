@@ -1,4 +1,4 @@
-import type { WizardInputs } from '../types';
+import type { WizardInputs } from '../types.js';
 
 export function buildMultiDayPlanOutputSpec(inputs: WizardInputs): string {
   const days = Math.max(1, Math.round(inputs.hoursAvailable / 24));

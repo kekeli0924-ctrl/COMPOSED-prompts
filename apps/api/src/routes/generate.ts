@@ -36,7 +36,7 @@ generate.post('/api/generate', async (c) => {
 
   const parsed = WizardInputsSchema.safeParse(body);
   if (!parsed.success) {
-    return c.json({ error: 'invalid input', issues: parsed.error.issues.map((i: { path: (string | number)[]; message: string }) => ({ path: i.path, message: i.message })) }, 400);
+    return c.json({ error: 'invalid input', issues: parsed.error.issues.map((i) => ({ path: i.path.map(String), message: i.message })) }, 400);
   }
   const inputs = parsed.data;
 

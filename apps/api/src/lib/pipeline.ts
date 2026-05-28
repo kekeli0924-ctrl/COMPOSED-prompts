@@ -2,8 +2,8 @@ import {
   type WizardInputs,
   assembleDeterministicPrompt,
 } from '@composed-prompts/shared';
-import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt';
-import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash';
+import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
+import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
 import { budgetAvailable, recordSpend } from './budget.js';
 
 const OPUS_INPUT_USD_PER_MTOK = 5.0;

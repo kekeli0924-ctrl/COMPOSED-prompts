@@ -1,9 +1,9 @@
-import type { StudyMode, WizardInputs } from '../types';
-import { buildCramReviewOutputSpec, buildCramReviewFallbackInteractionStyle } from './cram-review';
-import { buildMultiDayPlanOutputSpec, buildMultiDayPlanFallbackInteractionStyle } from './multi-day-plan';
-import { buildPracticeQuestionsOutputSpec, buildPracticeQuestionsFallbackInteractionStyle } from './practice-questions';
-import { buildConceptClarificationOutputSpec, buildConceptClarificationFallbackInteractionStyle } from './concept-clarification';
-import { buildEssayProjectOutputSpec, buildEssayProjectFallbackInteractionStyle } from './essay-project';
+import type { StudyMode, WizardInputs } from '../types.js';
+import { buildCramReviewOutputSpec, buildCramReviewFallbackInteractionStyle } from './cram-review.js';
+import { buildMultiDayPlanOutputSpec, buildMultiDayPlanFallbackInteractionStyle } from './multi-day-plan.js';
+import { buildPracticeQuestionsOutputSpec, buildPracticeQuestionsFallbackInteractionStyle } from './practice-questions.js';
+import { buildConceptClarificationOutputSpec, buildConceptClarificationFallbackInteractionStyle } from './concept-clarification.js';
+import { buildEssayProjectOutputSpec, buildEssayProjectFallbackInteractionStyle } from './essay-project.js';
 
 type ModeBuilders = {
   outputSpec: (i: WizardInputs) => string;

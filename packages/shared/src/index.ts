@@ -3,23 +3,26 @@
 // here — import them via deep paths from server code only:
 //   import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash';
 //   import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt';
-export * from './types';
-export * from './api-contracts';
-export * from './validation/wizard-inputs';
-export * from './courses';
-export * from './model-profiles';
-export * from './storage/redact';
+//
+// All relative imports use .js extensions for NodeNext / ESM compatibility.
+// Bundler-resolution (Next.js) handles them fine; tsc NodeNext requires them.
+export * from './types.js';
+export * from './api-contracts.js';
+export * from './validation/wizard-inputs.js';
+export * from './courses.js';
+export * from './model-profiles.js';
+export * from './storage/redact.js';
 export {
   templateFor,
   STUDY_MODE_LABELS,
   STUDY_MODE_DESCRIPTIONS,
-} from './templates';
+} from './templates/index.js';
 export {
   buildRoleSection,
   buildAboutMeSection,
   buildMaterialSection,
   buildGoalSection,
   buildSelfCheckSection,
-} from './templates/shared';
-export { assembleDeterministicPrompt, assembleSections } from './generation/assembler';
-export { formatSection, formatAssembledPrompt } from './generation/format-selector';
+} from './templates/shared.js';
+export { assembleDeterministicPrompt, assembleSections } from './generation/assembler.js';
+export { formatSection, formatAssembledPrompt } from './generation/format-selector.js';

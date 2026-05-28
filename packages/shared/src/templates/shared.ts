@@ -1,5 +1,5 @@
-import type { WizardInputs } from '../types';
-import { findCourse } from '../courses';
+import type { WizardInputs } from '../types.js';
+import { findCourse } from '../courses.js';
 
 const courseLabel = (inputs: WizardInputs): string => {
   if (inputs.courseId) {

@@ -1,4 +1,4 @@
-import type { WizardInputs, StudyMode } from './types';
+import type { WizardInputs, StudyMode } from './types.js';
 
 // POST /api/generate
 export type GenerateResponse = {

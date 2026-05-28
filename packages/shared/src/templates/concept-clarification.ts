@@ -1,4 +1,4 @@
-import type { WizardInputs } from '../types';
+import type { WizardInputs } from '../types.js';
 
 export function buildConceptClarificationOutputSpec(_inputs: WizardInputs): string {
   return [

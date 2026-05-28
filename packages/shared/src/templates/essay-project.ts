@@ -1,4 +1,4 @@
-import type { WizardInputs } from '../types';
+import type { WizardInputs } from '../types.js';
 
 export function buildEssayProjectOutputSpec(_inputs: WizardInputs): string {
   return [

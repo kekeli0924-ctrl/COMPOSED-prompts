@@ -22,7 +22,7 @@ feedback.post('/api/feedback', async (c) => {
 
   const parsed = FeedbackSchema.safeParse(body);
   if (!parsed.success) {
-    return c.json({ error: 'invalid input', issues: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })) }, 400);
+    return c.json({ error: 'invalid input', issues: parsed.error.issues.map((i) => ({ path: i.path.map(String), message: i.message })) }, 400);
   }
 
   // Verify generation exists

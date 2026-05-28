@@ -1,8 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
-import type { WizardInputs } from '../types';
-import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '../templates';
-import { findCourse } from '../courses';
-import { getModelProfile } from '../model-profiles';
+import type { WizardInputs } from '../types.js';
+import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '../templates/index.js';
+import { findCourse } from '../courses.js';
+import { getModelProfile } from '../model-profiles.js';
 
 const OPUS_MODEL = 'claude-opus-4-7';
 

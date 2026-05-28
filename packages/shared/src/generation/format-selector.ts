@@ -1,4 +1,4 @@
-import type { ModelFormat } from '../model-profiles';
+import type { ModelFormat } from '../model-profiles.js';
 
 export type Section = {
   name: string;

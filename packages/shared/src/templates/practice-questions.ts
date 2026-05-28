@@ -1,4 +1,4 @@
-import type { WizardInputs } from '../types';
+import type { WizardInputs } from '../types.js';
 
 export function buildPracticeQuestionsOutputSpec(inputs: WizardInputs): string {
   const isEssayLike = inputs.assessmentType === 'paper' || inputs.assessmentType === 'project';

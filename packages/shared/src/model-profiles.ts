@@ -1,4 +1,4 @@
-import profilesData from '../data/model-profiles.json';
+import profilesData from '../data/model-profiles.json' with { type: 'json' };
 
 export type ModelFormat = 'xml' | 'markdown' | 'numbered-steps';
 

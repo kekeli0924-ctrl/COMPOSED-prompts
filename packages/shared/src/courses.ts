@@ -1,4 +1,4 @@
-import coursesData from '../data/courses.json';
+import coursesData from '../data/courses.json' with { type: 'json' };
 
 export type Course = {
   id: string;
