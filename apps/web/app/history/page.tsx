@@ -42,6 +42,42 @@ export default function HistoryPage() {
           <HistoryRow key={e.id} entry={e} onRate={(r) => rateHistoryEntry(e.id, r)} />
         ))}
       </ul>
+
+      <section className="mt-16 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-6">
+        <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+          Behind the scenes
+        </span>
+        <h3 className="mt-1 text-xl font-semibold">Where your history lives</h3>
+        <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700">
+          <p>
+            Right now, your prompt history lives entirely in your browser&apos;s{' '}
+            <strong>localStorage</strong> — no server has a copy. That means it&apos;s
+            private (only you can see it), it doesn&apos;t cost anything to store, and it
+            disappears if you clear your browser data or use a different device.
+          </p>
+          <p>
+            For privacy, I scrub any pasted assignment material out of the saved prompt
+            text before it goes into localStorage. The <strong>Material</strong> section
+            of every saved prompt shows{' '}
+            <code className="rounded bg-slate-200 px-1 py-0.5 text-xs">
+              [material redacted — not stored locally]
+            </code>
+            . You can verify this by expanding any past prompt.
+          </p>
+          <p>
+            When you submit a rating, only the rating itself (1–5) and a SHA-256 hash of
+            the prompt are sent to the backend — never the prompt content or anything
+            identifying. The hash lets the system aggregate ratings per prompt
+            <em> shape</em> without knowing whose prompt it was.
+          </p>
+          <p>
+            The architecture I&apos;m building this on top of will let signed-in users
+            sync their history across devices via a Postgres database. That part lives
+            behind an authentication layer (see <strong>How it works</strong> in the
+            header for the full picture).
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
