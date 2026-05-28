@@ -11,11 +11,11 @@ export default function AccountPage() {
   const [profileSummary, setProfileSummary] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isSignedIn) return;
+    if (!isLoaded || !isSignedIn) return;
     apiGet<MeResponse>('/api/me')
       .then((d) => setProfileSummary('profileSummary' in d ? d.profileSummary : null))
       .catch(() => setProfileSummary(null));
-  }, [isSignedIn, apiGet]);
+  }, [isLoaded, isSignedIn, apiGet]);
 
   if (!isLoaded) {
     return <main className="mx-auto max-w-md px-6 py-16">Loading…</main>;
