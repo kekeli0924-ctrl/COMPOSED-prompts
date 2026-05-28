@@ -6,15 +6,43 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { listHistory, rateHistoryEntry, type HistoryEntry } from '@/lib/storage/history';
 import { findCourse, STUDY_MODE_LABELS } from '@composed-prompts/shared';
+import { useAuth } from '@/lib/use-auth';
+import { apiGet } from '@/lib/api-client';
+import type { HistoryResponse } from '@composed-prompts/shared';
+
+type DisplayEntry = HistoryEntry & { source: 'local' | 'server' };
 
 export default function HistoryPage() {
-  const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
+  const auth = useAuth();
+  const [entries, setEntries] = useState<DisplayEntry[] | null>(null);
 
   useEffect(() => {
-    setEntries(listHistory());
-  }, []);
+    if (auth.status === 'loading') return;
+    if (auth.status === 'authed') {
+      apiGet<HistoryResponse>('/api/me/history')
+        .then((res) => {
+          setEntries(
+            res.entries.map((e) => ({
+              id: e.id,
+              createdAt: new Date(e.createdAt).getTime(),
+              promptText: e.promptText,
+              llm: e.llm,
+              model: e.model,
+              mode: e.mode,
+              courseId: e.courseId,
+              rating: (e.rating ?? undefined) as DisplayEntry['rating'],
+              ratingText: e.ratingText ?? undefined,
+              source: 'server',
+            })),
+          );
+        })
+        .catch(() => setEntries([]));
+    } else {
+      setEntries(listHistory().map((e) => ({ ...e, source: 'local' })));
+    }
+  }, [auth.status]);
 
-  if (entries === null) {
+  if (auth.status === 'loading' || entries === null) {
     return <main className="mx-auto max-w-3xl px-6 py-12">Loading…</main>;
   }
 
@@ -25,6 +53,9 @@ export default function HistoryPage() {
         <Alert className="mt-4">
           <AlertDescription>
             No saved prompts yet. <Link className="underline" href="/wizard">Generate one</Link>.
+            {auth.status === 'anonymous' && (
+              <> Sign up to save prompts across devices.</>
+            )}
           </AlertDescription>
         </Alert>
       </main>
@@ -35,54 +66,34 @@ export default function HistoryPage() {
     <main className="mx-auto max-w-3xl px-6 py-12">
       <h1 className="text-2xl font-semibold">Past prompts</h1>
       <p className="mt-2 text-sm text-slate-600">
-        Stored in your browser only — nothing is sent to any server unless you submit a rating.
+        {auth.status === 'authed'
+          ? 'Synced from your account. Available on any device.'
+          : 'Stored in this browser only. Sign up to sync across devices.'}
       </p>
       <ul className="mt-6 grid gap-3">
         {entries.map((e) => (
-          <HistoryRow key={e.id} entry={e} onRate={(r) => rateHistoryEntry(e.id, r)} />
+          <HistoryRow
+            key={e.id}
+            entry={e}
+            onRate={(r) => {
+              if (e.source === 'local') rateHistoryEntry(e.id, r);
+              // For server entries, rating is done from the result page right after
+              // generation; server-side re-rating could be added later but isn't in v1 scope.
+            }}
+          />
         ))}
       </ul>
-
-      <section className="mt-16 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-6">
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-          Behind the scenes
-        </span>
-        <h3 className="mt-1 text-xl font-semibold">Where your history lives</h3>
-        <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700">
-          <p>
-            Right now, your prompt history lives entirely in your browser&apos;s{' '}
-            <strong>localStorage</strong> — no server has a copy. That means it&apos;s
-            private (only you can see it), it doesn&apos;t cost anything to store, and it
-            disappears if you clear your browser data or use a different device.
-          </p>
-          <p>
-            For privacy, I scrub any pasted assignment material out of the saved prompt
-            text before it goes into localStorage. The <strong>Material</strong> section
-            of every saved prompt shows{' '}
-            <code className="rounded bg-slate-200 px-1 py-0.5 text-xs">
-              [material redacted — not stored locally]
-            </code>
-            . You can verify this by expanding any past prompt.
-          </p>
-          <p>
-            When you submit a rating, only the rating itself (1–5) and a SHA-256 hash of
-            the prompt are sent to the backend — never the prompt content or anything
-            identifying. The hash lets the system aggregate ratings per prompt
-            <em> shape</em> without knowing whose prompt it was.
-          </p>
-          <p>
-            The architecture I&apos;m building this on top of will let signed-in users
-            sync their history across devices via a Postgres database. That part lives
-            behind an authentication layer (see <strong>How it works</strong> in the
-            header for the full picture).
-          </p>
-        </div>
-      </section>
     </main>
   );
 }
 
-function HistoryRow({ entry, onRate }: { entry: HistoryEntry; onRate: (r: 1 | 2 | 3 | 4 | 5) => void }) {
+function HistoryRow({
+  entry,
+  onRate,
+}: {
+  entry: DisplayEntry;
+  onRate: (r: 1 | 2 | 3 | 4 | 5) => void;
+}) {
   const [expanded, setExpanded] = useState(false);
   const course = entry.courseId ? findCourse(entry.courseId)?.name : 'Free-text class';
   return (
@@ -97,9 +108,14 @@ function HistoryRow({ entry, onRate }: { entry: HistoryEntry; onRate: (r: 1 | 2 
         </div>
         <div className="flex flex-col items-end gap-2">
           {entry.rating ? (
-            <div className="text-yellow-500">{'★'.repeat(entry.rating)}{'☆'.repeat(5 - entry.rating)}</div>
-          ) : (
+            <div className="text-yellow-500">
+              {'★'.repeat(entry.rating)}
+              {'☆'.repeat(5 - entry.rating)}
+            </div>
+          ) : entry.source === 'local' ? (
             <RatingButtons onRate={onRate} />
+          ) : (
+            <span className="text-xs text-slate-400">no rating</span>
           )}
         </div>
       </div>
