@@ -243,7 +243,7 @@ function ComposingScreen() {
       />
 
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="composing-text font-serif text-6xl italic tracking-tight sm:text-7xl">
+        <h1 className="composing-text font-serif text-6xl italic leading-[1.25] tracking-tight pb-3 sm:text-7xl sm:pb-4">
           composing
           <span className="composing-dot composing-dot-1">.</span>
           <span className="composing-dot composing-dot-2">.</span>
