@@ -5,17 +5,9 @@ export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   email: text('email').notNull().unique(),
   displayName: text('display_name'),
-  passwordHash: text('password_hash').notNull(),
+  clerkUserId: text('clerk_user_id').notNull().unique(),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
-
-export const sessions = pgTable('sessions', {
-  id: text('id').primaryKey(),
-  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
-  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
-}, (t) => ({
-  userIdx: index('sessions_user_idx').on(t.userId),
-}));
 
 export const generations = pgTable('generations', {
   id: uuid('id').primaryKey().defaultRandom(),

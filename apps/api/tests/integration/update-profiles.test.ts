@@ -11,7 +11,7 @@ describe('updateAllProfiles', () => {
   it('skips users with fewer than MIN_RATED_GENERATIONS rated generations', async () => {
     const [user] = await db
       .insert(schema.users)
-      .values({ email: 'u@test.com', passwordHash: 'x' })
+      .values({ email: 'u@test.com', clerkUserId: `clerk_${Math.random()}` })
       .returning({ id: schema.users.id });
     // Seed 2 rated generations (below threshold of 5)
     for (let i = 0; i < 2; i++) {
@@ -40,7 +40,7 @@ describe('updateAllProfiles', () => {
   it('creates profile for user with >= MIN_RATED_GENERATIONS', async () => {
     const [user] = await db
       .insert(schema.users)
-      .values({ email: 'u@test.com', passwordHash: 'x' })
+      .values({ email: 'u@test.com', clerkUserId: `clerk_${Math.random()}` })
       .returning({ id: schema.users.id });
     for (let i = 0; i < MIN_RATED_GENERATIONS; i++) {
       const [g] = await db

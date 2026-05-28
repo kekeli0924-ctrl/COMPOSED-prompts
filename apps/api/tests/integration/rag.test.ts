@@ -26,7 +26,7 @@ const seedGen = async (opts: { userId?: string; courseId: string; mode: string; 
 };
 
 const seedUser = async (email: string): Promise<string> => {
-  const [u] = await db.insert(schema.users).values({ email, passwordHash: 'x' }).returning({ id: schema.users.id });
+  const [u] = await db.insert(schema.users).values({ email, clerkUserId: `clerk_${email}` }).returning({ id: schema.users.id });
   return u!.id;
 };
 

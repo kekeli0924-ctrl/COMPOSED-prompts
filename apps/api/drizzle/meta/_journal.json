@@ -15,6 +15,20 @@
       "when": 1779968513634,
       "tag": "0001_same_susan_delgado",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780008027094,
+      "tag": "0002_complex_sheva_callister",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780008036630,
+      "tag": "0003_strange_frightful_four",
+      "breakpoints": true
     }
   ]
 }

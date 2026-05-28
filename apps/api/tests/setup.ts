@@ -9,7 +9,6 @@ export async function resetAllTables(): Promise<void> {
   // Order matters for FK cascades
   await db.delete(schema.feedback);
   await db.delete(schema.generations);
-  await db.delete(schema.sessions);
   await db.delete(schema.userProfiles);
   await db.delete(schema.users);
   await db.delete(schema.rateLimitLog);
