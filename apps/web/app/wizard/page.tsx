@@ -14,7 +14,8 @@ import { AboutMeStep } from '@/components/AboutMeStep';
 import { RagPanel } from '@/components/RagPanel';
 import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
-import { apiPost, ApiError } from '@/lib/api-client';
+import { ApiError } from '@/lib/api-client';
+import { useApi } from '@/lib/use-api';
 
 type PartialWizardState = Partial<WizardInputs> & {
   material: string;
@@ -36,6 +37,7 @@ const today = (): string => new Date().toISOString().slice(0, 10);
 
 export default function WizardPage() {
   const router = useRouter();
+  const { apiPost } = useApi();
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);

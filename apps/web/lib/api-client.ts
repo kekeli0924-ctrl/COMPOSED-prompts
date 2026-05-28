@@ -9,12 +9,14 @@ export class ApiError extends Error {
   }
 }
 
-export async function apiPost<TRes>(path: string, body: unknown): Promise<TRes> {
+export async function apiPost<TRes>(path: string, body: unknown, token?: string): Promise<TRes> {
   const res = await fetch(path, {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: {
+      'content-type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify(body),
-    credentials: 'include',
   });
   if (!res.ok) {
     const errBody = await res.json().catch(() => ({}));
@@ -27,8 +29,10 @@ export async function apiPost<TRes>(path: string, body: unknown): Promise<TRes> 
   return res.json() as Promise<TRes>;
 }
 
-export async function apiGet<TRes>(path: string): Promise<TRes> {
-  const res = await fetch(path, { credentials: 'include' });
+export async function apiGet<TRes>(path: string, token?: string): Promise<TRes> {
+  const res = await fetch(path, {
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+  });
   if (!res.ok) {
     const errBody = await res.json().catch(() => ({}));
     throw new ApiError(

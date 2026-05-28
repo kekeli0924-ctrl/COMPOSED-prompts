@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { listHistory, rateHistoryEntry } from '@/lib/storage/history';
-import { apiPost } from '@/lib/api-client';
+import { useApi } from '@/lib/use-api';
 import type { FeedbackPayload } from '@composed-prompts/shared';
 
 const STARS = [1, 2, 3, 4, 5] as const;
 
 export function FeedbackForm(props: { promptHash: string; entryId: string; generationId: string }) {
+  const { apiPost } = useApi();
   const [rating, setRating] = useState<number | null>(null);
   const [text, setText] = useState('');
   const [submitted, setSubmitted] = useState(false);
