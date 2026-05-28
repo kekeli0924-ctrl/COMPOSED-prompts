@@ -83,3 +83,58 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Loading state — used while Opus 4.7 is composing the prompt. */
+@keyframes composing-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.composing-text {
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0.35) 0%,
+    rgba(15, 23, 42, 1) 25%,
+    rgba(15, 23, 42, 0.35) 50%,
+    rgba(15, 23, 42, 1) 75%,
+    rgba(15, 23, 42, 0.35) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: composing-shimmer 3.6s linear infinite;
+}
+
+@keyframes composing-dot {
+  0%, 60%, 100% { opacity: 0.15; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-0.18em); }
+}
+
+.composing-dot {
+  display: inline-block;
+  animation: composing-dot 1.4s ease-in-out infinite;
+}
+.composing-dot-1 { animation-delay: 0s; }
+.composing-dot-2 { animation-delay: 0.18s; }
+.composing-dot-3 { animation-delay: 0.36s; }
+
+@keyframes composing-orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes composing-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.composing-helper {
+  animation: composing-fade-in 0.5s ease-out;
+}
+
+.composing-orbit-ring {
+  animation: composing-orbit 8s linear infinite;
+}
+

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -112,6 +112,10 @@ export default function WizardPage() {
     }
   };
 
+  if (submitting) {
+    return <ComposingScreen />;
+  }
+
   return (
     <main className="mx-auto max-w-2xl px-6 py-12">
       <div className="mb-8">
@@ -188,6 +192,62 @@ export default function WizardPage() {
             {submitting ? 'Generating...' : 'Generate prompt'}
           </Button>
         )}
+      </div>
+    </main>
+  );
+}
+
+// ----- Loading screen shown while Opus 4.7 composes the prompt -----
+
+const COMPOSING_HELPER_MESSAGES = [
+  'Reading your inputs',
+  'Pulling Pomfret course context',
+  'Calling Claude Opus 4.7',
+  'Tailoring to your model',
+  'Polishing the language',
+];
+
+function ComposingScreen() {
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhase((p) => (p + 1) % COMPOSING_HELPER_MESSAGES.length);
+    }, 2400);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <main className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden px-6">
+      {/* Soft orbit glow in the background */}
+      <div
+        aria-hidden
+        className="composing-orbit-ring absolute h-[420px] w-[420px] rounded-full opacity-40 blur-3xl"
+        style={{
+          background:
+            'conic-gradient(from 0deg, rgba(99,102,241,0.18), rgba(236,72,153,0.14), rgba(245,158,11,0.16), rgba(99,102,241,0.18))',
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-center">
+        <h1 className="composing-text font-serif text-6xl italic tracking-tight sm:text-7xl">
+          composing
+          <span className="composing-dot composing-dot-1">.</span>
+          <span className="composing-dot composing-dot-2">.</span>
+          <span className="composing-dot composing-dot-3">.</span>
+        </h1>
+
+        <p
+          key={phase}
+          className="composing-helper mt-8 text-sm font-medium uppercase tracking-[0.2em] text-slate-500"
+        >
+          {COMPOSING_HELPER_MESSAGES[phase]}
+        </p>
+
+        <p className="mt-6 max-w-md text-center text-xs leading-relaxed text-slate-400">
+          Opus 4.7 is writing all seven sections of your prompt. This usually takes
+          about ten seconds — long enough that we made you a nice loading screen.
+        </p>
       </div>
     </main>
   );
