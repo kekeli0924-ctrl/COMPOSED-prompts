@@ -1,8 +1,10 @@
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
+import { health } from './routes/health';
 
 const app = new Hono();
 
+app.route('/', health);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
 const port = parseInt(process.env.PORT ?? '8080', 10);
