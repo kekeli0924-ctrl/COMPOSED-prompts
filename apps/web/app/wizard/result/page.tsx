@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { PromptOutput } from '@/components/PromptOutput';
 import { FeedbackForm } from '@/components/FeedbackForm';
+import { RagPanel } from '@/components/RagPanel';
 
 type LastResult = {
   prompt: string;
@@ -50,6 +51,10 @@ export default function ResultPage() {
 
       <div className="mt-6">
         <PromptOutput prompt={data.prompt} />
+      </div>
+
+      <div className="mt-8">
+        <RagPanel eyebrow="What happened behind that prompt — the RAG learning system" />
       </div>
 
       <div className="mt-8 rounded-lg border bg-white p-6">
