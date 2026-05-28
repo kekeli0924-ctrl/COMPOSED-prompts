@@ -81,6 +81,13 @@ export default function WizardPage() {
       confusion: inputs.confusion.trim() || undefined,
     };
 
+    // Floor the loading-screen visibility so users always see at least one full
+    // shimmer cycle of the composing animation. Opus calls take ~10s in
+    // production, so this only matters when the request is unexpectedly fast
+    // (e.g. local dev hitting the deterministic fallback, or a cache hit).
+    const MIN_LOADING_MS = 4500;
+    const startedAt = Date.now();
+
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
@@ -105,6 +112,12 @@ export default function WizardPage() {
         'pomfret.lastResult',
         JSON.stringify({ ...data, entryId: entry.id }),
       );
+
+      // Hold the loading screen until at least MIN_LOADING_MS has elapsed.
+      const elapsed = Date.now() - startedAt;
+      if (elapsed < MIN_LOADING_MS) {
+        await new Promise((r) => setTimeout(r, MIN_LOADING_MS - elapsed));
+      }
       router.push('/wizard/result');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'unknown error');
