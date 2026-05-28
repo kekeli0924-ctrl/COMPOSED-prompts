@@ -3,6 +3,7 @@ import { serve } from '@hono/node-server';
 import 'dotenv/config';
 import { health } from './routes/health.js';
 import { generate } from './routes/generate.js';
+import { feedback } from './routes/feedback.js';
 import { corsMiddleware } from './middleware/cors.js';
 
 const app = new Hono();
@@ -10,6 +11,7 @@ const app = new Hono();
 app.use('*', corsMiddleware);
 app.route('/', health);
 app.route('/', generate);
+app.route('/', feedback);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
 const port = parseInt(process.env.PORT ?? '8080', 10);
