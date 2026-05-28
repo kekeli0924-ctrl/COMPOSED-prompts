@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index, numeric } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -60,3 +60,9 @@ export const rateLimitLog = pgTable('rate_limit_log', {
 }, (t) => ({
   bucketTimeIdx: index('rate_limit_bucket_time_idx').on(t.bucketKey, t.occurredAt),
 }));
+
+export const dailySpend = pgTable('daily_spend', {
+  day: text('day').primaryKey(),  // ISO date YYYY-MM-DD UTC
+  cumulativeUsd: numeric('cumulative_usd', { precision: 10, scale: 4 }).notNull().default('0'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
