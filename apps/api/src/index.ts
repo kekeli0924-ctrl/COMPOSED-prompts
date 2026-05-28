@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { health } from './routes/health.js';
 import { generate } from './routes/generate.js';
 import { feedback } from './routes/feedback.js';
+import { auth } from './routes/auth.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { sessionMiddleware } from './middleware/session.js';
 
@@ -14,6 +15,7 @@ app.use('*', sessionMiddleware);
 app.route('/', health);
 app.route('/', generate);
 app.route('/', feedback);
+app.route('/', auth);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
 const port = parseInt(process.env.PORT ?? '8080', 10);
