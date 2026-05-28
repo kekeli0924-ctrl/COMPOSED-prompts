@@ -11,6 +11,8 @@ vi.mock('@/lib/pipeline', () => ({ runPipeline: mockRunPipeline }));
 vi.mock('@/lib/rate-limit', () => ({ checkAndRecord: mockCheckAndRecord }));
 
 import { generate } from '@/routes/generate';
+import { sessionMiddleware } from '@/middleware/session';
+import { auth as authRoutes } from '@/routes/auth';
 
 const validBody = {
   provider: 'anthropic',
@@ -80,5 +82,32 @@ describe('POST /api/generate', () => {
     expect(rows[0]!.promptText).toContain('[material redacted');
     const inputs = rows[0]!.inputsJson as Record<string, unknown>;
     expect(inputs.material).toBe('[redacted]');
+  });
+
+  it('attaches userId when session present', async () => {
+    // Setup: signup to get a session
+    const setupApp = (() => {
+      const a = new Hono();
+      a.use('*', sessionMiddleware);
+      a.route('/', authRoutes);
+      a.route('/', generate);
+      return a;
+    })();
+    const signup = await setupApp.request('/api/auth/signup', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: 'u@test.com', password: 'longenough123' }),
+    });
+    const cookie = signup.headers.get('set-cookie')!.split(';')[0]!;
+
+    const res = await setupApp.request('/api/generate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4', cookie },
+      body: JSON.stringify(validBody),
+    });
+    expect(res.status).toBe(200);
+    const { db, schema } = await import('@/lib/db');
+    const rows = await db.select().from(schema.generations);
+    expect(rows[0]!.userId).not.toBeNull();
   });
 });

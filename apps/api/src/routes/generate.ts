@@ -54,6 +54,7 @@ generate.post('/api/generate', async (c) => {
       .insert(schema.generations)
       .values({
         ipHash: hashIp(ip),
+        userId: c.get('user')?.id ?? null,
         inputsJson: redactInputsForStorage(inputs as unknown as Record<string, unknown>),
         promptText: scrubbedPrompt,
         promptHash: result.promptHash,
