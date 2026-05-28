@@ -133,9 +133,11 @@ git commit -m "build(api): swap lucia/bcryptjs deps for @clerk/backend"
 
 **Files:** Modify `apps/api/src/schema.ts`; Create `apps/api/scripts/reset-for-clerk.ts`; Modify `apps/api/tests/setup.ts`, `apps/api/tests/integration/rag.test.ts`, `apps/api/tests/integration/update-profiles.test.ts`
 
-- [ ] **Step 1: Edit the `users` table and remove `sessions`**
+**IMPORTANT — two separate migrations to avoid an interactive prompt.** `drizzle-kit generate` asks an arrow-key "is this a rename?" question when a column is added AND dropped in the same diff. A non-interactive shell can't answer it. So we generate the DROP and the ADD as two separate, unambiguous migrations.
 
-In `apps/api/src/schema.ts`, replace the `users` definition and delete the `sessions` definition.
+- [ ] **Step 1: Edit schema — remove `password_hash` and the `sessions` table (do NOT add `clerk_user_id` yet)**
+
+In `apps/api/src/schema.ts`, replace the `users` definition and delete the entire `sessions` definition.
 
 Replace:
 ```typescript
@@ -155,7 +157,27 @@ export const sessions = pgTable('sessions', {
   userIdx: index('sessions_user_idx').on(t.userId),
 }));
 ```
-With:
+With (note: NO `clerk_user_id` yet — that's added in Step 3):
+```typescript
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  email: text('email').notNull().unique(),
+  displayName: text('display_name'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+```
+
+(`index` stays imported — generations/rate_limit_log still use it.)
+
+- [ ] **Step 2: Generate the DROP migration (non-interactive — pure drops)**
+
+Run: `cd apps/api && npm run db:generate`
+This diff only drops a column and a table (no additions), so drizzle-kit does NOT prompt for a rename.
+Expected: new file `apps/api/drizzle/0002_*.sql` containing `DROP COLUMN "password_hash"` and `DROP TABLE "sessions"` (with cascade). If the command appears to hang waiting for input, press Ctrl-C and report BLOCKED — the schema edit in Step 1 likely still had an added column.
+
+- [ ] **Step 3: Edit schema — now ADD `clerk_user_id`**
+
+In `apps/api/src/schema.ts`, add `clerkUserId` to the `users` table so it becomes:
 ```typescript
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -166,9 +188,13 @@ export const users = pgTable('users', {
 });
 ```
 
-(If `index` is now unused in the file, leave the import — other tables use it. Verify with `grep -c "index(" apps/api/src/schema.ts`; it's used by generations/rate_limit_log.)
+- [ ] **Step 4: Generate the ADD migration (non-interactive — pure add)**
 
-- [ ] **Step 2: Create the data-clear script**
+Run: `cd apps/api && npm run db:generate`
+This diff only adds a column (nothing dropped), so no rename prompt.
+Expected: new file `apps/api/drizzle/0003_*.sql` containing `ADD COLUMN "clerk_user_id" text NOT NULL` and a UNIQUE constraint.
+
+- [ ] **Step 5: Create the data-clear script**
 
 Create `apps/api/scripts/reset-for-clerk.ts`:
 ```typescript
@@ -177,33 +203,27 @@ import { sql } from 'drizzle-orm';
 import { db } from '../src/lib/db.js';
 
 // All existing users/generations are throwaway test data. Clearing the users
-// table (cascading to sessions/generations/feedback/user_profiles) lets the
+// table (cascading to generations/feedback/user_profiles/sessions) lets the
 // new NOT NULL clerk_user_id column be added to an empty table.
 await db.execute(sql`TRUNCATE users CASCADE`);
 console.log('cleared users (cascade) for Clerk migration');
 process.exit(0);
 ```
 
-- [ ] **Step 3: Generate the migration**
-
-Run: `cd apps/api && npm run db:generate`
-When drizzle-kit prompts about `clerk_user_id` vs `password_hash`, choose **create new column** for `clerk_user_id` (NOT a rename) and **drop** `password_hash`. It also drops the `sessions` table.
-Expected: new file `apps/api/drizzle/0002_*.sql`.
-
-- [ ] **Step 4: Review the generated SQL**
-
-Open the new `apps/api/drizzle/0002_*.sql`. Confirm it: adds `clerk_user_id text NOT NULL`, adds a unique constraint on it, drops `password_hash`, and drops the `sessions` table. If it shows a RENAME of `password_hash`→`clerk_user_id`, delete the migration and regenerate choosing "create column."
-
-- [ ] **Step 5: Clear data, then apply**
+- [ ] **Step 6: Clear data, then apply both migrations**
 
 ```bash
 cd apps/api
 npx tsx scripts/reset-for-clerk.ts
 npm run db:migrate
 ```
-Expected: script prints "cleared users…"; migrate applies 0002 with no "column contains null values" error (table is empty).
+Expected: script prints "cleared users…"; migrate applies 0002 (drop password_hash + sessions) then 0003 (add clerk_user_id NOT NULL) with no "column contains null values" error (users table is empty). NOTE: this runs against the live Neon DB in `apps/api/.env` — the user has authorized this (production auth breaks until the new backend deploys; anonymous generation keeps working).
 
-- [ ] **Step 6: Fix `tests/setup.ts`**
+- [ ] **Step 7: Review the generated SQL**
+
+Read both `apps/api/drizzle/0002_*.sql` and `0003_*.sql` and confirm they match the intent (drop password_hash + sessions; add clerk_user_id NOT NULL unique). Neither should contain a RENAME.
+
+- [ ] **Step 8: Fix `tests/setup.ts`**
 
 In `apps/api/tests/setup.ts`, remove the sessions line:
 ```typescript
@@ -211,7 +231,7 @@ In `apps/api/tests/setup.ts`, remove the sessions line:
 ```
 (Leave the others.)
 
-- [ ] **Step 7: Fix test seeds that set `passwordHash`**
+- [ ] **Step 9: Fix test seeds that set `passwordHash`**
 
 In `apps/api/tests/integration/rag.test.ts`, the `seedUser` helper:
 ```typescript
@@ -232,7 +252,7 @@ become:
 ```
 (Each user needs a unique `clerk_user_id`; both tests reset tables in `beforeEach`, but use a unique value to be safe.)
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 10: Commit**
 
 ```bash
 git add apps/api/src/schema.ts apps/api/drizzle apps/api/scripts/reset-for-clerk.ts apps/api/tests/setup.ts apps/api/tests/integration/rag.test.ts apps/api/tests/integration/update-profiles.test.ts
