@@ -5,10 +5,12 @@ import { health } from './routes/health.js';
 import { generate } from './routes/generate.js';
 import { feedback } from './routes/feedback.js';
 import { corsMiddleware } from './middleware/cors.js';
+import { sessionMiddleware } from './middleware/session.js';
 
 const app = new Hono();
 
 app.use('*', corsMiddleware);
+app.use('*', sessionMiddleware);
 app.route('/', health);
 app.route('/', generate);
 app.route('/', feedback);
