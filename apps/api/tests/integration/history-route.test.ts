@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Hono } from 'hono';
+import { me } from '@/routes/me';
+import { generate } from '@/routes/generate';
+import { withUser } from '../helpers/with-user';
+import { db, schema } from '@/lib/db';
+import { resetAllTables } from '../setup';
 
 vi.mock('@/lib/pipeline', () => ({
   runPipeline: vi.fn().mockResolvedValue({
@@ -12,16 +17,19 @@ vi.mock('@/lib/rate-limit', () => ({
   checkAndRecord: vi.fn().mockResolvedValue({ allowed: true, remaining: 19 }),
 }));
 
-import { me } from '@/routes/me';
-import { auth } from '@/routes/auth';
-import { generate } from '@/routes/generate';
-import { sessionMiddleware } from '@/middleware/session';
-import { resetAllTables } from '../setup';
+type U = { id: string; email: string; displayName: string | null };
 
-const makeApp = (): Hono => {
+const seedUser = async (email: string, clerkUserId: string): Promise<U> => {
+  const [u] = await db
+    .insert(schema.users)
+    .values({ email, clerkUserId, displayName: null })
+    .returning({ id: schema.users.id, email: schema.users.email, displayName: schema.users.displayName });
+  return u!;
+};
+
+const appFor = (user: U | null) => {
   const a = new Hono();
-  a.use('*', sessionMiddleware);
-  a.route('/', auth);
+  a.use('*', withUser(user));
   a.route('/', generate);
   a.route('/', me);
   return a;
@@ -37,25 +45,26 @@ const validInputs = {
   hoursAvailable: 2,
 };
 
+const gen = (app: Hono) =>
+  app.request('/api/generate', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+    body: JSON.stringify(validInputs),
+  });
+
 describe('GET /api/me/history', () => {
   beforeEach(async () => {
     await resetAllTables();
   });
 
   it('returns 401 when anonymous', async () => {
-    const res = await makeApp().request('/api/me/history');
+    const res = await appFor(null).request('/api/me/history');
     expect(res.status).toBe(401);
   });
 
-  it('returns empty list for new user', async () => {
-    const app = makeApp();
-    const signup = await app.request('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'h@test.com', password: 'longenough123' }),
-    });
-    const cookie = signup.headers.get('set-cookie')!.split(';')[0]!;
-    const res = await app.request('/api/me/history', { headers: { cookie } });
+  it('returns empty list for a new user', async () => {
+    const u = await seedUser('h@test.com', 'clerk_h');
+    const res = await appFor(u).request('/api/me/history');
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.entries).toEqual([]);
@@ -63,50 +72,26 @@ describe('GET /api/me/history', () => {
   });
 
   it('returns entries newest-first', async () => {
-    const app = makeApp();
-    const signup = await app.request('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'h@test.com', password: 'longenough123' }),
-    });
-    const cookie = signup.headers.get('set-cookie')!.split(';')[0]!;
-    // Generate 3 prompts
+    const u = await seedUser('h@test.com', 'clerk_h');
+    const app = appFor(u);
     for (let i = 0; i < 3; i++) {
-      await app.request('/api/generate', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4', cookie },
-        body: JSON.stringify(validInputs),
-      });
-      await new Promise((r) => setTimeout(r, 10));  // ensure distinct created_at
+      await gen(app);
+      await new Promise((r) => setTimeout(r, 10));
     }
-    const res = await app.request('/api/me/history', { headers: { cookie } });
-    expect(res.status).toBe(200);
+    const res = await app.request('/api/me/history');
     const body = await res.json();
     expect(body.entries.length).toBe(3);
     expect(body.total).toBe(3);
-    expect(new Date(body.entries[0].createdAt).getTime())
-      .toBeGreaterThan(new Date(body.entries[2].createdAt).getTime());
+    expect(new Date(body.entries[0].createdAt).getTime()).toBeGreaterThan(
+      new Date(body.entries[2].createdAt).getTime(),
+    );
   });
 
   it('does not return other users entries', async () => {
-    const app = makeApp();
-    // User A
-    const signupA = await app.request('/api/auth/signup', {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'a@test.com', password: 'longenough123' }),
-    });
-    const cookieA = signupA.headers.get('set-cookie')!.split(';')[0]!;
-    await app.request('/api/generate', {
-      method: 'POST', headers: { 'content-type': 'application/json', cookie: cookieA, 'x-forwarded-for': '1.1.1.1' },
-      body: JSON.stringify(validInputs),
-    });
-    // User B
-    const signupB = await app.request('/api/auth/signup', {
-      method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'b@test.com', password: 'longenough123' }),
-    });
-    const cookieB = signupB.headers.get('set-cookie')!.split(';')[0]!;
-    const res = await app.request('/api/me/history', { headers: { cookie: cookieB } });
+    const a = await seedUser('a@test.com', 'clerk_a');
+    const b = await seedUser('b@test.com', 'clerk_b');
+    await gen(appFor(a));
+    const res = await appFor(b).request('/api/me/history');
     const body = await res.json();
     expect(body.entries.length).toBe(0);
   });

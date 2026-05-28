@@ -11,8 +11,8 @@ vi.mock('@/lib/pipeline', () => ({ runPipeline: mockRunPipeline }));
 vi.mock('@/lib/rate-limit', () => ({ checkAndRecord: mockCheckAndRecord }));
 
 import { generate } from '@/routes/generate';
-import { sessionMiddleware } from '@/middleware/session';
-import { auth as authRoutes } from '@/routes/auth';
+import { withUser } from '../helpers/with-user';
+import { db, schema } from '@/lib/db';
 
 const validBody = {
   provider: 'anthropic',
@@ -75,7 +75,6 @@ describe('POST /api/generate', () => {
   it('persists generation with redacted material in prompt_text', async () => {
     const res = await post(makeApp(), { ...validBody, material: 'SENSITIVE NOTES' });
     expect(res.status).toBe(200);
-    const { db, schema } = await import('@/lib/db');
     const rows = await db.select().from(schema.generations);
     expect(rows.length).toBe(1);
     expect(rows[0]!.promptText).not.toContain('fake');
@@ -84,30 +83,23 @@ describe('POST /api/generate', () => {
     expect(inputs.material).toBe('[redacted]');
   });
 
-  it('attaches userId when session present', async () => {
-    // Setup: signup to get a session
-    const setupApp = (() => {
-      const a = new Hono();
-      a.use('*', sessionMiddleware);
-      a.route('/', authRoutes);
-      a.route('/', generate);
-      return a;
-    })();
-    const signup = await setupApp.request('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'u@test.com', password: 'longenough123' }),
-    });
-    const cookie = signup.headers.get('set-cookie')!.split(';')[0]!;
+  it('attaches userId when authenticated', async () => {
+    const [u] = await db
+      .insert(schema.users)
+      .values({ email: 'u@test.com', clerkUserId: 'clerk_u', displayName: null })
+      .returning({ id: schema.users.id });
 
-    const res = await setupApp.request('/api/generate', {
+    const app = new Hono();
+    app.use('*', withUser({ id: u!.id, email: 'u@test.com', displayName: null }));
+    app.route('/', generate);
+
+    const res = await app.request('/api/generate', {
       method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4', cookie },
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
       body: JSON.stringify(validBody),
     });
     expect(res.status).toBe(200);
-    const { db, schema } = await import('@/lib/db');
     const rows = await db.select().from(schema.generations);
-    expect(rows[0]!.userId).not.toBeNull();
+    expect(rows[0]!.userId).toBe(u!.id);
   });
 });

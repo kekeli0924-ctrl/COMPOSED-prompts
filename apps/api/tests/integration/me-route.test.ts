@@ -1,16 +1,16 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Hono } from 'hono';
 import { me } from '@/routes/me';
-import { auth } from '@/routes/auth';
-import { sessionMiddleware } from '@/middleware/session';
+import { withUser } from '../helpers/with-user';
+import { db, schema } from '@/lib/db';
 import { resetAllTables } from '../setup';
 
-const makeApp = (): Hono => {
-  const app = new Hono();
-  app.use('*', sessionMiddleware);
-  app.route('/', auth);
-  app.route('/', me);
-  return app;
+const seedUser = async () => {
+  const [u] = await db
+    .insert(schema.users)
+    .values({ email: 'me@test.com', clerkUserId: 'clerk_me', displayName: 'Me' })
+    .returning({ id: schema.users.id, email: schema.users.email, displayName: schema.users.displayName });
+  return u!;
 };
 
 describe('GET /api/me', () => {
@@ -18,22 +18,21 @@ describe('GET /api/me', () => {
     await resetAllTables();
   });
 
-  it('returns user: null when no session', async () => {
-    const res = await makeApp().request('/api/me');
+  it('returns user: null when anonymous', async () => {
+    const app = new Hono();
+    app.use('*', withUser(null));
+    app.route('/', me);
+    const res = await app.request('/api/me');
     expect(res.status).toBe(200);
-    const body = await res.json();
-    expect(body.user).toBeNull();
+    expect((await res.json()).user).toBeNull();
   });
 
-  it('returns user when session valid', async () => {
-    const app = makeApp();
-    const signup = await app.request('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ email: 'me@test.com', password: 'longenough123' }),
-    });
-    const cookie = signup.headers.get('set-cookie')!.split(';')[0]!;
-    const res = await app.request('/api/me', { headers: { cookie } });
+  it('returns user + null profileSummary when authed without profile', async () => {
+    const u = await seedUser();
+    const app = new Hono();
+    app.use('*', withUser({ id: u.id, email: u.email, displayName: u.displayName }));
+    app.route('/', me);
+    const res = await app.request('/api/me');
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.user.email).toBe('me@test.com');
