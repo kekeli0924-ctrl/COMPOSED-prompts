@@ -11,11 +11,6 @@ export default function AboutPage() {
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">
           A walkthrough of the system I built.
         </h1>
-        <p className="mt-4 text-lg text-slate-600">
-          This page exists for transparency — and because this project is my final
-          showcase for coding class. Below is what I built, the technical decisions I
-          made along the way, and what I learned doing it.
-        </p>
       </header>
 
       <Section number="1" title="The problem I'm solving">
