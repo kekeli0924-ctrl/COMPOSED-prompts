@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { listHistory, rateHistoryEntry, type HistoryEntry } from '@/lib/storage/history';
-import { findCourse } from '@/lib/courses';
-import { STUDY_MODE_LABELS } from '@/lib/templates';
+import { findCourse, STUDY_MODE_LABELS } from '@composed-prompts/shared';
 
 export default function HistoryPage() {
   const [entries, setEntries] = useState<HistoryEntry[] | null>(null);

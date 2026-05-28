@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { WizardInputs } from '@/lib/types';
+import type { WizardInputs } from '@composed-prompts/shared';
 
 const { mockGenerateFullPromptWithOpus, mockBudgetCheck, mockBudgetRecord } = vi.hoisted(() => ({
   mockGenerateFullPromptWithOpus: vi.fn(),
@@ -7,9 +7,13 @@ const { mockGenerateFullPromptWithOpus, mockBudgetCheck, mockBudgetRecord } = vi
   mockBudgetRecord: vi.fn(),
 }));
 
-vi.mock('@/lib/generation/opus-full-prompt', () => ({
-  generateFullPromptWithOpus: mockGenerateFullPromptWithOpus,
-}));
+vi.mock('@composed-prompts/shared', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@composed-prompts/shared')>();
+  return {
+    ...actual,
+    generateFullPromptWithOpus: mockGenerateFullPromptWithOpus,
+  };
+});
 
 vi.mock('@/lib/budget/daily-cap', () => ({
   budgetAvailable: mockBudgetCheck,

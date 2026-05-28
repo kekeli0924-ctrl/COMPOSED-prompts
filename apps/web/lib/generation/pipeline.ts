@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
-import type { WizardInputs, GenerateResponse } from '@/lib/types';
-import { assembleDeterministicPrompt } from '@/lib/generation/assembler';
-import { generateFullPromptWithOpus } from '@/lib/generation/opus-full-prompt';
+import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
+import { assembleDeterministicPrompt } from '@composed-prompts/shared';
+import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt';
 import { budgetAvailable, recordSpend } from '@/lib/budget/daily-cap';
 
 const OPUS_INPUT_PER_MTOK_USD = 5.0;

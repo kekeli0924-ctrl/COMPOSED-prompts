@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { WizardInputsSchema } from '@/lib/validation/wizard-inputs';
+import { WizardInputsSchema } from '@composed-prompts/shared';
 import { runPipeline } from '@/lib/generation/pipeline';
 import { checkAndRecord } from '@/lib/rate-limit/sliding-window';
 

@@ -11,7 +11,7 @@ import { ModePicker } from '@/components/ModePicker';
 import { AssessmentStep } from '@/components/AssessmentStep';
 import { MaterialStep } from '@/components/MaterialStep';
 import { AboutMeStep } from '@/components/AboutMeStep';
-import type { WizardInputs } from '@/lib/types';
+import type { WizardInputs } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
 
 type PartialWizardState = Partial<WizardInputs> & {

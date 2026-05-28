@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { FeedbackPayloadSchema } from '@/lib/validation/wizard-inputs';
+import { FeedbackPayloadSchema } from '@composed-prompts/shared';
 import { kv } from '@/lib/kv';
 
 const KEY = (hash: string): string => `feedback:${hash}`;

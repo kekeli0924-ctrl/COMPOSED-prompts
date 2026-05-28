@@ -2,8 +2,8 @@
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import type { StudyMode } from '@/lib/types';
-import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '@/lib/templates';
+import type { StudyMode } from '@composed-prompts/shared';
+import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '@composed-prompts/shared';
 
 const MODES: StudyMode[] = [
   'cram-review',

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { searchCourses, findCourse } from '@/lib/courses';
+import { searchCourses, findCourse } from '@composed-prompts/shared';
 
 export function CoursePicker(props: {
   courseId: string | null;

@@ -3,7 +3,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { AssessmentType } from '@/lib/types';
+import type { AssessmentType } from '@composed-prompts/shared';
 
 const HOUR_OPTIONS: Array<{ value: number; label: string }> = [
   { value: 0.5, label: '30 minutes' },
