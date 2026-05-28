@@ -98,12 +98,7 @@ export default function AboutPage() {
       </Section>
 
       <Section number="3" title="The Pomfret-Study Framework">
-        <p>
-          The core of this project isn&apos;t the code — it&apos;s the{' '}
-          <strong>prompt structure</strong> I designed. Every prompt the system writes
-          follows this exact 7-section pattern:
-        </p>
-        <ol className="mt-4 ml-4 list-decimal space-y-2 text-sm">
+        <ol className="ml-4 list-decimal space-y-2 text-sm">
           <li><strong>Role</strong> — calibrated tutor persona (patient, rigorous, etc.) based on the student&apos;s confidence and the course&apos;s rigor</li>
           <li><strong>About Me</strong> — who the student is (course + level + confidence + what they understand + what confuses them)</li>
           <li><strong>Material</strong> — whatever the student pasted in</li>
