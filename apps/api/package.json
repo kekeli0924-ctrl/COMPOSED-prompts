@@ -19,16 +19,13 @@
     "@hono/node-server": "^1.13.7",
     "drizzle-orm": "^0.36.0",
     "hono": "^4.6.0",
-    "lucia": "^3.2.0",
-    "@lucia-auth/adapter-drizzle": "^1.1.0",
-    "bcryptjs": "^2.4.3",
+    "@clerk/backend": "^1.21.0",
     "postgres": "^3.4.5",
     "zod": "^4.4.3",
     "dotenv": "^16.4.5",
     "tsx": "^4.22.3"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.19.41",
     "drizzle-kit": "^0.28.0",
     "typescript": "^5",
