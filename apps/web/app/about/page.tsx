@@ -58,19 +58,19 @@ export default function AboutPage() {
           host="Fly.io"
         >
           <p>
-            A separate Node.js service deployed as a Docker container on Fly.io. It
-            handles the actual prompt generation — receiving the form data, calling the
-            Anthropic API, persisting the result, returning the prompt.
+            The backend is written in <strong>Hono</strong> — a modern JavaScript
+            framework similar to Express but more portable. It runs as a Docker
+            container on Fly.io, but I could move it to AWS, Cloudflare, or my laptop
+            and it&apos;d run unchanged. That portability was one of my design goals.
           </p>
           <p className="mt-2">
-            I picked <strong>Hono</strong> over Express because it&apos;s modern,
-            TypeScript-native, and runs on any JavaScript runtime (Node, Bun,
-            Cloudflare Workers). If I ever want to move off Fly.io, the code comes with
-            me unchanged.
+            The backend handles the actual prompt generation — receiving form data from
+            the frontend, calling the Anthropic API, persisting the result, returning
+            the prompt to the user.
           </p>
           <p className="mt-2">
-            The backend talks to a <strong>Postgres database</strong> (hosted on Neon,
-            a serverless Postgres provider). Schema and migrations are managed by{' '}
+            It talks to a <strong>Postgres database</strong> (hosted on Neon, a
+            serverless Postgres provider). Schema and migrations are managed by{' '}
             <strong>Drizzle ORM</strong>, which gives me type-safe queries — TypeScript
             knows the shape of every database row.
           </p>
