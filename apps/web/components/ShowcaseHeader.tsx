@@ -8,7 +8,6 @@ export function ShowcaseHeader() {
           Pomfret Study Prompts
         </Link>
         <nav className="flex items-center gap-5 text-sm text-slate-600">
-          <Link href="/wizard" className="hover:text-slate-900">Wizard</Link>
           <Link href="/history" className="hover:text-slate-900">History</Link>
           <Link href="/about" className="hover:text-slate-900">How it works</Link>
         </nav>
