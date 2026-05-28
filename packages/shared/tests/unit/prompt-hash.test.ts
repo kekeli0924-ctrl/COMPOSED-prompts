@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { promptHash } from '@composed-prompts/shared';
+import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
 
 describe('promptHash', () => {
   it('returns a 64-char hex string', () => {

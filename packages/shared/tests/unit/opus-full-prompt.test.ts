@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { generateFullPromptWithOpus } from '@composed-prompts/shared';
+import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
 import type { WizardInputs } from '@composed-prompts/shared';
 
 const inputs: WizardInputs = {
