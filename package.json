@@ -10,5 +10,8 @@
     "web": "npm run dev --workspace=apps/web",
     "api": "npm run dev --workspace=apps/api",
     "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "drizzle-orm": "^0.36.4"
   }
 }
