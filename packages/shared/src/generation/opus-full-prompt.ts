@@ -3,6 +3,7 @@ import type { WizardInputs } from '../types.js';
 import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '../templates/index.js';
 import { findCourse } from '../courses.js';
 import { getModelProfile } from '../model-profiles.js';
+import { describeAttachedKinds } from '../material-kinds.js';
 
 const OPUS_MODEL = 'claude-opus-4-8';
 
@@ -103,6 +104,9 @@ const buildUserMessage = (inputs: WizardInputs): string => {
       ? `Material the student shared:\n---\n${inputs.material.slice(0, 8000)}\n---`
       : 'Material: The student did not paste specific material. Instruct the tutor LLM to ask for notes, syllabus, or topic list before going deep.',
     '',
+    inputs.attachedMaterialKinds && inputs.attachedMaterialKinds.length > 0
+      ? `The student will ATTACH the following to their own LLM when they study: ${describeAttachedKinds(inputs.attachedMaterialKinds)}. Write the Material and Interaction sections so the tutor first reads the attached material, extracts the key topics from it, and quizzes the student on those topics — do NOT assume that material text is inline in this prompt.`
+      : '',
     inputs.confidence !== undefined ? `Confidence on this material: ${inputs.confidence}/5` : '',
     inputs.understanding ? `What the student already understands: ${inputs.understanding}` : '',
     inputs.confusion ? `What confuses them: ${inputs.confusion}` : '',

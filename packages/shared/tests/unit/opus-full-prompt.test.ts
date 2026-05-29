@@ -73,4 +73,16 @@ describe('generateFullPromptWithOpus', () => {
     const result = await generateFullPromptWithOpus(inputs);
     expect(result.ok).toBe(false);
   });
+
+  it('adds an attach directive to the user message when kinds are set', async () => {
+    mockCreate.mockResolvedValue({
+      content: [{ type: 'text', text: 'ok' }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    });
+    await generateFullPromptWithOpus({ ...inputs, attachedMaterialKinds: ['study-guide'] });
+    const call = mockCreate.mock.calls[0]![0];
+    const userMsg = call.messages[0].content as string;
+    expect(userMsg).toContain('will ATTACH');
+    expect(userMsg).toContain('study guide');
+  });
 });
