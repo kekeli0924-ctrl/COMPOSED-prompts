@@ -3,6 +3,13 @@
     "anthropic": {
       "displayName": "Claude (Anthropic)",
       "models": {
+        "claude-opus-4-8": {
+          "displayName": "Claude Opus 4.8",
+          "format": "xml",
+          "isReasoning": false,
+          "longContext": true,
+          "supportsToolUse": true
+        },
         "claude-opus-4-7": {
           "displayName": "Claude Opus 4.7",
           "format": "xml",
