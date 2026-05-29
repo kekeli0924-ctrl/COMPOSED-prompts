@@ -13,6 +13,14 @@ export type AssessmentType =
   | 'presentation'
   | 'other';
 
+export type MaterialKind =
+  | 'study-guide'
+  | 'class-notes'
+  | 'past-quiz'
+  | 'textbook'
+  | 'slides'
+  | 'problem-set';
+
 export type WizardInputs = {
   // Step 1
   provider: string;          // e.g. 'anthropic'
@@ -32,6 +40,8 @@ export type WizardInputs = {
 
   // Step 5 (optional)
   material?: string;         // max 20000 chars
+  // Step 5 (optional) — what the student will attach to their own LLM
+  attachedMaterialKinds?: MaterialKind[];
 
   // Step 6 (optional)
   confidence?: 1 | 2 | 3 | 4 | 5;
