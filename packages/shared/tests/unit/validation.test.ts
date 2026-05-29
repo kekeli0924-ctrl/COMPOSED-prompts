@@ -65,6 +65,33 @@ describe('WizardInputsSchema', () => {
     });
     expect(r.success).toBe(false);
   });
+
+  it('accepts a valid attachedMaterialKinds array', () => {
+    const r = WizardInputsSchema.safeParse({
+      ...validInputs,
+      attachedMaterialKinds: ['study-guide', 'past-quiz'],
+    });
+    expect(r.success).toBe(true);
+  });
+
+  it('rejects an unknown material kind', () => {
+    const r = WizardInputsSchema.safeParse({
+      ...validInputs,
+      attachedMaterialKinds: ['notebook'],
+    });
+    expect(r.success).toBe(false);
+  });
+
+  it('rejects more than 6 material kinds', () => {
+    const r = WizardInputsSchema.safeParse({
+      ...validInputs,
+      attachedMaterialKinds: [
+        'study-guide', 'class-notes', 'past-quiz',
+        'textbook', 'slides', 'problem-set', 'study-guide',
+      ],
+    });
+    expect(r.success).toBe(false);
+  });
 });
 
 describe('FeedbackPayloadSchema', () => {

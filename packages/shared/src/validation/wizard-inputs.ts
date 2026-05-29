@@ -32,6 +32,19 @@ export const WizardInputsSchema = z
       .regex(ISO_DATE_RE, 'must be YYYY-MM-DD'),
     hoursAvailable: z.number().positive().max(720),
     material: z.string().max(20000).optional(),
+    attachedMaterialKinds: z
+      .array(
+        z.enum([
+          'study-guide',
+          'class-notes',
+          'past-quiz',
+          'textbook',
+          'slides',
+          'problem-set',
+        ]),
+      )
+      .max(6)
+      .optional(),
     confidence: z
       .union([
         z.literal(1),
