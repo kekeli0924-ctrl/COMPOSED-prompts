@@ -33,7 +33,11 @@ export function MaterialStep(props: {
           what you&apos;ll attach and we&apos;ll build the prompt so your AI pulls the key topics out
           of it and quizzes you on them.
         </p>
-        <div className="mt-1 flex flex-wrap gap-2">
+        <div
+          role="group"
+          aria-label="What you'll attach to your AI"
+          className="mt-1 flex flex-wrap gap-2"
+        >
           {MATERIAL_KINDS.map((k) => {
             const on = selected.has(k);
             return (
