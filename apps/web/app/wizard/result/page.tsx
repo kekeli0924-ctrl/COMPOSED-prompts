@@ -8,6 +8,7 @@ import { PromptOutput } from '@/components/PromptOutput';
 import { FeedbackForm } from '@/components/FeedbackForm';
 import { RagPanel } from '@/components/RagPanel';
 import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
+import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
 
 type LastResult = {
   prompt: string;
@@ -18,6 +19,7 @@ type LastResult = {
     generationId: string;
   };
   entryId: string;
+  attachedMaterialKinds?: MaterialKind[];
 };
 
 export default function ResultPage() {
@@ -47,6 +49,15 @@ export default function ResultPage() {
         <Alert className="mt-4">
           <AlertDescription>
             We couldn&apos;t reach Opus 4.7 for this generation — used the deterministic templates instead. The prompt is still solid, but lacks the topic-specific tailoring Opus would have added.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {data.attachedMaterialKinds && data.attachedMaterialKinds.length > 0 && (
+        <Alert className="mt-4 border-indigo-200 bg-indigo-50">
+          <AlertDescription className="text-indigo-900">
+            Remember to attach your {describeAttachedKinds(data.attachedMaterialKinds)} to your AI
+            when you paste this prompt — the prompt asks it to read your material first.
           </AlertDescription>
         </Alert>
       )}
