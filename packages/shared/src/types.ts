@@ -16,7 +16,7 @@ export type AssessmentType =
 export type WizardInputs = {
   // Step 1
   provider: string;          // e.g. 'anthropic'
-  model: string;             // e.g. 'claude-opus-4-7'
+  model: string;             // e.g. 'claude-opus-4-8'
 
   // Step 2
   courseId: string | null;   // null when 'Other'

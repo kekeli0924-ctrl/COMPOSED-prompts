@@ -57,7 +57,7 @@ describe('generateFullPromptWithOpus', () => {
     });
     await generateFullPromptWithOpus(inputs);
     const call = mockCreate.mock.calls[0]![0];
-    expect(call.model).toBe('claude-opus-4-7');
+    expect(call.model).toBe('claude-opus-4-8');
     expect(Array.isArray(call.system)).toBe(true);
     const cached = call.system.some(
       (b: { cache_control?: { type: string } }) => b.cache_control?.type === 'ephemeral',

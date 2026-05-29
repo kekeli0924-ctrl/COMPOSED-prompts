@@ -18,7 +18,7 @@ const defaultSummarize: SummarizeFn = async ({ ratedSamples }) => {
     )
     .join('\n\n---\n\n');
   const response = await client.messages.create({
-    model: 'claude-opus-4-7',
+    model: 'claude-opus-4-8',
     max_tokens: 400,
     system:
       "You analyze a student's ratings + comments on study prompts to produce a single-paragraph (3-5 sentences) summary of their preferences. Be concrete and specific. Focus on actionable patterns (preferred style, length, depth, types of activities). Output only the summary paragraph, no preamble.",

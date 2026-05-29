@@ -4,7 +4,7 @@ import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '../templates/index.j
 import { findCourse } from '../courses.js';
 import { getModelProfile } from '../model-profiles.js';
 
-const OPUS_MODEL = 'claude-opus-4-7';
+const OPUS_MODEL = 'claude-opus-4-8';
 
 const OPUS_SYSTEM_PROMPT = `You are an expert prompt engineer creating customized study prompts for Pomfret School students. Your output is pasted verbatim into the student's chosen LLM (ChatGPT, Claude, or Gemini) for a study session — so write it AS the prompt the student will send, not ABOUT what such a prompt would look like.
 
