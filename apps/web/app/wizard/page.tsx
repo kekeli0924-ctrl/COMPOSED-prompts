@@ -80,6 +80,10 @@ export default function WizardPage() {
       assessmentDate: inputs.assessmentDate!,
       hoursAvailable: inputs.hoursAvailable!,
       material: inputs.material.trim() || undefined,
+      attachedMaterialKinds:
+        inputs.attachedMaterialKinds && inputs.attachedMaterialKinds.length > 0
+          ? inputs.attachedMaterialKinds
+          : undefined,
       confidence: inputs.confidence,
       understanding: inputs.understanding.trim() || undefined,
       confusion: inputs.confusion.trim() || undefined,
@@ -111,7 +115,11 @@ export default function WizardPage() {
       });
       sessionStorage.setItem(
         'pomfret.lastResult',
-        JSON.stringify({ ...data, entryId: entry.id }),
+        JSON.stringify({
+          ...data,
+          entryId: entry.id,
+          attachedMaterialKinds: payload.attachedMaterialKinds ?? [],
+        }),
       );
 
       // Hold the loading screen until at least MIN_LOADING_MS has elapsed.
@@ -170,7 +178,9 @@ export default function WizardPage() {
         {step === 4 && (
           <MaterialStep
             material={inputs.material}
+            attachedMaterialKinds={inputs.attachedMaterialKinds ?? []}
             onChange={(v) => update({ material: v })}
+            onKindsChange={(kinds) => update({ attachedMaterialKinds: kinds })}
           />
         )}
         {step === 5 && (
