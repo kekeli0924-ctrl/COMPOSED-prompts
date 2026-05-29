@@ -1,5 +1,6 @@
 import type { WizardInputs } from '../types.js';
 import { findCourse } from '../courses.js';
+import { describeAttachedKinds } from '../material-kinds.js';
 
 const courseLabel = (inputs: WizardInputs): string => {
   if (inputs.courseId) {
@@ -65,10 +66,17 @@ export function buildAboutMeSection(inputs: WizardInputs): string {
 }
 
 export function buildMaterialSection(inputs: WizardInputs): string {
-  if (!inputs.material || inputs.material.trim().length === 0) {
-    return 'I have shared no specific material — please ask me to share my notes, syllabus, or topic list if you need them to be effective.';
+  const kinds = inputs.attachedMaterialKinds ?? [];
+  const hasText = Boolean(inputs.material && inputs.material.trim().length > 0);
+
+  if (kinds.length > 0) {
+    const attach = `I will attach my ${describeAttachedKinds(kinds)} to you. Read it first, extract the 6-8 most important topics it covers, and base our session on those.`;
+    return hasText ? `${attach}\n\nI've also pasted some material:\n${inputs.material!.trim()}` : attach;
   }
-  return inputs.material.trim();
+  if (hasText) {
+    return inputs.material!.trim();
+  }
+  return 'I have shared no specific material — please ask me to share my notes, syllabus, or topic list if you need them to be effective.';
 }
 
 const formatHours = (h: number): string => {

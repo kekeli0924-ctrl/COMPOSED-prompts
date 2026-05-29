@@ -76,4 +76,20 @@ describe('shared section builders', () => {
     const out = buildSelfCheckSection(baseInputs);
     expect(out).toMatch(/before responding/i);
   });
+
+  it('builds an attach directive when material kinds are set', () => {
+    const out = buildMaterialSection({ ...baseInputs, attachedMaterialKinds: ['study-guide'] });
+    expect(out).toContain('I will attach my study guide');
+    expect(out).toContain('extract the 6');
+  });
+
+  it('includes both attached and pasted material', () => {
+    const out = buildMaterialSection({
+      ...baseInputs,
+      attachedMaterialKinds: ['study-guide'],
+      material: 'my pasted notes',
+    });
+    expect(out).toContain('I will attach my study guide');
+    expect(out).toContain('my pasted notes');
+  });
 });
