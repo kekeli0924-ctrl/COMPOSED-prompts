@@ -89,7 +89,10 @@ export default function PlanPage() {
 
       {submitted && (
         <div className="mt-8">
+          {/* key remounts the component on each new submission so it re-proposes
+              from the new inputs (its block state is initialized once on mount). */}
           <StudySchedule
+            key={`${submitted.assessmentDate}|${submitted.hoursAvailable}|${submitted.courseLabel}`}
             assessmentDate={submitted.assessmentDate}
             hoursAvailable={submitted.hoursAvailable}
             courseLabel={submitted.courseLabel}
