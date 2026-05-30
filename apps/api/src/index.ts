@@ -5,6 +5,7 @@ import { health } from './routes/health.js';
 import { generate } from './routes/generate.js';
 import { feedback } from './routes/feedback.js';
 import { me } from './routes/me.js';
+import { calendar } from './routes/calendar.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { clerkAuthMiddleware } from './middleware/clerk-auth.js';
 
@@ -16,6 +17,7 @@ app.route('/', health);
 app.route('/', generate);
 app.route('/', feedback);
 app.route('/', me);
+app.route('/', calendar);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
 const port = parseInt(process.env.PORT ?? '8080', 10);
