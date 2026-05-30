@@ -9,6 +9,7 @@ import { FeedbackForm } from '@/components/FeedbackForm';
 import { RagPanel } from '@/components/RagPanel';
 import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
+import { StudySchedule } from '@/components/StudySchedule';
 
 type LastResult = {
   prompt: string;
@@ -20,6 +21,12 @@ type LastResult = {
   };
   entryId: string;
   attachedMaterialKinds?: MaterialKind[];
+  schedule?: {
+    assessmentDate: string;
+    hoursAvailable: number;
+    courseLabel: string;
+    assessmentType: string;
+  };
 };
 
 export default function ResultPage() {
@@ -65,6 +72,17 @@ export default function ResultPage() {
       <div className="mt-6">
         <PromptOutput prompt={data.prompt} />
       </div>
+
+      {data.schedule && (
+        <div className="mt-8">
+          <StudySchedule
+            assessmentDate={data.schedule.assessmentDate}
+            hoursAvailable={data.schedule.hoursAvailable}
+            courseLabel={data.schedule.courseLabel}
+            assessmentType={data.schedule.assessmentType}
+          />
+        </div>
+      )}
 
       <div className="mt-8">
         <RagPanel eyebrow="What happened behind that prompt — the RAG learning system" />

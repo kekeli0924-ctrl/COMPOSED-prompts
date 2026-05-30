@@ -13,6 +13,7 @@ import { MaterialStep } from '@/components/MaterialStep';
 import { AboutMeStep } from '@/components/AboutMeStep';
 import { RagPanel } from '@/components/RagPanel';
 import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
+import { findCourse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
 import { ApiError } from '@/lib/api-client';
 import { useApi } from '@/lib/use-api';
@@ -119,6 +120,13 @@ export default function WizardPage() {
           ...data,
           entryId: entry.id,
           attachedMaterialKinds: payload.attachedMaterialKinds ?? [],
+          schedule: {
+            assessmentDate: payload.assessmentDate,
+            hoursAvailable: payload.hoursAvailable,
+            courseLabel:
+              (payload.courseId ? findCourse(payload.courseId)?.name : payload.courseFreeText) ?? 'your course',
+            assessmentType: payload.assessmentType,
+          },
         }),
       );
 
