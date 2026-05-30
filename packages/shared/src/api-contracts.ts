@@ -1,4 +1,5 @@
 import type { WizardInputs, StudyMode } from './types.js';
+import type { Interval } from './calendar.js';
 
 // POST /api/generate
 export type GenerateResponse = {
@@ -55,3 +56,8 @@ export type ErrorResponse = { error: string; issues?: Array<{ path: (string | nu
 
 // Unused so far; kept for parity with WizardInputs imports
 export type { WizardInputs };
+
+// GET /api/calendar/freebusy
+export type CalendarFreeBusyResponse =
+  | { connected: false }
+  | { connected: true; busy: Interval[]; freeBlocks: Interval[] };
