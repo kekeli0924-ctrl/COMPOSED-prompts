@@ -50,6 +50,10 @@ describe('GET /api/calendar/freebusy', () => {
     const body = await res.json();
     expect(body.connected).toBe(true);
     expect(body.freeBlocks.length).toBe(1);
+    // Token vended for THIS user via the 'google' provider (guards IDOR + the
+    // version-sensitive provider string), then forwarded to Google.
+    expect(mockGetToken).toHaveBeenCalledWith('clerk_1', 'google');
+    expect(mockFetchBusy).toHaveBeenCalledWith('ya29', expect.any(String), expect.any(String));
   });
 
   it('returns connected:false on a calendar auth error', async () => {
@@ -65,5 +69,11 @@ describe('GET /api/calendar/freebusy', () => {
     const res = await appFor(USER).request('/api/calendar/freebusy');
     expect(res.status).toBe(502);
     expect(await res.json()).toEqual({ error: 'calendar unavailable' });
+  });
+
+  it('returns connected:false when the Clerk token fetch itself throws', async () => {
+    mockGetToken.mockRejectedValue(new Error('clerk down'));
+    const res = await appFor(USER).request('/api/calendar/freebusy');
+    expect(await res.json()).toEqual({ connected: false });
   });
 });

@@ -29,4 +29,11 @@ describe('fetchBusyIntervals', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue(new Response('boom', { status: 500 }));
     await expect(fetchBusyIntervals('tok', 'a', 'b')).rejects.toThrow('google freebusy failed 500');
   });
+
+  it('throws on a per-calendar error in a 200 response (does not report "fully free")', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ calendars: { primary: { errors: [{ reason: 'notFound' }] } } }), { status: 200 }),
+    );
+    await expect(fetchBusyIntervals('tok', 'a', 'b')).rejects.toThrow(/primary error/);
+  });
 });
