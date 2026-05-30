@@ -12,12 +12,17 @@ export default function HomePage() {
         prompt that&apos;s tuned to your LLM and your situation — the kind of
         prompt that gets a real study session, not a generic summary.
       </p>
-      <div className="mt-10 flex gap-3">
+      <div className="mt-10 flex flex-wrap gap-3">
         <Link href="/wizard">
           <Button size="lg">Start studying</Button>
         </Link>
-        <Link href="/history">
+        <Link href="/plan">
           <Button size="lg" variant="outline">
+            Plan study time
+          </Button>
+        </Link>
+        <Link href="/history">
+          <Button size="lg" variant="ghost">
             My past prompts
           </Button>
         </Link>
