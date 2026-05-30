@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import {
   WizardInputsSchema,
   redactMaterialForHistory,
+  gradeFromGradYear,
   type GenerateResponse,
 } from '@composed-prompts/shared';
 import { runPipeline } from '../lib/pipeline.js';
@@ -47,8 +48,10 @@ generate.post('/api/generate', async (c) => {
   }
 
   try {
-    const userId = c.get('user')?.id ?? null;
-    const result = await runPipeline(inputs, { userId });
+    const authedUser = c.get('user');
+    const userId = authedUser?.id ?? null;
+    const studentGrade = gradeFromGradYear(authedUser?.gradYear ?? null) ?? undefined;
+    const result = await runPipeline(inputs, { userId, studentGrade });
 
     const scrubbedPrompt = redactMaterialForHistory(result.prompt);
     const [inserted] = await db

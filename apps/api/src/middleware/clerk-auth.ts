@@ -5,7 +5,7 @@ import { getOrCreateUser } from '../lib/users.js';
 
 declare module 'hono' {
   interface ContextVariableMap {
-    user: { id: string; email: string; displayName: string | null } | null;
+    user: { id: string; email: string; displayName: string | null; gradYear: number | null } | null;
   }
 }
 
@@ -28,7 +28,7 @@ export const clerkAuthMiddleware: MiddlewareHandler = async (c, next) => {
       const displayName = [u.firstName, u.lastName].filter(Boolean).join(' ') || null;
       return { email, displayName };
     });
-    c.set('user', { id: user.id, email: user.email, displayName: user.displayName });
+    c.set('user', { id: user.id, email: user.email, displayName: user.displayName, gradYear: user.gradYear });
   } catch (err) {
     // Expected for forged/expired tokens (treat as anonymous). But a
     // misconfigured CLERK_SECRET_KEY or a Clerk/JWKS outage also lands here and

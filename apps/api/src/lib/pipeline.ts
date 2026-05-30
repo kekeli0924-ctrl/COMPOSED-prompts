@@ -23,7 +23,7 @@ export type PipelineResult = {
 
 export async function runPipeline(
   inputs: WizardInputs,
-  opts: { userId: string | null } = { userId: null },
+  opts: { userId: string | null; studentGrade?: string } = { userId: null },
 ): Promise<PipelineResult> {
   const budgetOk = await budgetAvailable();
   let fallbackReason: PipelineResult['fallbackReason'];
@@ -31,7 +31,7 @@ export async function runPipeline(
   if (budgetOk) {
     const rag = await fetchRagContext({ userId: opts.userId, courseId: inputs.courseId, mode: inputs.mode });
     const ragText = buildRagContext(rag);
-    const result = await generateFullPromptWithOpus(inputs, ragText);
+    const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade);
     if (result.ok) {
       await recordSpend(estimateOpusSpendUsd(result.usage));
       return {
@@ -45,7 +45,7 @@ export async function runPipeline(
     fallbackReason = 'budget-exhausted';
   }
 
-  const prompt = assembleDeterministicPrompt(inputs);
+  const prompt = assembleDeterministicPrompt(inputs, { studentGrade: opts.studentGrade });
   return {
     prompt,
     promptHash: promptHash(prompt),
