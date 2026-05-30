@@ -58,4 +58,12 @@ describe('GET /api/calendar/freebusy', () => {
     const res = await appFor(USER).request('/api/calendar/freebusy');
     expect(await res.json()).toEqual({ connected: false });
   });
+
+  it('returns 502 on an unexpected calendar failure (does NOT fake connected)', async () => {
+    mockGetToken.mockResolvedValue({ data: [{ token: 'ya29' }] });
+    mockFetchBusy.mockRejectedValue(new Error('google freebusy failed 500'));
+    const res = await appFor(USER).request('/api/calendar/freebusy');
+    expect(res.status).toBe(502);
+    expect(await res.json()).toEqual({ error: 'calendar unavailable' });
+  });
 });

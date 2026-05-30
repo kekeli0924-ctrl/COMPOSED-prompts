@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { computeFreeBlocks } from '@composed-prompts/shared';
+import { computeFreeBlocks, type CalendarFreeBusyResponse } from '@composed-prompts/shared';
 import { clerkClient } from '../lib/clerk.js';
 import { fetchBusyIntervals, CalendarAuthError } from '../lib/google-calendar.js';
 
@@ -23,14 +23,14 @@ calendar.get('/api/calendar/freebusy', async (c) => {
   } catch {
     googleToken = null;
   }
-  if (!googleToken) return c.json({ connected: false }, 200);
+  if (!googleToken) return c.json({ connected: false } satisfies CalendarFreeBusyResponse, 200);
 
   try {
     const busy = await fetchBusyIntervals(googleToken, timeMin, timeMax);
     const freeBlocks = computeFreeBlocks(busy, timeMin, timeMax, 30);
-    return c.json({ connected: true, busy, freeBlocks }, 200);
+    return c.json({ connected: true, busy, freeBlocks } satisfies CalendarFreeBusyResponse, 200);
   } catch (err) {
-    if (err instanceof CalendarAuthError) return c.json({ connected: false }, 200);
+    if (err instanceof CalendarAuthError) return c.json({ connected: false } satisfies CalendarFreeBusyResponse, 200);
     console.error('calendar freebusy failed', { message: err instanceof Error ? err.message : String(err) });
     return c.json({ error: 'calendar unavailable' }, 502);
   }

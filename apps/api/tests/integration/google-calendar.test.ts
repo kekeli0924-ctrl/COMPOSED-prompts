@@ -24,4 +24,9 @@ describe('fetchBusyIntervals', () => {
     vi.spyOn(global, 'fetch').mockResolvedValue(new Response('no', { status: 403 }));
     await expect(fetchBusyIntervals('tok', 'a', 'b')).rejects.toBeInstanceOf(CalendarAuthError);
   });
+
+  it('throws a plain Error (not CalendarAuthError) on other non-ok statuses', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue(new Response('boom', { status: 500 }));
+    await expect(fetchBusyIntervals('tok', 'a', 'b')).rejects.toThrow('google freebusy failed 500');
+  });
 });
