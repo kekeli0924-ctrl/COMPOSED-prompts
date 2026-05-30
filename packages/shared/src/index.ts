@@ -15,6 +15,7 @@ export * from './material-kinds.js';
 export * from './grade.js';
 export * from './calendar.js';
 export * from './study-schedule.js';
+export * from './ics.js';
 export * from './storage/redact.js';
 export {
   templateFor,
