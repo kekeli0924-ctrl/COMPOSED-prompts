@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
-import type { MeResponse } from '@composed-prompts/shared';
+import type { MeResponse, Grade } from '@composed-prompts/shared';
 
 const GRADES = ['Freshman', 'Sophomore', 'Junior', 'Senior'] as const;
 
@@ -13,6 +13,7 @@ export default function AccountPage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const { apiGet, apiPatch } = useApi();
   const [me, setMe] = useState<MeView | null>(null);
+  const [gradeError, setGradeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -23,10 +24,15 @@ export default function AccountPage() {
       .catch(() => setMe(null));
   }, [isLoaded, isSignedIn, apiGet]);
 
-  const onGradeChange = async (value: string): Promise<void> => {
+  const onGradeChange = async (value: Grade | ''): Promise<void> => {
     const grade = value === '' ? null : value;
-    const res = await apiPatch<{ gradYear: number | null; grade: string | null }>('/api/me/grade', { grade });
-    setMe((prev) => (prev ? { ...prev, gradYear: res.gradYear, grade: res.grade } : prev));
+    setGradeError(null);
+    try {
+      const res = await apiPatch<{ gradYear: number | null; grade: string | null }>('/api/me/grade', { grade });
+      setMe((prev) => (prev ? { ...prev, gradYear: res.gradYear, grade: res.grade } : prev));
+    } catch {
+      setGradeError("Couldn't save your grade — try again.");
+    }
   };
 
   if (!isLoaded) return <main className="mx-auto max-w-md px-6 py-16">Loading…</main>;
@@ -60,13 +66,14 @@ export default function AccountPage() {
               aria-label="Your grade"
               className="mt-2 block rounded border px-2 py-1"
               value={me?.grade ?? ''}
-              onChange={(e) => onGradeChange(e.target.value)}
+              onChange={(e) => onGradeChange(e.target.value as Grade | '')}
             >
               <option value="">Not set</option>
               {GRADES.map((g) => (
                 <option key={g} value={g}>{g}</option>
               ))}
             </select>
+            {gradeError && <p className="mt-1 text-xs text-red-600">{gradeError}</p>}
           </dd>
         </div>
         {me?.profileSummary && (
