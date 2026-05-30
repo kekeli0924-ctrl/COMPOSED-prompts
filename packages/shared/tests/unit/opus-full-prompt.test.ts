@@ -85,4 +85,14 @@ describe('generateFullPromptWithOpus', () => {
     expect(userMsg).toContain('will ATTACH');
     expect(userMsg).toContain('study guide');
   });
+
+  it('includes the grade line in the user message when studentGrade is set', async () => {
+    mockCreate.mockResolvedValue({
+      content: [{ type: 'text', text: 'ok' }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    });
+    await generateFullPromptWithOpus(inputs, '', 'Sophomore');
+    const call = mockCreate.mock.calls[0]![0];
+    expect(call.messages[0].content as string).toContain("Student's grade: Sophomore");
+  });
 });

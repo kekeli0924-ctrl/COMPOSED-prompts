@@ -78,7 +78,7 @@ const formatHours = (h: number): string => {
   return `${days} days`;
 };
 
-const buildUserMessage = (inputs: WizardInputs): string => {
+const buildUserMessage = (inputs: WizardInputs, studentGrade?: string): string => {
   const course = inputs.courseId ? findCourse(inputs.courseId) : null;
   const profile = getModelProfile(inputs.provider, inputs.model);
   const courseLine = course
@@ -91,6 +91,7 @@ const buildUserMessage = (inputs: WizardInputs): string => {
   const lines: string[] = [
     courseLine,
     courseDesc,
+    studentGrade ? `Student's grade: ${studentGrade}` : '',
     '',
     `Student's LLM: ${inputs.provider} / ${inputs.model}`,
     `Use format: ${profile.format}`,
@@ -148,11 +149,12 @@ function makeClient(): AnthropicLike {
 export async function generateFullPromptWithOpus(
   inputs: WizardInputs,
   ragContext: string = '',
+  studentGrade?: string,
 ): Promise<OpusFullPromptResult> {
   const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = makeClient();
   try {
-    const userMessage = buildUserMessage(inputs) + (ragContext ? `\n\n${ragContext}` : '');
+    const userMessage = buildUserMessage(inputs, studentGrade) + (ragContext ? `\n\n${ragContext}` : '');
     const response = await client.messages.create({
       model: OPUS_MODEL,
       max_tokens: 4000,
