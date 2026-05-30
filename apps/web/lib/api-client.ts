@@ -43,3 +43,23 @@ export async function apiGet<TRes>(path: string, token?: string): Promise<TRes> 
   }
   return res.json() as Promise<TRes>;
 }
+
+export async function apiPatch<TRes>(path: string, body: unknown, token?: string): Promise<TRes> {
+  const res = await fetch(path, {
+    method: 'PATCH',
+    headers: {
+      'content-type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    throw new ApiError(
+      (errBody as { error?: string }).error ?? `Request failed (${res.status})`,
+      res.status,
+      errBody,
+    );
+  }
+  return res.json() as Promise<TRes>;
+}
