@@ -13,6 +13,7 @@ export * from './courses.js';
 export * from './model-profiles.js';
 export * from './material-kinds.js';
 export * from './grade.js';
+export * from './calendar.js';
 export * from './storage/redact.js';
 export {
   templateFor,
