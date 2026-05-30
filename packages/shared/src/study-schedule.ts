@@ -61,6 +61,9 @@ export function proposeStudyBlocks(input: {
 
     const firstStart = new Date(day);
     firstStart.setHours(19, 0, 0, 0);
+    // If 7 PM has already passed today, bump to the next top-of-hour after `now`.
+    // Late at night this can roll today's sessions past midnight onto the next
+    // calendar date — acceptable, since the schedule is editable downstream.
     if (sameDay(day, now) && now.getTime() >= firstStart.getTime()) {
       const next = new Date(now);
       next.setMinutes(0, 0, 0);

@@ -39,4 +39,9 @@ describe('buildIcs', () => {
     const ics = buildIcs(BLOCKS, { courseLabel: 'Biology', assessmentType: 'test' });
     expect(ics).toContain('\r\n');
   });
+
+  it('escapes semicolons in the summary', () => {
+    const ics = buildIcs(BLOCKS, { courseLabel: 'Bio; Honors', assessmentType: 'test' });
+    expect(ics).toContain('Bio\\; Honors');
+  });
 });

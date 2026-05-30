@@ -42,4 +42,14 @@ describe('proposeStudyBlocks', () => {
     const blocks = proposeStudyBlocks({ assessmentDate: '2026-06-01', hoursAvailable: 1, now: at(2026, 6, 5) });
     expect(blocks).toEqual([{ start: '2026-06-05T19:00:00', end: '2026-06-05T20:00:00' }]);
   });
+
+  it('stacks multiple sessions per day, in day order, when sessions exceed days', () => {
+    // 3 sessions across 2 available days (Jun 1, Jun 2): day 0 gets two back-to-back.
+    const blocks = proposeStudyBlocks({ assessmentDate: '2026-06-03', hoursAvailable: 3, now: at(2026, 6, 1) });
+    expect(blocks).toEqual([
+      { start: '2026-06-01T19:00:00', end: '2026-06-01T20:00:00' },
+      { start: '2026-06-01T20:00:00', end: '2026-06-01T21:00:00' },
+      { start: '2026-06-02T19:00:00', end: '2026-06-02T20:00:00' },
+    ]);
+  });
 });
