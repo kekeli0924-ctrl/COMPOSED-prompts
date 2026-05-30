@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
 import type { MeResponse, Grade } from '@composed-prompts/shared';
+import { CalendarConnect } from '@/components/CalendarConnect';
 
 const GRADES = ['Freshman', 'Sophomore', 'Junior', 'Senior'] as const;
 
@@ -76,6 +77,7 @@ export default function AccountPage() {
             {gradeError && <p className="mt-1 text-xs text-red-600">{gradeError}</p>}
           </dd>
         </div>
+        <CalendarConnect />
         {me?.profileSummary && (
           <div>
             <dt className="text-slate-500">What we&apos;ve learned about your study style</dt>
