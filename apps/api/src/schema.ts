@@ -6,6 +6,7 @@ export const users = pgTable('users', {
   email: text('email').notNull().unique(),
   displayName: text('display_name'),
   clerkUserId: text('clerk_user_id').notNull().unique(),
+  gradYear: integer('grad_year'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
