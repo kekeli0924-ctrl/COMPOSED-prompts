@@ -43,4 +43,25 @@ describe('computeFreeBlocks', () => {
     const busy = [{ start: '2026-05-31T00:00:00.000Z', end: '2026-06-02T00:00:00.000Z' }];
     expect(computeFreeBlocks(busy, W_START, W_END, 30)).toEqual([]);
   });
+
+  it('clips a busy block that straddles the window start edge', () => {
+    // Runs from the previous evening into the window; only the in-window
+    // portion should consume free time.
+    const busy = [{ start: '2026-05-31T23:00:00.000Z', end: '2026-06-01T03:00:00.000Z' }];
+    const free = computeFreeBlocks(busy, W_START, W_END, 30);
+    expect(free).toEqual([{ start: '2026-06-01T03:00:00.000Z', end: '2026-06-01T10:00:00.000Z' }]);
+  });
+
+  it('is order-independent (sorts unsorted busy input)', () => {
+    const busy = [
+      { start: '2026-06-01T07:00:00.000Z', end: '2026-06-01T08:00:00.000Z' }, // later block first
+      { start: '2026-06-01T03:00:00.000Z', end: '2026-06-01T05:00:00.000Z' }, // earlier block second
+    ];
+    const free = computeFreeBlocks(busy, W_START, W_END, 30);
+    expect(free).toEqual([
+      { start: '2026-06-01T00:00:00.000Z', end: '2026-06-01T03:00:00.000Z' },
+      { start: '2026-06-01T05:00:00.000Z', end: '2026-06-01T07:00:00.000Z' },
+      { start: '2026-06-01T08:00:00.000Z', end: '2026-06-01T10:00:00.000Z' },
+    ]);
+  });
 });

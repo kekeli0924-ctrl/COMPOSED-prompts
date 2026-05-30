@@ -2,7 +2,8 @@ export type Interval = { start: string; end: string }; // ISO 8601 strings
 
 // Merge busy intervals (clipped to the window), then return the gaps that are
 // at least minBlockMinutes long within [windowStart, windowEnd]. Timezone-agnostic:
-// callers render the ISO times in the student's local time.
+// callers render the ISO times in the student's local time. Callers own ISO
+// validity: an unparseable date becomes NaN and that interval is silently dropped.
 export function computeFreeBlocks(
   busy: Interval[],
   windowStart: string,
