@@ -23,21 +23,35 @@ export function CalendarConnect() {
 
   useEffect(() => {
     if (!connected) return;
+    let cancelled = false;
     apiGet<CalendarFreeBusyResponse>('/api/calendar/freebusy')
-      .then(setData)
-      .catch(() => setData({ connected: false }));
+      .then((d) => {
+        if (!cancelled) setData(d);
+      })
+      .catch(() => {
+        if (!cancelled) setData({ connected: false });
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [connected, apiGet]);
 
-  // NOTE: externalAccount.reauthorize returns a verification carrying an external
-  // redirect URL. Verify its exact shape against the installed @clerk/nextjs version.
+  // reauthorize returns an ExternalAccountResource whose verification carries the
+  // Google consent URL; sending the browser there grants the calendar.freebusy
+  // scope and redirects back to /account.
   const onConnect = async (): Promise<void> => {
     if (!google) return;
-    const res = await google.reauthorize({
-      additionalScopes: [CALENDAR_SCOPE],
-      redirectUrl: `${window.location.origin}/account`,
-    });
-    const url = res.verification?.externalVerificationRedirectURL;
-    if (url) window.location.href = url.toString();
+    try {
+      const res = await google.reauthorize({
+        additionalScopes: [CALENDAR_SCOPE],
+        redirectUrl: `${window.location.origin}/account`,
+      });
+      const url = res.verification?.externalVerificationRedirectURL;
+      if (url) window.location.href = url.toString();
+    } catch {
+      // Consent dismissed or a transient Clerk error — no-op; the button stays
+      // available so the student can try again.
+    }
   };
 
   if (!isLoaded) return null;
@@ -75,8 +89,8 @@ export function CalendarConnect() {
               <>
                 <p className="mt-1 text-slate-500">Your open blocks over the next 7 days:</p>
                 <ul className="mt-1 list-disc pl-5 text-xs text-slate-700">
-                  {data.freeBlocks.slice(0, 8).map((b: Interval, i: number) => (
-                    <li key={i}>{fmt(b.start)} – {fmt(b.end)}</li>
+                  {data.freeBlocks.slice(0, 8).map((b: Interval) => (
+                    <li key={b.start}>{fmt(b.start)} – {fmt(b.end)}</li>
                   ))}
                 </ul>
               </>
