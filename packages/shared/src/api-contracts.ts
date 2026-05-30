@@ -28,6 +28,8 @@ export type AuthResponse = { user: { id: string; email: string; displayName: str
 export type MeResponse = {
   user: { id: string; email: string; displayName: string | null };
   profileSummary: string | null;
+  gradYear: number | null;
+  grade: string | null;
 } | { user: null };  // anonymous
 
 // GET /api/me/history
