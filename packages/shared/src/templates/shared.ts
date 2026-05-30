@@ -42,8 +42,11 @@ export function buildRoleSection(inputs: WizardInputs): string {
     .trim();
 }
 
-export function buildAboutMeSection(inputs: WizardInputs): string {
+export function buildAboutMeSection(inputs: WizardInputs, studentGrade?: string): string {
   const lines: string[] = [];
+  if (studentGrade) {
+    lines.push(`- Grade: ${studentGrade}`);
+  }
   if (inputs.courseId) {
     const c = findCourse(inputs.courseId);
     if (c) {

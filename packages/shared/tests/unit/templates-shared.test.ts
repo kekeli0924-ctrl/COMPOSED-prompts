@@ -92,4 +92,12 @@ describe('shared section builders', () => {
     expect(out).toContain('I will attach my study guide');
     expect(out).toContain('my pasted notes');
   });
+
+  it('includes grade in About-Me when provided', () => {
+    expect(buildAboutMeSection(baseInputs, 'Sophomore')).toContain('- Grade: Sophomore');
+  });
+
+  it('omits grade from About-Me when not provided', () => {
+    expect(buildAboutMeSection(baseInputs)).not.toContain('Grade:');
+  });
 });
