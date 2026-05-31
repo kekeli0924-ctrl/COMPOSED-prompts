@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { SignedIn, SignedOut, SignInButton } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
 import type { SharpenResponse } from '@composed-prompts/shared';
@@ -20,8 +20,16 @@ export function SharpenPanel({
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [critique, setCritique] = useState<string | null>(null);
   const [showCritique, setShowCritique] = useState(false);
+  // Ref guard (not a `state` check) because a fast double-click fires both onClicks
+  // against the same render — both would read state==='idle'. A ref mutates
+  // synchronously, so the second call bails. This endpoint spends real money
+  // (two frontier-model calls + a per-user cap slot), so a dupe must not slip through.
+  const inFlight = useRef(false);
 
   const sharpen = async (): Promise<void> => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setCritique(null); // clear any critique from a prior (failed) run before retrying
     setState('loading');
     try {
       const res = await apiPost<SharpenResponse>('/api/generate/sharpen', { generationId, basePrompt });
@@ -34,6 +42,8 @@ export function SharpenPanel({
       }
     } catch {
       setState('error');
+    } finally {
+      inFlight.current = false;
     }
   };
 
@@ -54,7 +64,10 @@ export function SharpenPanel({
         )}
         {state === 'loading' && <p className="text-sm text-slate-500">A second model is critiquing &amp; sharpening — about 30 seconds…</p>}
         {state === 'error' && (
-          <p className="text-sm text-slate-600">Couldn&apos;t sharpen right now — your prompt above is still solid.</p>
+          <>
+            <p className="text-sm text-slate-600">Couldn&apos;t sharpen right now — your prompt above is still solid.</p>
+            <button type="button" onClick={sharpen} className={`${btn} mt-2`}>Try again</button>
+          </>
         )}
         {state === 'done' && (
           <div className="text-sm">
