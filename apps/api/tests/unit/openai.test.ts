@@ -13,6 +13,12 @@ describe('critiquePromptWithGpt', () => {
   beforeEach(() => {
     mockCreate.mockReset();
     delete process.env.SHARPEN_GPT_EFFORT;
+    process.env.OPENAI_API_KEY = 'sk-test';
+  });
+
+  it('throws CritiqueError when OPENAI_API_KEY is not configured', async () => {
+    delete process.env.OPENAI_API_KEY;
+    await expect(critiquePromptWithGpt('b', ctx)).rejects.toBeInstanceOf(CritiqueError);
   });
 
   it('returns the critique and sends reasoning_effort=high by default', async () => {
