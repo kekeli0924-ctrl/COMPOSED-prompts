@@ -8,17 +8,12 @@ import {
 import { runPipeline } from '../lib/pipeline.js';
 import { checkAndRecord } from '../lib/rate-limit.js';
 import { hashIp } from '../lib/ip-hash.js';
+import { getIp } from '../lib/get-ip.js';
 import { db, schema } from '../lib/db.js';
 
 export const generate = new Hono();
 
 const RATE_LIMIT_PER_IP_PER_DAY = parseInt(process.env.RATE_LIMIT_PER_IP_PER_DAY ?? '20', 10);
-
-const getIp = (c: { req: { header: (k: string) => string | undefined } }): string => {
-  const fwd = c.req.header('x-forwarded-for');
-  if (fwd) return fwd.split(',')[0]!.trim();
-  return c.req.header('x-real-ip') ?? 'unknown';
-};
 
 const redactInputsForStorage = (inputs: Record<string, unknown>): Record<string, unknown> => ({
   ...inputs,
