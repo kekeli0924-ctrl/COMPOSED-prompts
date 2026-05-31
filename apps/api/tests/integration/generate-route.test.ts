@@ -13,6 +13,7 @@ vi.mock('@/lib/rate-limit', () => ({ checkAndRecord: mockCheckAndRecord }));
 import { generate } from '@/routes/generate';
 import { withUser } from '../helpers/with-user';
 import { db, schema } from '@/lib/db';
+import { hashIp } from '@/lib/ip-hash';
 
 const validBody = {
   provider: 'anthropic',
@@ -101,5 +102,32 @@ describe('POST /api/generate', () => {
     expect(res.status).toBe(200);
     const rows = await db.select().from(schema.generations);
     expect(rows[0]!.userId).toBe(u!.id);
+  });
+
+  it('keys the rate limit on the IP (limit 20) for anonymous requests', async () => {
+    await post(makeApp(), validBody); // header x-forwarded-for: '1.2.3.4'
+    expect(mockCheckAndRecord).toHaveBeenCalledWith(`ip:${hashIp('1.2.3.4')}`, {
+      limit: 20,
+      windowSeconds: 86400,
+    });
+  });
+
+  it('keys the rate limit on the user (limit 100) when authenticated', async () => {
+    const [u] = await db
+      .insert(schema.users)
+      .values({ email: 'k@test.com', clerkUserId: 'clerk_k', displayName: null })
+      .returning({ id: schema.users.id });
+    const app = new Hono();
+    app.use('*', withUser({ id: u!.id, email: 'k@test.com', displayName: null }));
+    app.route('/', generate);
+    await app.request('/api/generate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+      body: JSON.stringify(validBody),
+    });
+    expect(mockCheckAndRecord).toHaveBeenCalledWith(`user:${u!.id}`, {
+      limit: 100,
+      windowSeconds: 86400,
+    });
   });
 });

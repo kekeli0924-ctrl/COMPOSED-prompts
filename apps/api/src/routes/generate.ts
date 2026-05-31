@@ -14,6 +14,7 @@ import { db, schema } from '../lib/db.js';
 export const generate = new Hono();
 
 const RATE_LIMIT_PER_IP_PER_DAY = parseInt(process.env.RATE_LIMIT_PER_IP_PER_DAY ?? '20', 10);
+const RATE_LIMIT_PER_USER_PER_DAY = parseInt(process.env.RATE_LIMIT_PER_USER_PER_DAY ?? '100', 10);
 
 const redactInputsForStorage = (inputs: Record<string, unknown>): Record<string, unknown> => ({
   ...inputs,
@@ -36,14 +37,16 @@ generate.post('/api/generate', async (c) => {
   }
   const inputs = parsed.data;
 
+  const authedUser = c.get('user');
   const ip = getIp(c);
-  const limit = await checkAndRecord(`ip:${hashIp(ip)}`, { limit: RATE_LIMIT_PER_IP_PER_DAY, windowSeconds: 24 * 60 * 60 });
+  const rlBucket = authedUser ? `user:${authedUser.id}` : `ip:${hashIp(ip)}`;
+  const rlLimit = authedUser ? RATE_LIMIT_PER_USER_PER_DAY : RATE_LIMIT_PER_IP_PER_DAY;
+  const limit = await checkAndRecord(rlBucket, { limit: rlLimit, windowSeconds: 24 * 60 * 60 });
   if (!limit.allowed) {
     return c.json({ error: 'rate limit exceeded; try again tomorrow' }, 429);
   }
 
   try {
-    const authedUser = c.get('user');
     const userId = authedUser?.id ?? null;
     const studentGrade = gradeFromGradYear(authedUser?.gradYear ?? null) ?? undefined;
     const result = await runPipeline(inputs, { userId, studentGrade });
