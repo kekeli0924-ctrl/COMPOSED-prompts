@@ -61,3 +61,9 @@ export type { WizardInputs };
 export type CalendarFreeBusyResponse =
   | { connected: false }
   | { connected: true; busy: Interval[]; freeBlocks: Interval[] };
+
+// POST /api/generate/sharpen
+export type SharpenRequest = { generationId: string; basePrompt: string };
+export type SharpenResponse =
+  | { ok: true; improvedPrompt: string; critique: string }
+  | { ok: false; reason: 'unavailable' | 'critic-failed' | 'revise-failed' };

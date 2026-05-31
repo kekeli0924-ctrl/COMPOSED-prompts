@@ -5,7 +5,7 @@ import { findCourse } from '../courses.js';
 import { getModelProfile } from '../model-profiles.js';
 import { describeAttachedKinds } from '../material-kinds.js';
 
-const OPUS_MODEL = 'claude-opus-4-8';
+export const OPUS_MODEL = 'claude-opus-4-8';
 
 const OPUS_SYSTEM_PROMPT = `You are an expert prompt engineer creating customized study prompts for Pomfret School students. Your output is pasted verbatim into the student's chosen LLM (ChatGPT, Claude, or Gemini) for a study session — so write it AS the prompt the student will send, not ABOUT what such a prompt would look like.
 
@@ -127,13 +127,13 @@ type MessageResponse = {
   content: Array<{ type: string; text?: string } & Record<string, unknown>>;
   usage: { input_tokens: number; output_tokens: number };
 };
-type AnthropicLike = {
+export type AnthropicLike = {
   messages: {
     create: (params: MessagesCreateParams) => Promise<MessageResponse>;
   };
 };
 
-function makeClient(): AnthropicLike {
+export function makeClient(): AnthropicLike {
   // The Anthropic SDK ships as a class at runtime, but tests may mock it with
   // an arrow function (which JS does not permit invoking with `new`). Try
   // `new` first and fall back to a plain function call so both paths work.

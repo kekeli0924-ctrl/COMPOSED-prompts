@@ -7,6 +7,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./src/generation/opus-full-prompt.js": "./src/generation/opus-full-prompt.ts",
+    "./src/generation/revise-prompt.js": "./src/generation/revise-prompt.ts",
     "./src/storage/prompt-hash.js": "./src/storage/prompt-hash.ts",
     "./data/courses.json": "./data/courses.json",
     "./data/model-profiles.json": "./data/model-profiles.json"
