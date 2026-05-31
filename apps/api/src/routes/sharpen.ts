@@ -52,16 +52,21 @@ sharpen.post('/api/generate/sharpen', async (c) => {
   if (basePrompt.length > MAX_PROMPT) return c.json({ error: 'prompt too long' }, 400);
 
   const rl = await checkAndRecord(`sharpen:user:${user.id}`, { limit: PER_USER, windowSeconds: 86400 });
-  if (!rl.allowed) return c.json({ error: 'daily sharpen limit reached' }, 429);
+  if (!rl.allowed) {
+    console.log('[sharpen] blocked: per-user daily cap reached', { userId: user.id, limit: PER_USER });
+    return c.json({ error: 'daily sharpen limit reached' }, 429);
+  }
 
   // Cost gate: dollar budget (fails closed) + the in-memory backstop + the DB-backed global
   // Opus cap (same `global:opus:<day>` bucket + ceiling as the base generate flow, so the two
   // are jointly bounded and the cap survives a process restart). The revise is an Opus call.
   if (!(await budgetAvailable()) || !reserveGlobalOpusSlot()) {
+    console.log('[sharpen] blocked: budget unavailable or in-memory opus slot exhausted');
     return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
   }
   const globalCap = await checkAndRecord(`global:opus:${utcDay()}`, { limit: GLOBAL_OPUS_CAP(), windowSeconds: 86400, failClosed: true });
   if (!globalCap.allowed) {
+    console.log('[sharpen] blocked: global opus daily cap reached');
     return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
   }
 
@@ -69,7 +74,10 @@ sharpen.post('/api/generate/sharpen', async (c) => {
   // metadata copied into the caller's OWN new row; nothing from it is returned to the caller,
   // so this is intentionally NOT ownership-scoped (low-harm).
   const [row] = await db.select().from(schema.generations).where(eq(schema.generations.id, generationId));
-  if (!row) return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
+  if (!row) {
+    console.log('[sharpen] blocked: generation row not found', { generationId });
+    return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
+  }
   const inputs = row.inputsJson as unknown as WizardInputs;
   const courseLabel = (inputs.courseId ? findCourse(inputs.courseId)?.name : inputs.courseFreeText) ?? 'their course';
   const grade = gradeFromGradYear(user.gradYear ?? null) ?? undefined;
@@ -88,7 +96,10 @@ sharpen.post('/api/generate/sharpen', async (c) => {
   await recordSpend(GPT_SPEND); // GPT money is spent now — record it regardless of the revise outcome.
 
   const revised = await revisePromptWithOpus(basePrompt, critique, inputs, grade);
-  if (!revised.ok) return c.json({ ok: false, reason: 'revise-failed' } satisfies SharpenResponse, 200);
+  if (!revised.ok) {
+    console.error('[sharpen] revise failed', { detail: (revised as { error?: unknown }).error });
+    return c.json({ ok: false, reason: 'revise-failed' } satisfies SharpenResponse, 200);
+  }
 
   await recordSpend(OPUS_SPEND);
   await db.insert(schema.generations).values({
@@ -103,5 +114,6 @@ sharpen.post('/api/generate/sharpen', async (c) => {
     model: row.model,
   });
 
+  console.log('[sharpen] ok', { userId: user.id });
   return c.json({ ok: true, improvedPrompt: revised.prompt, critique } satisfies SharpenResponse, 200);
 });
