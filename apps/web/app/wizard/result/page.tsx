@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { PromptOutput } from '@/components/PromptOutput';
 import { FeedbackForm } from '@/components/FeedbackForm';
-import { RagPanel } from '@/components/RagPanel';
 import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
 import { StudySchedule } from '@/components/StudySchedule';
@@ -31,6 +30,7 @@ type LastResult = {
 
 export default function ResultPage() {
   const [data, setData] = useState<LastResult | null>(null);
+  const [showSchedule, setShowSchedule] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem('pomfret.lastResult');
@@ -75,18 +75,20 @@ export default function ResultPage() {
 
       {data.schedule && (
         <div className="mt-8">
-          <StudySchedule
-            assessmentDate={data.schedule.assessmentDate}
-            hoursAvailable={data.schedule.hoursAvailable}
-            courseLabel={data.schedule.courseLabel}
-            assessmentType={data.schedule.assessmentType}
-          />
+          {showSchedule ? (
+            <StudySchedule
+              assessmentDate={data.schedule.assessmentDate}
+              hoursAvailable={data.schedule.hoursAvailable}
+              courseLabel={data.schedule.courseLabel}
+              assessmentType={data.schedule.assessmentType}
+            />
+          ) : (
+            <Button variant="outline" onClick={() => setShowSchedule(true)}>
+              Plan study time (optional)
+            </Button>
+          )}
         </div>
       )}
-
-      <div className="mt-8">
-        <RagPanel eyebrow="What happened behind that prompt — the RAG learning system" />
-      </div>
 
       <div className="mt-8 rounded-lg border bg-white p-6">
         <h2 className="font-semibold">How did this go?</h2>
@@ -130,48 +132,6 @@ export default function ResultPage() {
           </div>
         </div>
       </SignedOut>
-
-      <section className="mt-16 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-6">
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-          Behind the scenes
-        </span>
-        <h3 className="mt-1 text-xl font-semibold">How that prompt was just generated</h3>
-        <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700">
-          <p>
-            That prompt was written by <strong>Claude Opus 4.7</strong>, Anthropic&apos;s
-            most capable model. The wizard inputs you submitted (course, mode, time
-            available, confidence, what confuses you, etc.) were sent to a backend
-            service I built, which called the Anthropic API with a custom system prompt
-            describing the <strong>Pomfret-Study Framework</strong> — a 7-section
-            structure I designed.
-          </p>
-          <p>
-            The 7 sections are: <strong>Role</strong> (who the tutor LLM should be),{' '}
-            <strong>About Me</strong> (the student&apos;s context),{' '}
-            <strong>Material</strong> (whatever was pasted), <strong>Goal</strong>{' '}
-            (the assessment + time), <strong>Interaction Style</strong> (how the tutor
-            should engage), <strong>Output Spec</strong> (the exact deliverable shape),
-            and <strong>Self-Check</strong> (quality control).
-          </p>
-          <p>
-            Notice that the output above is formatted with XML tags (for Claude),
-            markdown headers (for GPT), or numbered steps (for Gemini) depending on
-            which LLM you picked. That formatting is controlled by a{' '}
-            <code className="rounded bg-slate-200 px-1 py-0.5 text-xs">model-profiles.json</code>{' '}
-            file I maintain — each model gets the format it responds to best.
-          </p>
-          <p>
-            If Opus 4.7 is unavailable or the daily budget cap is hit, the system falls
-            back to a fully deterministic version of the same prompt built from
-            templates — slower-quality but always available. That&apos;s why you see the
-            banner up top sometimes.
-          </p>
-          <p className="text-xs text-slate-500">
-            One generation costs roughly $0.07 in Anthropic credits. Daily budget is
-            capped at $10/day in the production environment.
-          </p>
-        </div>
-      </section>
     </main>
   );
 }
