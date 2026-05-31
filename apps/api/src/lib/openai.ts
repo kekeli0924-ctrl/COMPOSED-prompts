@@ -2,7 +2,10 @@ import OpenAI from 'openai';
 
 export class CritiqueError extends Error {}
 
-const GPT_MODEL = 'gpt-5-5-thinking';
+// Env-overridable so the model can be swapped/upgraded via a Fly secret with no code
+// change — the account must actually have access to it. Default 'gpt-5.5' is the flagship
+// reasoning model. (The prior 'gpt-5-5-thinking' was not a real model id → model_not_found.)
+const model = (): string => process.env.SHARPEN_GPT_MODEL ?? 'gpt-5.5';
 
 const ALLOWED_EFFORTS = ['minimal', 'low', 'medium', 'high', 'xhigh'];
 // Validate the operator-supplied effort so a typo fails safe to 'high' rather
@@ -50,7 +53,7 @@ export async function critiquePromptWithGpt(
   ].join('\n');
   try {
     const res = await getClient().chat.completions.create({
-      model: GPT_MODEL,
+      model: model(),
       reasoning_effort: effort(),
       messages: [
         { role: 'system', content: CRITIC_SYSTEM },

@@ -11,7 +11,7 @@ import {
 // which also lets the route test mock them — mirrors how pipeline.ts imports these.
 import { revisePromptWithOpus } from '@composed-prompts/shared/src/generation/revise-prompt.js';
 import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
-import { critiquePromptWithGpt, CritiqueError } from '../lib/openai.js';
+import { critiquePromptWithGpt } from '../lib/openai.js';
 import { budgetAvailable, recordSpend } from '../lib/budget.js';
 import { checkAndRecord } from '../lib/rate-limit.js';
 import { reserveGlobalOpusSlot } from '../lib/pipeline.js';
@@ -78,7 +78,9 @@ sharpen.post('/api/generate/sharpen', async (c) => {
   try {
     critique = await critiquePromptWithGpt(basePrompt, { courseLabel, mode: inputs.mode, assessmentType: inputs.assessmentType });
   } catch (err) {
-    if (err instanceof CritiqueError) return c.json({ ok: false, reason: 'critic-failed' } satisfies SharpenResponse, 200);
+    // Log the underlying message — a CritiqueError carries the real OpenAI error
+    // (e.g. model_not_found / insufficient_quota), so production failures stay
+    // diagnosable. The caller still gets only the generic graceful reason.
     console.error('sharpen critic failed', { message: err instanceof Error ? err.message : String(err) });
     return c.json({ ok: false, reason: 'critic-failed' } satisfies SharpenResponse, 200);
   }

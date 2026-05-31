@@ -13,6 +13,7 @@ describe('critiquePromptWithGpt', () => {
   beforeEach(() => {
     mockCreate.mockReset();
     delete process.env.SHARPEN_GPT_EFFORT;
+    delete process.env.SHARPEN_GPT_MODEL;
     process.env.OPENAI_API_KEY = 'sk-test';
   });
 
@@ -26,7 +27,7 @@ describe('critiquePromptWithGpt', () => {
     const out = await critiquePromptWithGpt('BASE PROMPT', ctx);
     expect(out).toContain('WEAKNESS');
     const call = mockCreate.mock.calls[0]![0];
-    expect(call.model).toBe('gpt-5-5-thinking');
+    expect(call.model).toBe('gpt-5.5');
     expect(call.reasoning_effort).toBe('high');
     expect(JSON.stringify(call.messages)).toContain('BASE PROMPT');
   });
