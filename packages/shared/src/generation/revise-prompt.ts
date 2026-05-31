@@ -8,9 +8,14 @@ const REVISE_SYSTEM_PROMPT = `You are a prompt engineer improving a study prompt
 - Stays a clean, copy-paste-ready prompt written in the student's first person.
 Output ONLY the improved prompt — no preamble, no "here is", no commentary about the changes.`;
 
-const thinkingBudget = (): number => {
-  const n = parseInt(process.env.SHARPEN_OPUS_THINKING_BUDGET ?? '8000', 10);
-  return Number.isFinite(n) && n > 0 ? n : 8000;
+const ALLOWED_EFFORTS = ['low', 'medium', 'high', 'xhigh', 'max'];
+// claude-opus-4-8 controls thinking via `thinking.type: 'adaptive'` + `output_config.effort`.
+// The older `thinking.type: 'enabled'` + `budget_tokens` shape is rejected by this model
+// (400 invalid_request_error). Default 'medium' balances revise quality against staying
+// inside the request timeout; invalid values fail safe to 'medium'.
+const reviseEffort = (): string => {
+  const v = process.env.SHARPEN_OPUS_EFFORT ?? 'medium';
+  return ALLOWED_EFFORTS.includes(v) ? v : 'medium';
 };
 
 export async function revisePromptWithOpus(
@@ -20,7 +25,6 @@ export async function revisePromptWithOpus(
   studentGrade?: string,
 ): Promise<OpusFullPromptResult> {
   const profile = getModelProfile(inputs.provider, inputs.model);
-  const budget = thinkingBudget();
   const userMessage = [
     studentGrade ? `Student's grade: ${studentGrade}.` : '',
     `The student's LLM expects: ${profile.format} format. Keep that format.`,
@@ -44,8 +48,9 @@ export async function revisePromptWithOpus(
   try {
     const response = await client.messages.create({
       model: OPUS_MODEL,
-      max_tokens: budget + 4000, // must exceed the thinking budget
-      thinking: { type: 'enabled', budget_tokens: budget },
+      max_tokens: 16000, // generous ceiling: covers adaptive thinking + the revised prompt
+      thinking: { type: 'adaptive' },
+      output_config: { effort: reviseEffort() },
       system: REVISE_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userMessage }],
     } as Parameters<typeof client.messages.create>[0]);
