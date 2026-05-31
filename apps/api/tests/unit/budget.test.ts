@@ -1,5 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { budgetAvailable, recordSpend, resetForTests } from '@/lib/budget';
+import { db } from '@/lib/db';
 
 describe('daily budget cap', () => {
   beforeEach(async () => {
@@ -24,5 +25,13 @@ describe('daily budget cap', () => {
     expect(await budgetAvailable()).toBe(true);
     await recordSpend(0.04);
     expect(await budgetAvailable()).toBe(false);
+  });
+
+  it('fails CLOSED (returns false) when the DB query throws', async () => {
+    const spy = vi.spyOn(db, 'select').mockImplementation(() => {
+      throw new Error('db down');
+    });
+    expect(await budgetAvailable()).toBe(false);
+    spy.mockRestore();
   });
 });

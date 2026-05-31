@@ -20,8 +20,8 @@ export async function budgetAvailable(): Promise<boolean> {
     const spent = row ? parseFloat(row.cumulativeUsd) : 0;
     return spent < ceiling();
   } catch (err) {
-    console.error('[budget] check failed, failing open', { message: err instanceof Error ? err.message : String(err) });
-    return true;
+    console.error('[budget] check failed, failing CLOSED (deterministic only)', { message: err instanceof Error ? err.message : String(err) });
+    return false;
   }
 }
 
