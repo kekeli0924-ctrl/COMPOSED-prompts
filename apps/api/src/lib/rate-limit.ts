@@ -4,6 +4,10 @@ import { and, eq, gte, sql } from 'drizzle-orm';
 export type RateLimitOptions = {
   limit: number;
   windowSeconds: number;
+  // When true, a DB error DENIES the request (fail closed) instead of allowing
+  // it (the default fail-open). Use for money-protecting global caps so a DB
+  // outage / contention under a flood can't silently lift the ceiling.
+  failClosed?: boolean;
 };
 
 export type RateLimitResult = {
@@ -39,10 +43,12 @@ export async function checkAndRecord(
 
     return { allowed: true, remaining: opts.limit - count - 1 };
   } catch (err) {
-    console.error('[rate-limit] failure, failing open', {
+    console.error('[rate-limit] failure', {
+      bucketKey,
+      failClosed: Boolean(opts.failClosed),
       message: err instanceof Error ? err.message : String(err),
     });
-    return { allowed: true, remaining: opts.limit };
+    return opts.failClosed ? { allowed: false, remaining: 0 } : { allowed: true, remaining: opts.limit };
   }
 }
 

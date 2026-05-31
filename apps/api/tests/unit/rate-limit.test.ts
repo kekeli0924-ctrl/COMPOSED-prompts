@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { checkAndRecord } from '@/lib/rate-limit';
 import { resetRateLimitLog } from '../setup';
 
@@ -29,5 +29,25 @@ describe('rate limit', () => {
     const r = await checkAndRecord('ip:test-3', { limit: 5, windowSeconds: 60 });
     expect(r.allowed).toBe(true);
     expect(r.remaining).toBe(4); // old row excluded
+  });
+
+  it('fails OPEN by default when the DB throws', async () => {
+    const { db } = await import('@/lib/db');
+    const spy = vi.spyOn(db, 'select').mockImplementation(() => {
+      throw new Error('db down');
+    });
+    const r = await checkAndRecord('ip:err', { limit: 5, windowSeconds: 60 });
+    expect(r.allowed).toBe(true);
+    spy.mockRestore();
+  });
+
+  it('fails CLOSED when failClosed is set and the DB throws', async () => {
+    const { db } = await import('@/lib/db');
+    const spy = vi.spyOn(db, 'select').mockImplementation(() => {
+      throw new Error('db down');
+    });
+    const r = await checkAndRecord('global:opus:x', { limit: 5, windowSeconds: 60, failClosed: true });
+    expect(r.allowed).toBe(false);
+    spy.mockRestore();
   });
 });

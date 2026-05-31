@@ -61,10 +61,17 @@ export async function runPipeline(
 
   // Gate Opus on: dollar budget (fails closed) AND the in-memory backstop AND
   // the DB-backed global daily call cap. Any miss → deterministic fallback.
+  // The in-memory slot is reserved before the DB cap / Opus call and is never
+  // released — a denial or Opus error leaves it counted. That over-counts in
+  // the SAFE direction (the cap can only trip earlier, never spend more); do
+  // not "fix" it by releasing slots, which would reintroduce a TOCTOU race.
+  // The global DB cap is failClosed: a DB outage under a flood denies Opus
+  // (like the budget), so the ~GLOBAL_OPUS_CALLS_PER_DAY ceiling holds without
+  // depending on per-process memory.
   let opusAllowed = budgetOk;
   if (opusAllowed && !reserveGlobalOpusSlot()) opusAllowed = false;
   if (opusAllowed) {
-    const g = await checkAndRecord(`global:opus:${utcDay()}`, { limit: globalOpusCap(), windowSeconds: 86400 });
+    const g = await checkAndRecord(`global:opus:${utcDay()}`, { limit: globalOpusCap(), windowSeconds: 86400, failClosed: true });
     if (!g.allowed) opusAllowed = false;
   }
 
