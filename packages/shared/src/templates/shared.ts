@@ -110,8 +110,8 @@ export function buildSelfCheckSection(inputs: WizardInputs): string {
     "- Don't simply agree — explain your reasoning.",
     "- Adjust only if I'm correct or if I provide new information.",
     '',
-    'When we finish, close the session by doing two things:',
-    '- Give me a short, honest recap of the specific things I got wrong or was shaky on.',
-    '- Then write me a ready-to-paste follow-up prompt for my next session that skips the warm-up and drills exactly those weak spots with active recall.',
+    "When we wrap up (or I tell you we're done for now), close the session by doing two things:",
+    '- Give me a short, honest recap of the specific concepts I got wrong or was shaky on.',
+    '- Then write me a short, ready-to-paste follow-up prompt (a few sentences) for my next session that skips the warm-up and drills exactly those weak spots with active recall.',
   ].join('\n');
 }
