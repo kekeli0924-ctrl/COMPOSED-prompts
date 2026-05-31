@@ -8,11 +8,12 @@ export class CritiqueError extends Error {}
 const model = (): string => process.env.SHARPEN_GPT_MODEL ?? 'gpt-5.5';
 
 const ALLOWED_EFFORTS = ['minimal', 'low', 'medium', 'high', 'xhigh'];
-// Validate the operator-supplied effort so a typo fails safe to 'high' rather
-// than being sent to the API verbatim (mirrors the budget guard on the Opus side).
+// Default 'low': a prompt critique is not a hard reasoning task, and high effort on a
+// flagship reasoning model routinely runs past the request timeout. Operators can raise
+// it via SHARPEN_GPT_EFFORT; an invalid value fails safe to 'low'.
 const effort = (): string => {
-  const v = process.env.SHARPEN_GPT_EFFORT ?? 'high';
-  return ALLOWED_EFFORTS.includes(v) ? v : 'high';
+  const v = process.env.SHARPEN_GPT_EFFORT ?? 'low';
+  return ALLOWED_EFFORTS.includes(v) ? v : 'low';
 };
 
 const CRITIC_SYSTEM = `You are a prompt-engineering critic. You will be shown a study prompt that another AI wrote for a Pomfret School student, plus the student's situation. List concrete, specific weaknesses in the prompt and exactly what would make it sharper — name actual gaps (missing constraints, vague instructions, weak self-test design, format issues), not generic advice. Be terse and specific. Do NOT rewrite the prompt; only critique it.`;
@@ -24,7 +25,9 @@ function getClient(): OpenAI {
   // first and fall back to a plain call so both paths work — mirrors makeClient
   // in shared's opus-full-prompt.ts.
   if (!client) {
-    const opts = { apiKey: process.env.OPENAI_API_KEY, maxRetries: 1, timeout: 30000 };
+    // 120s: a reasoning-model critique can take well over the SDK's 30s default. maxRetries 0
+    // because retrying a slow reasoning call just compounds latency past the request budget.
+    const opts = { apiKey: process.env.OPENAI_API_KEY, maxRetries: 0, timeout: parseInt(process.env.SHARPEN_GPT_TIMEOUT_MS ?? '120000', 10) };
     try {
       client = new (OpenAI as unknown as new (o: typeof opts) => OpenAI)(opts);
     } catch {

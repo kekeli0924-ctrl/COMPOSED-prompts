@@ -22,13 +22,13 @@ describe('critiquePromptWithGpt', () => {
     await expect(critiquePromptWithGpt('b', ctx)).rejects.toBeInstanceOf(CritiqueError);
   });
 
-  it('returns the critique and sends reasoning_effort=high by default', async () => {
+  it('returns the critique and sends reasoning_effort=low by default', async () => {
     mockCreate.mockResolvedValueOnce({ choices: [{ message: { content: 'WEAKNESS: too vague' } }] });
     const out = await critiquePromptWithGpt('BASE PROMPT', ctx);
     expect(out).toContain('WEAKNESS');
     const call = mockCreate.mock.calls[0]![0];
     expect(call.model).toBe('gpt-5.5');
-    expect(call.reasoning_effort).toBe('high');
+    expect(call.reasoning_effort).toBe('low');
     expect(JSON.stringify(call.messages)).toContain('BASE PROMPT');
   });
 
