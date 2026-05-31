@@ -77,6 +77,13 @@ describe('shared section builders', () => {
     expect(out).toMatch(/before responding/i);
   });
 
+  it('Self-Check closes the loop with a recap + ready-to-paste follow-up prompt', () => {
+    const out = buildSelfCheckSection(baseInputs);
+    expect(out).toMatch(/recap/i);
+    expect(out).toMatch(/follow-up prompt/i);
+    expect(out).toMatch(/weak spots/i);
+  });
+
   it('builds an attach directive when material kinds are set', () => {
     const out = buildMaterialSection({ ...baseInputs, attachedMaterialKinds: ['study-guide'] });
     expect(out).toContain('I will attach my study guide');
