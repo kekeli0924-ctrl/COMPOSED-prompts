@@ -5,6 +5,7 @@ import {
 import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
 import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
 import { budgetAvailable, recordSpend } from './budget.js';
+import { checkAndRecord } from './rate-limit.js';
 import { fetchRagContext, buildRagContext } from './rag.js';
 
 const OPUS_INPUT_USD_PER_MTOK = 5.0;
@@ -21,6 +22,36 @@ export type PipelineResult = {
   fallbackReason?: 'budget-exhausted' | 'api-error';
 };
 
+const globalOpusCap = (): number => {
+  const n = parseInt(process.env.GLOBAL_OPUS_CALLS_PER_DAY ?? '250', 10);
+  return Number.isFinite(n) && n > 0 ? n : 250;
+};
+
+const utcDay = (): string => {
+  const d = new Date();
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+};
+
+// DB-independent per-process backstop: bounds Opus spend even if every DB
+// control fails open. Resets on UTC-day rollover.
+const inMemoryGlobalOpus = { day: '', count: 0 };
+function reserveGlobalOpusSlot(): boolean {
+  const day = utcDay();
+  if (inMemoryGlobalOpus.day !== day) {
+    inMemoryGlobalOpus.day = day;
+    inMemoryGlobalOpus.count = 0;
+  }
+  if (inMemoryGlobalOpus.count >= globalOpusCap()) return false;
+  inMemoryGlobalOpus.count += 1;
+  return true;
+}
+
+// Test helper.
+export function __resetGlobalOpusCounter(): void {
+  inMemoryGlobalOpus.day = '';
+  inMemoryGlobalOpus.count = 0;
+}
+
 export async function runPipeline(
   inputs: WizardInputs,
   opts: { userId: string | null; studentGrade?: string } = { userId: null },
@@ -28,7 +59,16 @@ export async function runPipeline(
   const budgetOk = await budgetAvailable();
   let fallbackReason: PipelineResult['fallbackReason'];
 
-  if (budgetOk) {
+  // Gate Opus on: dollar budget (fails closed) AND the in-memory backstop AND
+  // the DB-backed global daily call cap. Any miss → deterministic fallback.
+  let opusAllowed = budgetOk;
+  if (opusAllowed && !reserveGlobalOpusSlot()) opusAllowed = false;
+  if (opusAllowed) {
+    const g = await checkAndRecord(`global:opus:${utcDay()}`, { limit: globalOpusCap(), windowSeconds: 86400 });
+    if (!g.allowed) opusAllowed = false;
+  }
+
+  if (opusAllowed) {
     const rag = await fetchRagContext({ userId: opts.userId, courseId: inputs.courseId, mode: inputs.mode });
     const ragText = buildRagContext(rag);
     const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade);
