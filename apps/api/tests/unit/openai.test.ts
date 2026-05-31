@@ -1,0 +1,44 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+
+const mockCreate = vi.fn();
+vi.mock('openai', () => ({
+  default: vi.fn(() => ({ chat: { completions: { create: mockCreate } } })),
+}));
+
+import { critiquePromptWithGpt, CritiqueError } from '@/lib/openai';
+
+const ctx = { courseLabel: 'Biology', mode: 'cram-review', assessmentType: 'test' };
+
+describe('critiquePromptWithGpt', () => {
+  beforeEach(() => {
+    mockCreate.mockReset();
+    delete process.env.SHARPEN_GPT_EFFORT;
+  });
+
+  it('returns the critique and sends reasoning_effort=high by default', async () => {
+    mockCreate.mockResolvedValueOnce({ choices: [{ message: { content: 'WEAKNESS: too vague' } }] });
+    const out = await critiquePromptWithGpt('BASE PROMPT', ctx);
+    expect(out).toContain('WEAKNESS');
+    const call = mockCreate.mock.calls[0]![0];
+    expect(call.model).toBe('gpt-5-5-thinking');
+    expect(call.reasoning_effort).toBe('high');
+    expect(JSON.stringify(call.messages)).toContain('BASE PROMPT');
+  });
+
+  it('honors SHARPEN_GPT_EFFORT', async () => {
+    process.env.SHARPEN_GPT_EFFORT = 'medium';
+    mockCreate.mockResolvedValueOnce({ choices: [{ message: { content: 'x' } }] });
+    await critiquePromptWithGpt('b', ctx);
+    expect(mockCreate.mock.calls[0]![0].reasoning_effort).toBe('medium');
+  });
+
+  it('throws CritiqueError when the API throws', async () => {
+    mockCreate.mockRejectedValueOnce(new Error('429'));
+    await expect(critiquePromptWithGpt('b', ctx)).rejects.toBeInstanceOf(CritiqueError);
+  });
+
+  it('throws CritiqueError when there is no content', async () => {
+    mockCreate.mockResolvedValueOnce({ choices: [{ message: {} }] });
+    await expect(critiquePromptWithGpt('b', ctx)).rejects.toBeInstanceOf(CritiqueError);
+  });
+});

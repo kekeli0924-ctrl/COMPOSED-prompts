@@ -14,16 +14,17 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@composed-prompts/shared": "*",
     "@anthropic-ai/sdk": "^0.99.0",
+    "@clerk/backend": "^1.21.0",
+    "@composed-prompts/shared": "*",
     "@hono/node-server": "^1.13.7",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.0",
     "hono": "^4.6.0",
-    "@clerk/backend": "^1.21.0",
+    "openai": "^6.39.1",
     "postgres": "^3.4.5",
-    "zod": "^4.4.3",
-    "dotenv": "^16.4.5",
-    "tsx": "^4.22.3"
+    "tsx": "^4.22.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^20.19.41",
