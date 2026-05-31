@@ -137,7 +137,7 @@ function makeClient(): AnthropicLike {
   // The Anthropic SDK ships as a class at runtime, but tests may mock it with
   // an arrow function (which JS does not permit invoking with `new`). Try
   // `new` first and fall back to a plain function call so both paths work.
-  const opts = { apiKey: process.env.ANTHROPIC_API_KEY };
+  const opts = { apiKey: process.env.ANTHROPIC_API_KEY, maxRetries: 1, timeout: 30000 };
   try {
     return new (Anthropic as unknown as new (o: typeof opts) => AnthropicLike)(opts);
   } catch {
