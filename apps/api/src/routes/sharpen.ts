@@ -20,8 +20,21 @@ import { db, schema } from '../lib/db.js';
 export const sharpen = new Hono();
 
 const PER_USER = parseInt(process.env.SHARPEN_PER_USER_PER_DAY ?? '10', 10);
-const SPEND = parseFloat(process.env.SHARPEN_SPEND_ESTIMATE_USD ?? '0.20');
-const MAX_PROMPT = 20000;
+// Conservative flat spend estimates — a maxed critique + revise really costs ~$0.40-0.65,
+// so over-counting keeps the daily dollar budget protective. The GPT half is recorded once
+// the critique succeeds (independent of the revise outcome) so a revise outage can't burn
+// unrecorded GPT spend.
+const GPT_SPEND = parseFloat(process.env.SHARPEN_GPT_SPEND_USD ?? '0.30');
+const OPUS_SPEND = parseFloat(process.env.SHARPEN_OPUS_SPEND_USD ?? '0.35');
+const GLOBAL_OPUS_CAP = (): number => {
+  const n = parseInt(process.env.GLOBAL_OPUS_CALLS_PER_DAY ?? '250', 10);
+  return Number.isFinite(n) && n > 0 ? n : 250;
+};
+const utcDay = (): string => {
+  const d = new Date();
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+};
+const MAX_PROMPT = 40000;
 
 sharpen.post('/api/generate/sharpen', async (c) => {
   const user = c.get('user');
@@ -41,11 +54,20 @@ sharpen.post('/api/generate/sharpen', async (c) => {
   const rl = await checkAndRecord(`sharpen:user:${user.id}`, { limit: PER_USER, windowSeconds: 86400 });
   if (!rl.allowed) return c.json({ error: 'daily sharpen limit reached' }, 429);
 
-  // Cost gate: dollar budget (fails closed) + the global Opus slot (revise is an Opus call).
+  // Cost gate: dollar budget (fails closed) + the in-memory backstop + the DB-backed global
+  // Opus cap (same `global:opus:<day>` bucket + ceiling as the base generate flow, so the two
+  // are jointly bounded and the cap survives a process restart). The revise is an Opus call.
   if (!(await budgetAvailable()) || !reserveGlobalOpusSlot()) {
     return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
   }
+  const globalCap = await checkAndRecord(`global:opus:${utcDay()}`, { limit: GLOBAL_OPUS_CAP(), windowSeconds: 86400, failClosed: true });
+  if (!globalCap.allowed) {
+    return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
+  }
 
+  // Looked up only for redacted critique context (course/mode/assessment) + non-sensitive
+  // metadata copied into the caller's OWN new row; nothing from it is returned to the caller,
+  // so this is intentionally NOT ownership-scoped (low-harm).
   const [row] = await db.select().from(schema.generations).where(eq(schema.generations.id, generationId));
   if (!row) return c.json({ ok: false, reason: 'unavailable' } satisfies SharpenResponse, 200);
   const inputs = row.inputsJson as unknown as WizardInputs;
@@ -61,10 +83,12 @@ sharpen.post('/api/generate/sharpen', async (c) => {
     return c.json({ ok: false, reason: 'critic-failed' } satisfies SharpenResponse, 200);
   }
 
+  await recordSpend(GPT_SPEND); // GPT money is spent now — record it regardless of the revise outcome.
+
   const revised = await revisePromptWithOpus(basePrompt, critique, inputs, grade);
   if (!revised.ok) return c.json({ ok: false, reason: 'revise-failed' } satisfies SharpenResponse, 200);
 
-  await recordSpend(SPEND);
+  await recordSpend(OPUS_SPEND);
   await db.insert(schema.generations).values({
     userId: user.id,
     inputsJson: inputs as unknown as Record<string, unknown>, // already redacted (loaded from storage)

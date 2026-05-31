@@ -55,8 +55,23 @@ describe('POST /api/generate/sharpen', () => {
   });
 
   it('400 when basePrompt is too long', async () => {
-    const res = await post(appFor(USER), { generationId: genId, basePrompt: 'x'.repeat(20001) });
+    const res = await post(appFor(USER), { generationId: genId, basePrompt: 'x'.repeat(40001) });
     expect(res.status).toBe(400);
+  });
+
+  it('returns ok:false when the global Opus cap is hit (no model calls)', async () => {
+    mockCheck.mockResolvedValueOnce({ allowed: true, remaining: 9 }); // per-user cap passes
+    mockCheck.mockResolvedValueOnce({ allowed: false, remaining: 0 }); // global Opus cap blocks
+    const res = await post(appFor(USER), { generationId: genId, basePrompt: 'BASE' });
+    expect(await res.json()).toEqual({ ok: false, reason: 'unavailable' });
+    expect(mockCritique).not.toHaveBeenCalled();
+  });
+
+  it('records the GPT spend even when the revise fails (no unrecorded spend)', async () => {
+    mockRevise.mockResolvedValueOnce({ ok: false, error: 'api-error' });
+    const res = await post(appFor(USER), { generationId: genId, basePrompt: 'BASE' });
+    expect(await res.json()).toEqual({ ok: false, reason: 'revise-failed' });
+    expect(mockRecord).toHaveBeenCalledTimes(1); // GPT recorded; Opus not (revise failed)
   });
 
   it('429 over the per-user cap', async () => {
@@ -75,6 +90,6 @@ describe('POST /api/generate/sharpen', () => {
     const res = await post(appFor(USER), { generationId: genId, basePrompt: 'BASE' });
     const body = await res.json();
     expect(body).toEqual({ ok: true, improvedPrompt: 'IMPROVED', critique: 'CRITIQUE' });
-    expect(mockRecord).toHaveBeenCalled();
+    expect(mockRecord).toHaveBeenCalledTimes(2); // GPT spend + Opus spend
   });
 });

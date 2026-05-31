@@ -21,7 +21,7 @@ function getClient(): OpenAI {
   // first and fall back to a plain call so both paths work — mirrors makeClient
   // in shared's opus-full-prompt.ts.
   if (!client) {
-    const opts = { apiKey: process.env.OPENAI_API_KEY };
+    const opts = { apiKey: process.env.OPENAI_API_KEY, maxRetries: 1, timeout: 30000 };
     try {
       client = new (OpenAI as unknown as new (o: typeof opts) => OpenAI)(opts);
     } catch {
