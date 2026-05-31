@@ -35,7 +35,7 @@ const utcDay = (): string => {
 // DB-independent per-process backstop: bounds Opus spend even if every DB
 // control fails open. Resets on UTC-day rollover.
 const inMemoryGlobalOpus = { day: '', count: 0 };
-function reserveGlobalOpusSlot(): boolean {
+export function reserveGlobalOpusSlot(): boolean {
   const day = utcDay();
   if (inMemoryGlobalOpus.day !== day) {
     inMemoryGlobalOpus.day = day;
