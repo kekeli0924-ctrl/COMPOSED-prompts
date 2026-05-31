@@ -13,7 +13,6 @@ export function ShowcaseHeader() {
         </Link>
         <nav className="flex items-center gap-3 text-sm text-slate-600">
           <Link href="/history" className="hover:text-slate-900">History</Link>
-          <Link href="/about" className="hover:text-slate-900">How it works</Link>
           <SignedOut>
             <SignInButton mode="modal">
               <Button variant="ghost" size="sm">Sign in</Button>
