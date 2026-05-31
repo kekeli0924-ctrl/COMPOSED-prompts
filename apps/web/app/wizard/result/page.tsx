@@ -9,6 +9,7 @@ import { FeedbackForm } from '@/components/FeedbackForm';
 import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
 import { StudySchedule } from '@/components/StudySchedule';
+import { SharpenPanel } from '@/components/SharpenPanel';
 
 type LastResult = {
   prompt: string;
@@ -31,6 +32,8 @@ type LastResult = {
 export default function ResultPage() {
   const [data, setData] = useState<LastResult | null>(null);
   const [showSchedule, setShowSchedule] = useState(false);
+  const [improvedPrompt, setImprovedPrompt] = useState<string | null>(null);
+  const [showOriginal, setShowOriginal] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem('pomfret.lastResult');
@@ -70,8 +73,18 @@ export default function ResultPage() {
       )}
 
       <div className="mt-6">
-        <PromptOutput prompt={data.prompt} />
+        <PromptOutput prompt={improvedPrompt && !showOriginal ? improvedPrompt : data.prompt} />
+        {improvedPrompt && (
+          <button type="button" onClick={() => setShowOriginal((v) => !v)} className="mt-2 text-xs text-indigo-600 underline">
+            {showOriginal ? 'Show sharpened' : 'See original'}
+          </button>
+        )}
       </div>
+      <SharpenPanel
+        generationId={data.metadata.generationId}
+        basePrompt={data.prompt}
+        onImproved={setImprovedPrompt}
+      />
 
       {data.schedule && (
         <div className="mt-8">
