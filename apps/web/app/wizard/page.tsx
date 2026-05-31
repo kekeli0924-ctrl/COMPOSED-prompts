@@ -11,7 +11,6 @@ import { ModePicker } from '@/components/ModePicker';
 import { AssessmentStep } from '@/components/AssessmentStep';
 import { MaterialStep } from '@/components/MaterialStep';
 import { AboutMeStep } from '@/components/AboutMeStep';
-import { RagPanel } from '@/components/RagPanel';
 import type { WizardInputs, GenerateResponse } from '@composed-prompts/shared';
 import { findCourse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
@@ -225,34 +224,6 @@ export default function WizardPage() {
           </Button>
         )}
       </div>
-
-      <section className="mt-16 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-6">
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-          Behind the scenes
-        </span>
-        <h3 className="mt-1 text-xl font-semibold">What this wizard is doing</h3>
-        <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700">
-          <p>
-            This wizard is a <strong>React state machine</strong>. Each of the 6 steps
-            is a separate component (<code className="rounded bg-slate-200 px-1 py-0.5 text-xs">ModelPicker</code>,{' '}
-            <code className="rounded bg-slate-200 px-1 py-0.5 text-xs">CoursePicker</code>,
-            etc.) that updates a shared state object. The <strong>Next</strong> button
-            is disabled until the current step&apos;s required fields are filled in.
-          </p>
-          <p>
-            Step 2 (course picker) does a <strong>typeahead search</strong> over the 182
-            Pomfret courses I parsed from the official 2026–2027 curriculum guide. The
-            search scoring favors exact name matches over substring matches over
-            description matches.
-          </p>
-          <p>
-            When you click <strong>Generate prompt</strong>, the form values are
-            validated with <strong>Zod</strong> (a TypeScript schema validation library)
-            and sent as JSON to the backend. The same Zod schema runs on both sides, so
-            the frontend and backend are guaranteed to agree on the shape of the data.
-          </p>
-        </div>
-      </section>
     </main>
   );
 }
@@ -308,10 +279,6 @@ function ComposingScreen() {
           Opus 4.7 is writing all seven sections of your prompt. This usually takes
           about ten seconds.
         </p>
-      </div>
-
-      <div className="relative z-10 mt-16 w-full max-w-2xl">
-        <RagPanel eyebrow="While we wait — the RAG learning system" />
       </div>
     </main>
   );
