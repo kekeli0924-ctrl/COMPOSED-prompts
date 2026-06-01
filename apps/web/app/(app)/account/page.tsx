@@ -5,6 +5,7 @@ import { useUser } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
 import type { MeResponse } from '@composed-prompts/shared';
 import { CalendarConnect } from '@/components/CalendarConnect';
+import { CanvasConnect } from '@/components/CanvasConnect';
 
 type MeView = { profileSummary: string | null; gradYear: number | null; grade: string | null };
 
@@ -52,6 +53,7 @@ export default function AccountPage() {
           </dd>
         </div>
         <CalendarConnect />
+        <CanvasConnect />
         {me?.profileSummary && (
           <div>
             <dt className="text-muted-foreground">What we&apos;ve learned about your study style</dt>
