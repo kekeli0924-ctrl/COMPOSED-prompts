@@ -15,12 +15,12 @@ export function PromptOutput({ prompt }: { prompt: string }) {
     }
   };
   return (
-    <div className="rounded-lg border bg-slate-50">
-      <div className="flex items-center justify-between border-b bg-white px-4 py-2">
-        <span className="text-sm font-medium text-slate-600">Your prompt</span>
-        <Button size="sm" onClick={copy}>{copied ? 'Copied!' : 'Copy'}</Button>
+    <div className="rounded-2xl border border-border bg-card">
+      <div className="flex items-center justify-between border-b border-border px-4 py-2">
+        <span className="text-sm font-medium text-muted-foreground">Your prompt</span>
+        <Button size="sm" variant="outline" onClick={copy}>{copied ? 'Copied!' : 'Copy'}</Button>
       </div>
-      <pre className="whitespace-pre-wrap break-words p-4 text-sm font-mono text-slate-800">
+      <pre className="whitespace-pre-wrap break-words p-4 text-sm font-mono text-foreground">
         {prompt}
       </pre>
     </div>

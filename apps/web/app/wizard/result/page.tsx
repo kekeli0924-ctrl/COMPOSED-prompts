@@ -42,16 +42,16 @@ export default function ResultPage() {
 
   if (!data) {
     return (
-      <main className="mx-auto max-w-2xl px-6 py-12">
+      <main className="mx-auto max-w-3xl px-6 py-12">
         <p>No prompt found. <Link href="/wizard" className="underline">Start over</Link>.</p>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-12">
-      <h1 className="text-2xl font-semibold">Your prompt is ready.</h1>
-      <p className="mt-2 text-slate-600">
+    <main className="mx-auto max-w-3xl px-6 py-12">
+      <h1 className="font-serif text-2xl font-semibold text-foreground">Your study prompt is ready</h1>
+      <p className="mt-2 text-muted-foreground">
         Copy it, paste it into your LLM, and run a real study session.
       </p>
 
@@ -64,8 +64,8 @@ export default function ResultPage() {
       )}
 
       {data.attachedMaterialKinds && data.attachedMaterialKinds.length > 0 && (
-        <Alert className="mt-4 border-indigo-200 bg-indigo-50">
-          <AlertDescription className="text-indigo-900">
+        <Alert className="mt-4 border-border bg-secondary">
+          <AlertDescription className="text-foreground">
             Remember to attach your {describeAttachedKinds(data.attachedMaterialKinds)} to your AI
             when you paste this prompt — the prompt asks it to read your material first.
           </AlertDescription>
@@ -75,7 +75,7 @@ export default function ResultPage() {
       <div className="mt-6">
         <PromptOutput prompt={improvedPrompt && !showOriginal ? improvedPrompt : data.prompt} />
         {improvedPrompt && (
-          <button type="button" onClick={() => setShowOriginal((v) => !v)} className="mt-2 text-xs text-indigo-600 underline">
+          <button type="button" onClick={() => setShowOriginal((v) => !v)} className="mt-2 text-xs text-primary underline">
             {showOriginal ? 'Show sharpened' : 'See original'}
           </button>
         )}
@@ -103,9 +103,9 @@ export default function ResultPage() {
         </div>
       )}
 
-      <div className="mt-8 rounded-lg border bg-white p-6">
-        <h2 className="font-semibold">How did this go?</h2>
-        <p className="mt-1 text-sm text-slate-600">
+      <div className="mt-8 rounded-2xl border border-border bg-card p-6">
+        <h2 className="font-serif font-semibold text-foreground">How did this go?</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Once you&apos;ve used it, come back and rate the prompt. This helps me make the templates better.
         </p>
         <div className="mt-4">
@@ -123,22 +123,22 @@ export default function ResultPage() {
       </div>
 
       <SignedOut>
-        <div className="mt-6 rounded-lg border border-indigo-200 bg-indigo-50 p-4">
-          <p className="text-sm font-medium text-indigo-900">
+        <div className="mt-6 rounded-2xl border border-border bg-secondary p-4">
+          <p className="text-sm font-medium text-foreground">
             Save this prompt and unlock smarter ones over time
           </p>
-          <p className="mt-1 text-sm text-indigo-700">
+          <p className="mt-1 text-sm text-muted-foreground">
             Sign up to keep your history across devices. The system also starts learning your
             preferences and uses past high-rated prompts to make new ones even better.
           </p>
           <div className="mt-3 flex gap-2">
             <SignUpButton mode="modal">
-              <button className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700">
+              <button className="rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                 Sign up
               </button>
             </SignUpButton>
             <SignInButton mode="modal">
-              <button className="rounded border border-indigo-300 px-3 py-1.5 text-sm font-medium text-indigo-700 hover:bg-indigo-100">
+              <button className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-muted">
                 Sign in
               </button>
             </SignInButton>
