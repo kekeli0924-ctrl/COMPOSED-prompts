@@ -81,6 +81,22 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      {canvasItems.length > 0 && (
+        <>
+          <p className="mt-8 mb-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Upcoming assessments</p>
+          <div className="space-y-2">
+            {canvasItems.slice(0, 5).map((i) => (
+              <div key={i.id} className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3">
+                <div>
+                  <div className="text-sm font-medium text-foreground">{i.title}{i.course ? ` · ${i.course}` : ''}</div>
+                  <div className="text-xs text-muted-foreground">due {fmtDate(i.dueDate.slice(0, 10))}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       <p className="mt-8 mb-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Recent prompts</p>
       {entries === null && <p className="text-sm text-muted-foreground">Loading…</p>}
       {entries?.length === 0 && <p className="text-sm text-muted-foreground">No prompts yet — make your first one.</p>}
