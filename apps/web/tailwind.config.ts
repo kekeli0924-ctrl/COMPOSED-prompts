@@ -61,6 +61,11 @@ const config: Config = {
   				ring: 'var(--sidebar-ring)'
   			}
   		},
+  		fontFamily: {
+  			sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+  			serif: ['var(--font-newsreader)', 'Georgia', 'serif'],
+  			mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
