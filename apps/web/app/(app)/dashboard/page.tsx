@@ -7,7 +7,7 @@ import { useApi } from '@/lib/use-api';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { computeDashboardStats, type DashboardStats } from '@/lib/dashboard-stats';
-import { findCourse, type HistoryResponse, type HistoryEntry } from '@composed-prompts/shared';
+import { findCourse, type HistoryResponse, type HistoryEntry, type CanvasUpcomingResponse, type UpcomingAssessment } from '@composed-prompts/shared';
 
 const fmtDate = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 const relTime = (iso: string) => {
@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const { apiGet } = useApi();
   const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [canvasItems, setCanvasItems] = useState<UpcomingAssessment[]>([]);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -33,6 +34,13 @@ export default function DashboardPage() {
         setStats(computeDashboardStats(res.entries, res.total, new Date()));
       })
       .catch(() => { setEntries([]); setStats({ promptsMade: 0, dayStreak: 0, nextAssessment: null }); });
+  }, [isLoaded, isSignedIn, apiGet]);
+
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    apiGet<CanvasUpcomingResponse>('/api/me/canvas/upcoming')
+      .then((r) => setCanvasItems(r.items ?? []))
+      .catch(() => setCanvasItems([]));
   }, [isLoaded, isSignedIn, apiGet]);
 
   if (isLoaded && !isSignedIn) {
@@ -45,10 +53,14 @@ export default function DashboardPage() {
     );
   }
 
+  const nextAssessmentValue = canvasItems[0]?.dueDate
+    ? fmtDate(canvasItems[0].dueDate.slice(0, 10))
+    : (stats?.nextAssessment ? fmtDate(stats.nextAssessment) : '—');
+
   const statCards: { label: string; value: string }[] = [
     { label: 'Prompts made', value: String(stats?.promptsMade ?? '—') },
     { label: 'Day streak', value: String(stats?.dayStreak ?? '—') },
-    { label: 'Next assessment', value: stats?.nextAssessment ? fmtDate(stats.nextAssessment) : '—' },
+    { label: 'Next assessment', value: nextAssessmentValue },
   ];
 
   return (
