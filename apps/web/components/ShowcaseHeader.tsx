@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 
 export function ShowcaseHeader() {
   return (
-    <header className="border-b bg-white">
+    <header className="border-b border-border bg-card">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-        <Link href="/" className="font-serif text-base italic tracking-tight">
+        <Link href="/" className="font-serif text-xl font-semibold tracking-tight text-foreground">
           Composed
         </Link>
-        <nav className="flex items-center gap-3 text-sm text-slate-600">
-          <Link href="/history" className="hover:text-slate-900">History</Link>
+        <nav className="flex items-center gap-3 text-sm text-muted-foreground">
+          <Link href="/history" className="hover:text-foreground">History</Link>
           <SignedOut>
             <SignInButton mode="modal">
               <Button variant="ghost" size="sm">Sign in</Button>
@@ -22,7 +22,7 @@ export function ShowcaseHeader() {
             </SignUpButton>
           </SignedOut>
           <SignedIn>
-            <Link href="/account" className="hover:text-slate-900">Account</Link>
+            <Link href="/account" className="hover:text-foreground">Account</Link>
             <UserButton afterSignOutUrl="/" />
           </SignedIn>
         </nav>
