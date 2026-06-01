@@ -3,15 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
+import { Button } from '@/components/ui/button';
 import type { CalendarFreeBusyResponse, Interval } from '@composed-prompts/shared';
 
 const CALENDAR_SCOPE = 'https://www.googleapis.com/auth/calendar.freebusy';
 
 const fmt = (iso: string): string =>
   new Date(iso).toLocaleString(undefined, { weekday: 'short', hour: 'numeric', minute: '2-digit' });
-
-const btn =
-  'mt-2 rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700';
 
 export function CalendarConnect() {
   const { isLoaded, user } = useUser();
@@ -57,38 +55,38 @@ export function CalendarConnect() {
   if (!isLoaded) return null;
 
   return (
-    <div>
-      <dt className="text-slate-500">Google Calendar</dt>
+    <div className="rounded-2xl border border-border bg-card p-4">
+      <dt className="text-muted-foreground">Google Calendar</dt>
       <dd className="mt-1">
         {!connected ? (
           <>
-            <p className="text-slate-600">
+            <p className="text-muted-foreground">
               {google
                 ? 'Connect your Google Calendar so Composed can see your open study blocks.'
                 : 'Add a Google account (avatar menu, top-right) to connect your calendar.'}
             </p>
             {google && (
-              <button type="button" onClick={onConnect} className={btn}>
+              <Button type="button" onClick={onConnect} size="sm" className="mt-2">
                 Connect Google Calendar
-              </button>
+              </Button>
             )}
           </>
         ) : data === null ? (
-          <span className="text-slate-500">Checking your calendar…</span>
+          <span className="text-muted-foreground">Checking your calendar…</span>
         ) : data.connected === false ? (
           <>
-            <p className="text-slate-600">Couldn&apos;t read your calendar — reconnect.</p>
-            <button type="button" onClick={onConnect} className={btn}>Reconnect</button>
+            <p className="text-muted-foreground">Couldn&apos;t read your calendar — reconnect.</p>
+            <Button type="button" onClick={onConnect} size="sm" className="mt-2">Reconnect</Button>
           </>
         ) : (
           <>
-            <p className="font-medium">Google Calendar connected ✓</p>
+            <p className="font-medium text-foreground">Google Calendar connected ✓</p>
             {data.freeBlocks.length === 0 ? (
-              <p className="mt-1 text-slate-500">No open blocks found in the next 7 days.</p>
+              <p className="mt-1 text-muted-foreground">No open blocks found in the next 7 days.</p>
             ) : (
               <>
-                <p className="mt-1 text-slate-500">Your open blocks over the next 7 days:</p>
-                <ul className="mt-1 list-disc pl-5 text-xs text-slate-700">
+                <p className="mt-1 text-muted-foreground">Your open blocks over the next 7 days:</p>
+                <ul className="mt-1 list-disc pl-5 text-xs text-foreground">
                   {data.freeBlocks.slice(0, 8).map((b: Interval) => (
                     <li key={b.start}>{fmt(b.start)} – {fmt(b.end)}</li>
                   ))}

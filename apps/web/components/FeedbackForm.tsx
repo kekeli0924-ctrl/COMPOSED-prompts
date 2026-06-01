@@ -41,17 +41,17 @@ export function FeedbackForm(props: { promptHash: string; entryId: string; gener
   }
 
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-3 rounded-2xl border border-border bg-card p-4">
       <div className="flex gap-1">
         {STARS.map((s) => (
           <button
             key={s}
             type="button"
             onClick={() => setRating(s)}
-            className={`h-10 w-10 rounded-md border text-lg ${
+            className={`h-10 w-10 rounded-full border border-border text-lg ${
               rating !== null && s <= rating
                 ? 'bg-yellow-400 border-yellow-500'
-                : 'bg-white hover:bg-slate-50'
+                : 'bg-card hover:bg-muted'
             }`}
             aria-label={`${s} out of 5`}
           >

@@ -36,36 +36,36 @@ export default function AccountPage() {
     }
   };
 
-  if (!isLoaded) return <main className="mx-auto max-w-md px-6 py-16">Loading…</main>;
+  if (!isLoaded) return <main className="mx-auto max-w-3xl px-6 py-16 text-muted-foreground">Loading…</main>;
   if (!isSignedIn) {
     return (
-      <main className="mx-auto max-w-md px-6 py-16">
-        <p>You&apos;re not signed in.</p>
+      <main className="mx-auto max-w-3xl px-6 py-16">
+        <p className="text-muted-foreground">You&apos;re not signed in.</p>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-md px-6 py-16">
-      <h1 className="text-3xl font-semibold">Your account</h1>
-      <dl className="mt-6 grid gap-3 text-sm">
+    <main className="mx-auto max-w-3xl px-6 py-16">
+      <h1 className="font-serif text-3xl text-foreground">Your account</h1>
+      <dl className="mt-6 grid gap-3 rounded-2xl border border-border bg-card p-6 text-sm">
         <div>
-          <dt className="text-slate-500">Email</dt>
-          <dd className="font-medium">{user.primaryEmailAddress?.emailAddress}</dd>
+          <dt className="text-muted-foreground">Email</dt>
+          <dd className="font-medium text-foreground">{user.primaryEmailAddress?.emailAddress}</dd>
         </div>
         <div>
-          <dt className="text-slate-500">Grade</dt>
+          <dt className="text-muted-foreground">Grade</dt>
           <dd className="mt-1">
             {me?.grade ? (
-              <span className="font-medium">{me.grade} · Class of {me.gradYear}</span>
+              <span className="font-medium text-foreground">{me.grade} · Class of {me.gradYear}</span>
             ) : (
-              <span className="text-slate-500">
+              <span className="text-muted-foreground">
                 We couldn&apos;t read your grade from your email — pick it below.
               </span>
             )}
             <select
               aria-label="Your grade"
-              className="mt-2 block rounded border px-2 py-1"
+              className="mt-2 block rounded-md border border-border px-2 py-1"
               value={me?.grade ?? ''}
               onChange={(e) => onGradeChange(e.target.value as Grade | '')}
             >
@@ -80,12 +80,12 @@ export default function AccountPage() {
         <CalendarConnect />
         {me?.profileSummary && (
           <div>
-            <dt className="text-slate-500">What we&apos;ve learned about your study style</dt>
-            <dd className="mt-1 rounded border bg-white p-3 text-xs leading-relaxed">{me.profileSummary}</dd>
+            <dt className="text-muted-foreground">What we&apos;ve learned about your study style</dt>
+            <dd className="mt-1 rounded-2xl border border-border bg-card p-3 text-xs leading-relaxed text-foreground">{me.profileSummary}</dd>
           </div>
         )}
       </dl>
-      <p className="mt-8 text-xs text-slate-500">Manage your account from the avatar menu in the top-right.</p>
+      <p className="mt-8 text-xs text-muted-foreground">Manage your account from the avatar menu in the top-right.</p>
     </main>
   );
 }
