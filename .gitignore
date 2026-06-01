@@ -38,3 +38,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .gstack/
+
+# superpowers brainstorm scratch (mockups, visual-companion state)
+.superpowers/
