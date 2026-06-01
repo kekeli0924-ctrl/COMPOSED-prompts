@@ -24,11 +24,11 @@ export function ModePicker(props: {
       className="grid gap-3"
     >
       {MODES.map((m) => (
-        <div key={m} className="flex items-start gap-3 rounded border bg-white p-3">
+        <div key={m} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-3">
           <RadioGroupItem value={m} id={m} className="mt-1" />
           <Label htmlFor={m} className="flex-1 cursor-pointer">
             <div className="font-medium">{STUDY_MODE_LABELS[m]}</div>
-            <div className="text-sm text-slate-600">{STUDY_MODE_DESCRIPTIONS[m]}</div>
+            <div className="text-sm text-muted-foreground">{STUDY_MODE_DESCRIPTIONS[m]}</div>
           </Label>
         </div>
       ))}

@@ -23,16 +23,16 @@ export function CoursePicker(props: {
   if (selectedCourse) {
     return (
       <div className="grid gap-4">
-        <div className="rounded-lg border-2 border-green-500 bg-green-50 p-4">
+        <div className="rounded-2xl border-2 border-primary bg-accent p-4 ring-1 ring-ring">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="text-xs font-medium uppercase tracking-wide text-green-700">
+              <div className="text-xs font-medium uppercase tracking-wide text-primary">
                 Selected class
               </div>
-              <div className="mt-1 text-lg font-semibold text-slate-900">
+              <div className="mt-1 text-lg font-semibold text-foreground">
                 {selectedCourse.name}
               </div>
-              <div className="text-sm text-slate-600">
+              <div className="text-sm text-muted-foreground">
                 {selectedCourse.department} · {selectedCourse.level}
               </div>
             </div>
@@ -66,19 +66,19 @@ export function CoursePicker(props: {
           className="mt-2"
         />
         {results.length > 0 && (
-          <ul className="mt-2 max-h-72 overflow-auto rounded border bg-white">
+          <ul className="mt-2 max-h-72 overflow-auto rounded-lg border border-border bg-card">
             {results.map((c) => (
               <li key={c.id}>
                 <button
                   type="button"
-                  className="block w-full px-3 py-2 text-left text-sm hover:bg-slate-100"
+                  className="block w-full px-3 py-2 text-left text-sm hover:bg-muted"
                   onClick={() => {
                     props.onPick(c.id);
                     setShowFreeText(false);
                   }}
                 >
                   <div>{c.name}</div>
-                  <div className="text-xs text-slate-500">
+                  <div className="text-xs text-muted-foreground">
                     {c.department} · {c.level}
                   </div>
                 </button>

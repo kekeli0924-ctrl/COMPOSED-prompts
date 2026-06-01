@@ -149,10 +149,10 @@ export default function WizardPage() {
     <main className="mx-auto max-w-2xl px-6 py-12">
       <div className="mb-8">
         <Progress value={((step + 1) / 6) * 100} />
-        <h2 className="mt-3 text-sm font-medium text-slate-500">{STEP_TITLES[step]}</h2>
+        <h2 className="mt-3 font-serif text-sm font-medium text-foreground">{STEP_TITLES[step]}</h2>
       </div>
 
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
         {step === 0 && (
           <ModelPicker
             provider={inputs.provider ?? ''}
@@ -270,12 +270,12 @@ function ComposingScreen() {
 
         <p
           key={phase}
-          className="composing-helper mt-8 pl-[0.2em] text-sm font-medium uppercase tracking-[0.2em] text-slate-500"
+          className="composing-helper mt-8 pl-[0.2em] text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
         >
           {COMPOSING_HELPER_MESSAGES[phase]}
         </p>
 
-        <p className="mt-6 text-xs leading-relaxed text-slate-400">
+        <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
           Opus 4.7 is writing all seven sections of your prompt. This usually takes
           about ten seconds.
         </p>

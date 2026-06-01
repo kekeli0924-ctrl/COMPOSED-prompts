@@ -32,9 +32,9 @@ export function AboutMeStep(props: {
             step={1}
             onValueChange={(v) => props.onChange({ confidence: v[0] as 1 | 2 | 3 | 4 | 5 })}
           />
-          <div className="mt-2 flex justify-between text-xs text-slate-500">
+          <div className="mt-2 flex justify-between text-xs text-muted-foreground">
             <span>{CONF_LABELS[1]}</span>
-            <span className="font-medium text-slate-900">{CONF_LABELS[conf] ?? ''}</span>
+            <span className="font-medium text-foreground">{CONF_LABELS[conf] ?? ''}</span>
             <span>{CONF_LABELS[5]}</span>
           </div>
         </div>

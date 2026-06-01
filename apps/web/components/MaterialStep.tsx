@@ -28,7 +28,7 @@ export function MaterialStep(props: {
     <div className="grid gap-5">
       <div className="grid gap-2">
         <Label>Will you attach material to your AI when you study?</Label>
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-muted-foreground">
           Attaching your own study guide or notes to ChatGPT/Claude makes a huge difference. Tell us
           what you&apos;ll attach and we&apos;ll build the prompt so your AI pulls the key topics out
           of it and quizzes you on them.
@@ -48,8 +48,8 @@ export function MaterialStep(props: {
                 aria-pressed={on}
                 className={`rounded-full border px-3 py-1.5 text-sm transition ${
                   on
-                    ? 'border-indigo-500 bg-indigo-600 text-white'
-                    : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    ? 'border-primary bg-accent text-foreground ring-1 ring-ring'
+                    : 'border-border bg-card text-foreground hover:bg-muted'
                 }`}
               >
                 {MATERIAL_KIND_LABELS[k]}
@@ -68,7 +68,7 @@ export function MaterialStep(props: {
           placeholder="Paste topics or notes to bake straight into the prompt. This won't be stored anywhere."
           rows={8}
         />
-        <div className="text-right text-xs text-slate-500">
+        <div className="text-right text-xs text-muted-foreground">
           {len.toLocaleString()} / {MAX.toLocaleString()} characters
         </div>
         {len > SOFT && (
