@@ -2,6 +2,9 @@
 
 import { useState, type FormEvent } from 'react';
 import { StudySchedule } from '@/components/StudySchedule';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const HOUR_OPTIONS: Array<{ value: number; label: string }> = [
   { value: 0.5, label: '30 minutes' },
@@ -35,42 +38,42 @@ export default function PlanPage() {
   };
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-12">
-      <h1 className="text-2xl font-semibold">Plan a study schedule</h1>
-      <p className="mt-2 text-slate-600">
+    <main className="mx-auto max-w-3xl px-6 py-12">
+      <h1 className="font-serif text-3xl text-foreground">Plan a study schedule</h1>
+      <p className="mt-2 text-muted-foreground">
         Tell me what you&apos;re studying for and how much time you have — I&apos;ll suggest sessions you can add to
         your calendar.
       </p>
 
       <form onSubmit={build} className="mt-6 grid gap-4">
         <div>
-          <label htmlFor="subject" className="text-sm text-slate-600">What are you studying for?</label>
-          <input
+          <Label htmlFor="subject">What are you studying for?</Label>
+          <Input
             id="subject"
             type="text"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             placeholder="e.g. Biology test"
-            className="mt-1 block w-full rounded border px-3 py-2"
+            className="mt-1"
           />
         </div>
         <div>
-          <label htmlFor="date" className="text-sm text-slate-600">When is it?</label>
-          <input
+          <Label htmlFor="date">When is it?</Label>
+          <Input
             id="date"
             type="date"
             value={assessmentDate}
             onChange={(e) => setAssessmentDate(e.target.value)}
-            className="mt-1 block rounded border px-3 py-2"
+            className="mt-1 w-auto"
           />
         </div>
         <div>
-          <label htmlFor="hours" className="text-sm text-slate-600">How much study time do you have?</label>
+          <Label htmlFor="hours">How much study time do you have?</Label>
           <select
             id="hours"
             value={hours === '' ? '' : String(hours)}
             onChange={(e) => setHours(e.target.value === '' ? '' : parseFloat(e.target.value))}
-            className="mt-1 block rounded border px-3 py-2"
+            className="mt-1 block rounded-xl border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <option value="">Pick a range</option>
             {HOUR_OPTIONS.map((h) => (
@@ -78,13 +81,9 @@ export default function PlanPage() {
             ))}
           </select>
         </div>
-        <button
-          type="submit"
-          disabled={hours === ''}
-          className="justify-self-start rounded bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
-        >
+        <Button type="submit" disabled={hours === ''} className="justify-self-start">
           Suggest schedule
-        </button>
+        </Button>
       </form>
 
       {submitted && (

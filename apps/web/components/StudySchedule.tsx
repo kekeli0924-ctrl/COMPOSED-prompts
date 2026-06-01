@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from 'react';
 import { proposeStudyBlocks, buildIcs, type StudyBlock } from '@composed-prompts/shared';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 type Props = {
   assessmentDate: string; // 'yyyy-mm-dd'
@@ -82,9 +84,9 @@ export function StudySchedule({ assessmentDate, hoursAvailable, courseLabel, ass
   })();
 
   return (
-    <div className="rounded-lg border bg-white p-6">
-      <h2 className="font-semibold">Plan your study sessions</h2>
-      <p className="mt-1 text-sm text-slate-600">
+    <div className="rounded-2xl border border-border bg-card p-6">
+      <h2 className="font-serif text-xl text-foreground">Plan your study sessions</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
         A suggested schedule for your {hoursAvailable} hour{hoursAvailable === 1 ? '' : 's'} before {assessmentDate}.
         Edit anything, then add it to your calendar.
       </p>
@@ -93,27 +95,30 @@ export function StudySchedule({ assessmentDate, hoursAvailable, courseLabel, ass
       )}
 
       {blocks.length === 0 ? (
-        <p className="mt-4 text-sm text-slate-500">No sessions. Add one below.</p>
+        <p className="mt-4 text-sm text-muted-foreground">No sessions. Add one below.</p>
       ) : (
         <ul className="mt-4 space-y-2">
           {blocks.map((b, i) => (
-            <li key={i} className="flex flex-wrap items-center gap-2 text-sm">
-              <input
+            <li
+              key={i}
+              className="flex flex-wrap items-center gap-2 rounded-2xl border border-border bg-muted/40 px-3 py-2 text-sm"
+            >
+              <Input
                 type="date"
                 value={datePart(b.start)}
                 onChange={(e) => updateBlock(i, e.target.value, timePart(b.start), durationMin(b))}
-                className="rounded border px-2 py-1"
+                className="h-8 w-auto"
               />
-              <input
+              <Input
                 type="time"
                 value={timePart(b.start)}
                 onChange={(e) => updateBlock(i, datePart(b.start), e.target.value, durationMin(b))}
-                className="rounded border px-2 py-1"
+                className="h-8 w-auto"
               />
               <select
                 value={durationMin(b)}
                 onChange={(e) => updateBlock(i, datePart(b.start), timePart(b.start), Number(e.target.value))}
-                className="rounded border px-2 py-1"
+                className="h-8 rounded-xl border border-input bg-transparent px-2 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                 aria-label="Session length"
               >
                 {LENGTHS.map((l) => (
@@ -126,7 +131,7 @@ export function StudySchedule({ assessmentDate, hoursAvailable, courseLabel, ass
               <button
                 type="button"
                 onClick={() => removeBlock(i)}
-                className="text-slate-400 hover:text-red-600"
+                className="ml-auto text-muted-foreground transition-colors hover:text-destructive"
                 aria-label="Remove session"
               >
                 ✕
@@ -137,22 +142,17 @@ export function StudySchedule({ assessmentDate, hoursAvailable, courseLabel, ass
       )}
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={addBlock} className="rounded border px-3 py-1.5 text-sm hover:bg-slate-50">
+        <Button type="button" variant="outline" size="sm" onClick={addBlock}>
           Add session
-        </button>
-        <button type="button" onClick={reset} className="rounded border px-3 py-1.5 text-sm hover:bg-slate-50">
+        </Button>
+        <Button type="button" variant="outline" size="sm" onClick={reset}>
           Reset to suggested
-        </button>
-        <button
-          type="button"
-          onClick={download}
-          disabled={blocks.length === 0}
-          className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
-        >
+        </Button>
+        <Button type="button" size="sm" onClick={download} disabled={blocks.length === 0}>
           Add to calendar (.ics)
-        </button>
+        </Button>
       </div>
-      <p className="mt-2 text-xs text-slate-500">
+      <p className="mt-2 text-xs text-muted-foreground">
         Imports into Google, Apple, or Outlook Calendar. You&apos;ll get your calendar&apos;s normal reminders.
       </p>
     </div>
