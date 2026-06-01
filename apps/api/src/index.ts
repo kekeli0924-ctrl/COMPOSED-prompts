@@ -6,6 +6,7 @@ import { generate } from './routes/generate.js';
 import { sharpen } from './routes/sharpen.js';
 import { feedback } from './routes/feedback.js';
 import { me } from './routes/me.js';
+import { canvas } from './routes/canvas.js';
 import { calendar } from './routes/calendar.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { clerkAuthMiddleware } from './middleware/clerk-auth.js';
@@ -19,6 +20,7 @@ app.route('/', generate);
 app.route('/', sharpen);
 app.route('/', feedback);
 app.route('/', me);
+app.route('/', canvas);
 app.route('/', calendar);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
