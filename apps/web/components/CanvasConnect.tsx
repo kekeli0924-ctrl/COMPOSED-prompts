@@ -84,12 +84,14 @@ export function CanvasConnect() {
         ) : (
           <>
             <p className="font-medium text-foreground">Canvas connected ✓</p>
-            {items.length > 0 && (
+            {items.length > 0 ? (
               <ul className="mt-1 list-disc pl-5 text-xs text-foreground">
                 {items.slice(0, 6).map((i) => (
                   <li key={i.id}>{i.title}{i.course ? ` · ${i.course}` : ''} — due {fmtDue(i.dueDate)}</li>
                 ))}
               </ul>
+            ) : (
+              <p className="mt-1 text-xs text-muted-foreground">No upcoming assessments right now.</p>
             )}
             <Button type="button" size="sm" variant="outline" onClick={disconnect} disabled={busy} className="mt-2">Disconnect</Button>
           </>

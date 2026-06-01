@@ -25,6 +25,7 @@ export default function DashboardPage() {
   const [entries, setEntries] = useState<HistoryEntry[] | null>(null);
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [canvasItems, setCanvasItems] = useState<UpcomingAssessment[]>([]);
+  const [canvasConnected, setCanvasConnected] = useState(false);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
@@ -39,8 +40,8 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
     apiGet<CanvasUpcomingResponse>('/api/me/canvas/upcoming')
-      .then((r) => setCanvasItems(r.items ?? []))
-      .catch(() => setCanvasItems([]));
+      .then((r) => { setCanvasItems(r.items ?? []); setCanvasConnected(Boolean(r.connected)); })
+      .catch(() => { setCanvasItems([]); setCanvasConnected(false); });
   }, [isLoaded, isSignedIn, apiGet]);
 
   if (isLoaded && !isSignedIn) {
@@ -81,19 +82,23 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {canvasItems.length > 0 && (
+      {canvasConnected && (
         <>
           <p className="mt-8 mb-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">Upcoming assessments</p>
-          <div className="space-y-2">
-            {canvasItems.slice(0, 5).map((i) => (
-              <div key={i.id} className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3">
-                <div>
-                  <div className="text-sm font-medium text-foreground">{i.title}{i.course ? ` · ${i.course}` : ''}</div>
-                  <div className="text-xs text-muted-foreground">due {fmtDate(i.dueDate.slice(0, 10))}</div>
+          {canvasItems.length > 0 ? (
+            <div className="space-y-2">
+              {canvasItems.slice(0, 5).map((i) => (
+                <div key={i.id} className="flex items-center justify-between rounded-2xl border border-border bg-card px-4 py-3">
+                  <div>
+                    <div className="text-sm font-medium text-foreground">{i.title}{i.course ? ` · ${i.course}` : ''}</div>
+                    <div className="text-xs text-muted-foreground">due {fmtDate(i.dueDate.slice(0, 10))}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">Canvas connected ✓ — no upcoming assessments right now.</p>
+          )}
         </>
       )}
 
