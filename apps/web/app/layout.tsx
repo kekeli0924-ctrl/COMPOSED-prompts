@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
 import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
-import { ShowcaseHeader } from "@/components/ShowcaseHeader";
 import { ClerkProvider } from '@clerk/nextjs';
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", weight: ["400", "500", "600"] });
@@ -34,7 +33,6 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={`${inter.variable} ${newsreader.variable} ${geistMono.variable} font-sans antialiased`}>
-          <ShowcaseHeader />
           {children}
         </body>
       </html>
