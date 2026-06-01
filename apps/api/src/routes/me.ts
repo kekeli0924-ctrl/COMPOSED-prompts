@@ -1,7 +1,6 @@
 import { Hono } from 'hono';
 import { desc, eq, sql } from 'drizzle-orm';
-import { z } from 'zod';
-import { gradeFromGradYear, gradYearFromGrade } from '@composed-prompts/shared';
+import { gradeFromGradYear } from '@composed-prompts/shared';
 import { db, schema } from '../lib/db.js';
 
 export const me = new Hono();
@@ -24,23 +23,6 @@ me.get('/api/me', async (c) => {
     },
     200,
   );
-});
-
-const GradePatchSchema = z.object({
-  grade: z.enum(['Freshman', 'Sophomore', 'Junior', 'Senior']).nullable(),
-});
-
-me.patch('/api/me/grade', async (c) => {
-  const user = c.get('user');
-  if (!user) return c.json({ error: 'unauthorized' }, 401);
-
-  const body = await c.req.json().catch(() => ({}));
-  const parsed = GradePatchSchema.safeParse(body);
-  if (!parsed.success) return c.json({ error: 'invalid input' }, 400);
-
-  const gradYear = parsed.data.grade === null ? null : gradYearFromGrade(parsed.data.grade);
-  await db.update(schema.users).set({ gradYear }).where(eq(schema.users.id, user.id));
-  return c.json({ gradYear, grade: gradeFromGradYear(gradYear) }, 200);
 });
 
 me.get('/api/me/history', async (c) => {

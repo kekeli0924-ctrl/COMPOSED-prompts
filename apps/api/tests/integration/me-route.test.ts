@@ -54,28 +54,4 @@ describe('GET /api/me', () => {
     expect(body.grade).toBe('Sophomore');
   });
 
-  it('PATCH /api/me/grade sets the grade (and 401 when anonymous)', async () => {
-    const [u] = await db
-      .insert(schema.users)
-      .values({ email: 'p@test.com', clerkUserId: 'clerk_p', displayName: null })
-      .returning({ id: schema.users.id, email: schema.users.email, displayName: schema.users.displayName });
-
-    const anon = new Hono();
-    anon.use('*', withUser(null));
-    anon.route('/', me);
-    expect((await anon.request('/api/me/grade', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: '{}' })).status).toBe(401);
-
-    const app = new Hono();
-    app.use('*', withUser({ id: u!.id, email: u!.email, displayName: u!.displayName, gradYear: null }));
-    app.route('/', me);
-    const res = await app.request('/api/me/grade', {
-      method: 'PATCH',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ grade: 'Senior' }),
-    });
-    expect(res.status).toBe(200);
-    expect((await res.json()).grade).toBe('Senior');
-    const [reloaded] = await db.select().from(schema.users).where(eq(schema.users.id, u!.id));
-    expect(reloaded!.gradYear).toBe(2027);
-  });
 });
