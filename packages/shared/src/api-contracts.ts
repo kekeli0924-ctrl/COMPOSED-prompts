@@ -42,6 +42,8 @@ export type HistoryEntry = {
   model: string;
   mode: StudyMode;
   courseId: string | null;
+  assessmentType: string | null;
+  assessmentDate: string | null;  // ISO date 'YYYY-MM-DD' or null
   rating: number | null;
   ratingText: string | null;
 };

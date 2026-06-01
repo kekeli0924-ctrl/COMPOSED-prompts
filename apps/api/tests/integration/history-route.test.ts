@@ -85,6 +85,9 @@ describe('GET /api/me/history', () => {
     expect(new Date(body.entries[0].createdAt).getTime()).toBeGreaterThan(
       new Date(body.entries[2].createdAt).getTime(),
     );
+    const entry = body.entries[0];
+    expect(entry.assessmentType).toBe('test');
+    expect(entry.assessmentDate).toBe('2026-06-15');
   });
 
   it('does not return other users entries', async () => {

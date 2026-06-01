@@ -59,6 +59,7 @@ me.get('/api/me/history', async (c) => {
       model: schema.generations.model,
       mode: schema.generations.mode,
       courseId: schema.generations.courseId,
+      inputsJson: schema.generations.inputsJson,
       rating: schema.feedback.rating,
       ratingText: schema.feedback.text,
     })
@@ -85,6 +86,8 @@ me.get('/api/me/history', async (c) => {
         model: r.model,
         mode: r.mode,
         courseId: r.courseId,
+        assessmentType: (r.inputsJson as { assessmentType?: string } | null)?.assessmentType ?? null,
+        assessmentDate: (r.inputsJson as { assessmentDate?: string } | null)?.assessmentDate ?? null,
         rating: r.rating,
         ratingText: r.ratingText,
       })),
