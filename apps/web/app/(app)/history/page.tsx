@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { listHistory, rateHistoryEntry, type HistoryEntry } from '@/lib/storage/history';
+import { groupHistoryByClass } from '@/lib/group-history';
 import { findCourse, STUDY_MODE_LABELS } from '@composed-prompts/shared';
 import { useUser } from '@clerk/nextjs';
 import { useApi } from '@/lib/use-api';
@@ -71,19 +72,31 @@ export default function HistoryPage() {
           ? 'Synced from your account. Available on any device.'
           : 'Stored in this browser only. Sign up to sync across devices.'}
       </p>
-      <ul className="mt-6 grid gap-3">
-        {entries.map((e) => (
-          <HistoryRow
-            key={e.id}
-            entry={e}
-            onRate={(r) => {
-              if (e.source === 'local') rateHistoryEntry(e.id, r);
-              // For server entries, rating is done from the result page right after
-              // generation; server-side re-rating could be added later but isn't in v1 scope.
-            }}
-          />
+      <div className="mt-6 space-y-8">
+        {groupHistoryByClass(entries).map((group) => (
+          <section key={group.key}>
+            <h2 className="mb-3 flex items-baseline gap-2">
+              <span className="font-serif text-lg font-semibold text-foreground">{group.label}</span>
+              <span className="text-xs uppercase tracking-wide text-muted-foreground">
+                {group.count} prompt{group.count === 1 ? '' : 's'}
+              </span>
+            </h2>
+            <ul className="grid gap-3">
+              {group.entries.map((e) => (
+                <HistoryRow
+                  key={e.id}
+                  entry={e}
+                  onRate={(r) => {
+                    if (e.source === 'local') rateHistoryEntry(e.id, r);
+                    // For server entries, rating is done from the result page right after
+                    // generation; server-side re-rating could be added later but isn't in v1 scope.
+                  }}
+                />
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
+      </div>
     </main>
   );
 }
