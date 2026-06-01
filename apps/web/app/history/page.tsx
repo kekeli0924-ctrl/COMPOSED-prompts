@@ -50,9 +50,9 @@ export default function HistoryPage() {
   if (entries.length === 0) {
     return (
       <main className="mx-auto max-w-3xl px-6 py-12">
-        <h1 className="text-2xl font-semibold">Past prompts</h1>
+        <h1 className="font-serif text-2xl font-semibold text-foreground">Past prompts</h1>
         <Alert className="mt-4">
-          <AlertDescription>
+          <AlertDescription className="text-muted-foreground">
             No saved prompts yet. <Link className="underline" href="/wizard">Generate one</Link>.
             {!isSignedIn && (
               <> Sign up to save prompts across devices.</>
@@ -65,8 +65,8 @@ export default function HistoryPage() {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-2xl font-semibold">Past prompts</h1>
-      <p className="mt-2 text-sm text-slate-600">
+      <h1 className="font-serif text-2xl font-semibold text-foreground">Past prompts</h1>
+      <p className="mt-2 text-sm text-muted-foreground">
         {isSignedIn
           ? 'Synced from your account. Available on any device.'
           : 'Stored in this browser only. Sign up to sync across devices.'}
@@ -98,14 +98,14 @@ function HistoryRow({
   const [expanded, setExpanded] = useState(false);
   const course = entry.courseId ? findCourse(entry.courseId)?.name : 'Free-text class';
   return (
-    <li className="rounded-lg border bg-white p-4">
+    <li className="rounded-2xl border border-border bg-card p-5 shadow-soft">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="text-sm text-slate-500">
+          <div className="text-xs uppercase tracking-wide text-muted-foreground">
             {new Date(entry.createdAt).toLocaleString()}
           </div>
-          <div className="font-medium">{course} · {STUDY_MODE_LABELS[entry.mode]}</div>
-          <div className="text-xs text-slate-500">{entry.llm} / {entry.model}</div>
+          <div className="mt-1 font-medium text-foreground">{course} · {STUDY_MODE_LABELS[entry.mode]}</div>
+          <div className="text-xs text-muted-foreground">{entry.llm} / {entry.model}</div>
         </div>
         <div className="flex flex-col items-end gap-2">
           {entry.rating ? (
@@ -116,7 +116,7 @@ function HistoryRow({
           ) : entry.source === 'local' ? (
             <RatingButtons onRate={onRate} />
           ) : (
-            <span className="text-xs text-slate-400">no rating</span>
+            <span className="text-xs text-muted-foreground">no rating</span>
           )}
         </div>
       </div>
@@ -124,7 +124,7 @@ function HistoryRow({
         {expanded ? 'Hide prompt' : 'Show prompt'}
       </Button>
       {expanded && (
-        <pre className="mt-3 whitespace-pre-wrap break-words rounded bg-slate-50 p-3 text-xs font-mono">
+        <pre className="mt-3 whitespace-pre-wrap break-words rounded-2xl bg-muted p-3 text-xs font-mono text-foreground">
           {entry.promptText}
         </pre>
       )}
@@ -140,7 +140,7 @@ function RatingButtons({ onRate }: { onRate: (r: 1 | 2 | 3 | 4 | 5) => void }) {
           key={r}
           type="button"
           onClick={() => onRate(r as 1 | 2 | 3 | 4 | 5)}
-          className="h-7 w-7 rounded border bg-white text-sm hover:bg-yellow-100"
+          className="h-7 w-7 rounded-full border border-border bg-card text-sm text-foreground hover:bg-muted"
         >
           {r}
         </button>
