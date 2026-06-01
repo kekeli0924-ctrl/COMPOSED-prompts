@@ -36,6 +36,13 @@
       "when": 1780100908313,
       "tag": "0004_neat_epoch",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1780283061704,
+      "tag": "0005_superb_sugar_man",
+      "breakpoints": true
     }
   ]
 }

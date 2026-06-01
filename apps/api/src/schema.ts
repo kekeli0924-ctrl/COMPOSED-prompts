@@ -7,6 +7,7 @@ export const users = pgTable('users', {
   displayName: text('display_name'),
   clerkUserId: text('clerk_user_id').notNull().unique(),
   gradYear: integer('grad_year'),
+  canvasTokenEnc: text('canvas_token_enc'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 

@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "canvas_token_enc" text;
