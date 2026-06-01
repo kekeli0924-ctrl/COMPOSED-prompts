@@ -4,39 +4,39 @@
 
 @layer base {
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.141 0.005 285.823);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.141 0.005 285.823);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.141 0.005 285.823);
-    --primary: oklch(0.21 0.006 285.885);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.967 0.001 286.375);
-    --muted-foreground: oklch(0.552 0.016 285.938);
-    --accent: oklch(0.967 0.001 286.375);
-    --accent-foreground: oklch(0.21 0.006 285.885);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.985 0 0);
-    --border: oklch(0.92 0.004 286.32);
-    --input: oklch(0.92 0.004 286.32);
-    --ring: oklch(0.705 0.015 286.067);
-    --radius: 0.5rem;
-    --chart-1: oklch(0.871 0.006 286.286);
-    --chart-2: oklch(0.552 0.016 285.938);
-    --chart-3: oklch(0.442 0.017 285.786);
-    --chart-4: oklch(0.37 0.013 285.805);
-    --chart-5: oklch(0.274 0.006 286.033);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.141 0.005 285.823);
-    --sidebar-primary: oklch(0.21 0.006 285.885);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.967 0.001 286.375);
-    --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-    --sidebar-border: oklch(0.92 0.004 286.32);
-    --sidebar-ring: oklch(0.705 0.015 286.067);
+    --background: #F6F2EA;
+    --foreground: #26261F;
+    --card: #FFFFFF;
+    --card-foreground: #26261F;
+    --popover: #FFFFFF;
+    --popover-foreground: #26261F;
+    --primary: #586249;
+    --primary-foreground: #EEF0E7;
+    --secondary: #FCFBF7;
+    --secondary-foreground: #26261F;
+    --muted: #EFEAE0;
+    --muted-foreground: #8A857B;
+    --accent: #EEF0E7;
+    --accent-foreground: #26261F;
+    --destructive: #A23E34;
+    --destructive-foreground: #FBF1EF;
+    --border: #E7E1D6;
+    --input: #E7E1D6;
+    --ring: #586249;
+    --radius: 0.875rem;
+    --chart-1: #586249;
+    --chart-2: #8A857B;
+    --chart-3: #A65A33;
+    --chart-4: #4A5340;
+    --chart-5: #C9B79C;
+    --sidebar: #FBF9F4;
+    --sidebar-foreground: #26261F;
+    --sidebar-primary: #586249;
+    --sidebar-primary-foreground: #EEF0E7;
+    --sidebar-accent: #EEF0E7;
+    --sidebar-accent-foreground: #26261F;
+    --sidebar-border: #E7E1D6;
+    --sidebar-ring: #586249;
   }
 
   .dark {
@@ -84,7 +84,7 @@
   }
 }
 
-/* Loading state — used while Opus 4.7 is composing the prompt. */
+/* Loading state — used while Opus is composing the prompt. */
 @keyframes composing-shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -93,11 +93,11 @@
 .composing-text {
   background: linear-gradient(
     90deg,
-    rgba(15, 23, 42, 0.35) 0%,
-    rgba(15, 23, 42, 1) 25%,
-    rgba(15, 23, 42, 0.35) 50%,
-    rgba(15, 23, 42, 1) 75%,
-    rgba(15, 23, 42, 0.35) 100%
+    rgba(38, 38, 31, 0.35) 0%,
+    rgba(38, 38, 31, 1) 25%,
+    rgba(38, 38, 31, 0.35) 50%,
+    rgba(38, 38, 31, 1) 75%,
+    rgba(38, 38, 31, 0.35) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
