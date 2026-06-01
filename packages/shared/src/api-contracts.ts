@@ -69,3 +69,16 @@ export type SharpenRequest = { generationId: string; basePrompt: string };
 export type SharpenResponse =
   | { ok: true; improvedPrompt: string; critique: string }
   | { ok: false; reason: 'unavailable' | 'critic-failed' | 'revise-failed' };
+
+// Canvas integration
+export type UpcomingAssessment = {
+  id: string;
+  title: string;
+  course: string | null;
+  dueDate: string; // ISO
+  type: string;    // 'assignment' | 'quiz' | …
+  url: string | null;
+};
+export type CanvasStatus = { connected: boolean };
+export type CanvasConnectResponse = { connected: boolean; reason?: 'invalid-token' };
+export type CanvasUpcomingResponse = { connected: boolean; items: UpcomingAssessment[]; reason?: 'reconnect' | 'canvas-unavailable' };
