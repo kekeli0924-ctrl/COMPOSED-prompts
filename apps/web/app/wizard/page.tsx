@@ -256,7 +256,7 @@ function ComposingScreen() {
         className="composing-orbit-ring absolute top-32 h-[420px] w-[420px] rounded-full opacity-40 blur-3xl"
         style={{
           background:
-            'conic-gradient(from 0deg, rgba(99,102,241,0.18), rgba(236,72,153,0.14), rgba(245,158,11,0.16), rgba(99,102,241,0.18))',
+            'conic-gradient(from 0deg, rgba(88,98,73,0.18), rgba(166,90,51,0.14), rgba(201,183,156,0.18), rgba(88,98,73,0.18))',
         }}
       />
 
