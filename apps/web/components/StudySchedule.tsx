@@ -103,6 +103,9 @@ export function StudySchedule({ assessmentDate, hoursAvailable, courseLabel, ass
               key={i}
               className="flex flex-wrap items-center gap-2 rounded-2xl border border-border bg-muted/40 px-3 py-2 text-sm"
             >
+              <span className="w-full text-xs font-medium text-muted-foreground">
+                Review {i + 1} of {blocks.length}
+              </span>
               <Input
                 type="date"
                 value={datePart(b.start)}
