@@ -36,7 +36,8 @@ describe('proposeStudyBlocks', () => {
     const blocks = proposeStudyBlocks({ assessmentDate: '2026-06-10', hoursAvailable: 2.5, now: at(2026, 6, 1) });
     expect(blocks.length).toBe(3);
     expect(blocks[0]).toEqual({ start: '2026-06-01T19:00:00', end: '2026-06-01T20:00:00' });
-    // remainder session is 30 min, on the LAST review day (expanding-gap spacing).
+    // remainder session is 30 min; here (one session per review day) it lands on the
+    // last review day — the day before the test.
     expect(blocks[2]).toEqual({ start: '2026-06-09T19:00:00', end: '2026-06-09T19:30:00' });
   });
 

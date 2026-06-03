@@ -37,8 +37,9 @@ function reviewDayOffsets(windowDays: number, sessionCount: number): number[] {
   for (let i = 0; i < r; i++) {
     raw.push(Math.round(last * Math.pow(i / (r - 1), GAP_EXPONENT)));
   }
-  // `raw` is non-decreasing (convex curve); dedupe keeps it strictly increasing on
-  // small windows where rounding can collide (fewer review days is fine).
+  // `raw` is non-decreasing (convex curve, exponent > 1). The Set is defensive: it
+  // makes the strictly-increasing postcondition unconditional in case rounding ever
+  // collided on a tiny window. (It doesn't across realistic inputs, but the guard is cheap.)
   return [...new Set(raw)];
 }
 
