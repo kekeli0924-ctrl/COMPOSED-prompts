@@ -16,7 +16,6 @@ import { findCourse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
 import { ApiError } from '@/lib/api-client';
 import { useApi } from '@/lib/use-api';
-import { GENERATION_MODEL_NAME } from '@/lib/constants';
 
 type PartialWizardState = Partial<WizardInputs> & {
   material: string;
@@ -234,7 +233,7 @@ export default function WizardPage() {
 const COMPOSING_HELPER_MESSAGES = [
   'Reading your inputs',
   'Pulling Pomfret course context',
-  `Calling ${GENERATION_MODEL_NAME}`,
+  'Writing the seven sections',
   'Tailoring to your model',
   'Polishing the language',
 ];
@@ -274,11 +273,6 @@ function ComposingScreen() {
           className="composing-helper mt-8 pl-[0.2em] text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
         >
           {COMPOSING_HELPER_MESSAGES[phase]}
-        </p>
-
-        <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-          {GENERATION_MODEL_NAME} is writing all seven sections of your prompt. This usually takes
-          about ten seconds.
         </p>
       </div>
     </main>

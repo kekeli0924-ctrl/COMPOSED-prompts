@@ -10,7 +10,6 @@ import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
 import { StudySchedule } from '@/components/StudySchedule';
 import { SharpenPanel } from '@/components/SharpenPanel';
-import { GENERATION_MODEL_NAME } from '@/lib/constants';
 
 type LastResult = {
   prompt: string;
@@ -59,7 +58,7 @@ export default function ResultPage() {
       {data.metadata.generator === 'deterministic' && (
         <Alert className="mt-4">
           <AlertDescription>
-            We couldn&apos;t reach {GENERATION_MODEL_NAME} for this generation — used the deterministic templates instead. The prompt is still solid, but lacks the topic-specific tailoring Opus would have added.
+            We couldn&apos;t reach the AI model for this generation — used the deterministic templates instead. The prompt is still solid, but lacks the topic-specific tailoring it would have added.
           </AlertDescription>
         </Alert>
       )}
