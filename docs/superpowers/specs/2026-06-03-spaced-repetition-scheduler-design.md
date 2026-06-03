@@ -28,7 +28,7 @@ From the deep-research report: **distributed practice is the single most effecti
 1. **Sessions:** split `hoursAvailable` into ≤60-min sessions (unchanged). Let **S** = session count. If `hoursAvailable ≤ 0` → `[]`.
 2. **Window:** `W` = whole days from start-of-today to the assessment day (local midnights). The review window is offsets `[0 … W-1]` where offset 0 = today and offset `W-1` = the day before the test. If **W ≤ 1** (test today/tomorrow/past) → one review day = **today** (cram).
 3. **Review-day count R** = `clamp(1 + round(log2(W)), 1, min(S, W, 6))`. Grows with the horizon, never exceeds the sessions you have, the days available, or a cap of **6**. (Examples: W=2→2, W=3→3, W=7→4, W=14→5, W=21→5, W≥32→6.)
-4. **Expanding-gap offsets:** for `i = 0 … R-1`, `offset_i = round((W-1) * (i/(R-1))^1.4)` (when R>1; R=1 → `[0]`). The exponent **1.4** makes points denser early and sparser later, so consecutive gaps **expand**, with `offset_0 = 0` (today) and `offset_{R-1} = W-1` (day before test). Dedupe to a strictly-increasing offset list (rounding can collide on small windows; fewer review days is fine).
+4. **Expanding-gap offsets:** for `i = 0 … R-1`, `offset_i = round((W-1) * (i/(R-1))^1.4)` (when R>1; R=1, i.e. a single session → `[W-1]`, the day before the test). The exponent **1.4** makes points denser early and sparser later, so consecutive gaps **expand**, with `offset_0 = 0` (today) and `offset_{R-1} = W-1` (day before test). Dedupe to a strictly-increasing offset list (rounding can collide on small windows; fewer review days is fine).
 5. **Distribute + place:** round-robin the S sessions across the R chosen review days, then place each day's sessions at 7pm back-to-back (the existing placement code, reused verbatim).
 
 **Worked examples** (W = days-to-test):
@@ -63,5 +63,5 @@ Unit-test `proposeStudyBlocks` (the spacing is now the core logic):
 ## Risks / notes
 
 - **Behavior change:** this concentrates studying onto fewer, well-spaced days instead of a little every day — intended (spacing beats daily grind), but visible. Accepted in brainstorming.
-- **Tuning the curve:** the exponent (1.6) and the R formula are heuristics anchored on the research direction, not exact-optimal; they're easy to tune later and are covered by the invariant tests, not brittle exact-offset assertions where avoidable.
+- **Tuning the curve:** the exponent (1.4) and the R formula are heuristics anchored on the research direction, not exact-optimal; they're easy to tune later and are covered by the invariant tests, not brittle exact-offset assertions where avoidable.
 - **Short windows:** rounding collisions on small W naturally reduce the review-day count (handled by the dedupe) — fine.

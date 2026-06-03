@@ -74,6 +74,13 @@ describe('proposeStudyBlocks', () => {
     blocks.forEach((b) => expect(minutes(b)).toBeLessThanOrEqual(60));
   });
 
+  it('schedules a lone session the day before the test (single-session, long horizon)', () => {
+    // 1 hour = one session; test 14 days out → the single review lands the day before
+    // the test (Jun 14), honoring the "review before the test" promise — not today.
+    const blocks = proposeStudyBlocks({ assessmentDate: '2026-06-15', hoursAvailable: 1, now: at(2026, 6, 1) });
+    expect(blocks).toEqual([{ start: '2026-06-14T19:00:00', end: '2026-06-14T20:00:00' }]);
+  });
+
   it('crams everything today when the assessment is today, stacking back-to-back', () => {
     const blocks = proposeStudyBlocks({ assessmentDate: '2026-06-01', hoursAvailable: 2, now: at(2026, 6, 1) });
     expect(blocks).toEqual([

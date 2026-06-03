@@ -31,7 +31,10 @@ function reviewDayOffsets(windowDays: number, sessionCount: number): number[] {
     1,
     Math.min(1 + Math.round(Math.log2(windowDays)), sessionCount, windowDays, MAX_REVIEW_DAYS),
   );
-  if (r <= 1) return [0];
+  // Only reachable when sessionCount === 1 (for windowDays >= 2 the other terms are >= 2).
+  // A single session can't be "spaced" — place it the day before the test, where a lone
+  // review does the most good and the "review before the test" promise still holds.
+  if (r <= 1) return [windowDays - 1];
   const last = windowDays - 1;
   const raw: number[] = [];
   for (let i = 0; i < r; i++) {
