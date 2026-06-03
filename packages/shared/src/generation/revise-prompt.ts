@@ -4,6 +4,7 @@ import { makeClient, OPUS_MODEL, type OpusFullPromptResult } from './opus-full-p
 
 const REVISE_SYSTEM_PROMPT = `You are a prompt engineer improving a study prompt for a Pomfret School student. You will be given (1) a study prompt you previously wrote, and (2) an external critique of it from another model. Produce an IMPROVED version of the prompt that:
 - Fixes the valid, specific points in the critique (ignore vague or wrong ones).
+- Make sure the improved prompt drives retrieval practice (mixed multiple-choice + short-answer), forces self-explanation (why/how + the underlying principle), uses a guide-don't-tell tutoring stance, and scales scaffolding to the student's confidence.
 - Keeps the same 7-section Pomfret-Study framework and the SAME output format the student's LLM wants (XML tags / markdown headers / numbered steps — match whatever the original used).
 - Stays a clean, copy-paste-ready prompt written in the student's first person.
 Output ONLY the improved prompt — no preamble, no "here is", no commentary about the changes.`;
