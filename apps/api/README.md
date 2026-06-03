@@ -1,13 +1,13 @@
 # `apps/api` — Composed backend
 
-Hono on Fly.io. Postgres on Neon. Lucia for sessions. Anthropic SDK for Opus 4.7. Runs TypeScript directly via `tsx` (no build step).
+Hono on Fly.io. Postgres on Neon. Lucia for sessions. Anthropic SDK for Opus 4.8. Runs TypeScript directly via `tsx` (no build step).
 
 ## Endpoints
 
 | Method | Path                        | Purpose                                              |
 |--------|-----------------------------|------------------------------------------------------|
 | GET    | `/health`                   | Liveness probe                                       |
-| POST   | `/api/generate`             | Generate a study prompt (Opus 4.7 or fallback)       |
+| POST   | `/api/generate`             | Generate a study prompt (Opus 4.8 or fallback)       |
 | POST   | `/api/feedback`             | Submit a rating + optional text for a generation     |
 | POST   | `/api/auth/signup`          | Create account, return session cookie                |
 | POST   | `/api/auth/login`           | Authenticate, return session cookie                  |
@@ -50,7 +50,7 @@ npm run dev   # port 8080, hot-reloads via tsx watch
 | Var                                | Required          | Notes                                                  |
 |------------------------------------|-------------------|--------------------------------------------------------|
 | `DATABASE_URL`                     | yes               | Neon Postgres connection string                        |
-| `ANTHROPIC_API_KEY`                | yes               | Opus 4.7 + profile-job summarizer                      |
+| `ANTHROPIC_API_KEY`                | yes               | Opus 4.8 + profile-job summarizer                      |
 | `CORS_ALLOWED_ORIGINS`             | recommended       | Comma-separated; defaults to localhost + Vercel domain |
 | `RATE_LIMIT_PER_IP_PER_DAY`        | optional (20)     |                                                        |
 | `DAILY_BUDGET_CEILING_USD`         | optional (10)     |                                                        |
@@ -92,7 +92,7 @@ The block is appended to the user message (not the system message) so the prompt
 
 ## Profile job
 
-`src/jobs/update-profiles.ts`. Finds users with ≥ 5 rated generations in the last 30 days, asks Opus 4.7 to summarize their preferences in 3–5 sentences, upserts into `user_profiles`. Exported `updateAllProfiles({ summarizeFn? })` for test injection.
+`src/jobs/update-profiles.ts`. Finds users with ≥ 5 rated generations in the last 30 days, asks Opus 4.8 to summarize their preferences in 3–5 sentences, upserts into `user_profiles`. Exported `updateAllProfiles({ summarizeFn? })` for test injection.
 
 Image: `Dockerfile.job`. Fly app: `composed-prompts-jobs`. Config: `apps/api/fly.job.toml`. Schedule via Fly machine cron or GitHub Actions cron (see plan F2).
 

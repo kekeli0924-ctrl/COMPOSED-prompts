@@ -50,7 +50,7 @@ describe('generateFullPromptWithOpus', () => {
     }
   });
 
-  it('calls Opus 4.7 with prompt-cached system message', async () => {
+  it('calls Opus with a prompt-cached system message', async () => {
     mockCreate.mockResolvedValueOnce({
       content: [{ type: 'text', text: 'ok' }],
       usage: { input_tokens: 1, output_tokens: 1 },

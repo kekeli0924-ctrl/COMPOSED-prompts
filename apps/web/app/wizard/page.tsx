@@ -16,6 +16,7 @@ import { findCourse } from '@composed-prompts/shared';
 import { saveHistoryEntry } from '@/lib/storage/history';
 import { ApiError } from '@/lib/api-client';
 import { useApi } from '@/lib/use-api';
+import { GENERATION_MODEL_NAME } from '@/lib/constants';
 
 type PartialWizardState = Partial<WizardInputs> & {
   material: string;
@@ -228,12 +229,12 @@ export default function WizardPage() {
   );
 }
 
-// ----- Loading screen shown while Opus 4.7 composes the prompt -----
+// ----- Loading screen shown while Claude Opus composes the prompt -----
 
 const COMPOSING_HELPER_MESSAGES = [
   'Reading your inputs',
   'Pulling Pomfret course context',
-  'Calling Claude Opus 4.7',
+  `Calling ${GENERATION_MODEL_NAME}`,
   'Tailoring to your model',
   'Polishing the language',
 ];
@@ -276,7 +277,7 @@ function ComposingScreen() {
         </p>
 
         <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-          Opus 4.7 is writing all seven sections of your prompt. This usually takes
+          {GENERATION_MODEL_NAME} is writing all seven sections of your prompt. This usually takes
           about ten seconds.
         </p>
       </div>
