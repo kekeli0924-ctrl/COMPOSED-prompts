@@ -31,3 +31,11 @@ export {
 } from './templates/shared.js';
 export { assembleDeterministicPrompt, assembleSections } from './generation/assembler.js';
 export { formatSection, formatAssembledPrompt } from './generation/format-selector.js';
+export {
+  getActiveTemplateVersion,
+  ACTIVE_TEMPLATE_VERSION,
+  TEMPLATE_VERSIONS,
+  type TemplateVersionId,
+  type TemplateVersion,
+  type TemplateVersionSelectOpts,
+} from './generation/template-versions.js';

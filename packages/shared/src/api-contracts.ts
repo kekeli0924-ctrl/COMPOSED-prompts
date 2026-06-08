@@ -9,6 +9,7 @@ export type GenerateResponse = {
     generator: 'opus' | 'deterministic';
     fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
     generationId: string;  // for use in feedback later
+    templateVersion: string;  // prompt-engineering version that produced this (instrumentation)
   };
 };
 

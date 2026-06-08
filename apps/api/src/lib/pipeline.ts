@@ -1,6 +1,7 @@
 import {
   type WizardInputs,
   assembleDeterministicPrompt,
+  getActiveTemplateVersion,
 } from '@composed-prompts/shared';
 import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
 import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js';
@@ -19,6 +20,7 @@ export type PipelineResult = {
   prompt: string;
   promptHash: string;
   generator: 'opus' | 'deterministic';
+  templateVersion: string;
   fallbackReason?: 'budget-exhausted' | 'api-error';
 };
 
@@ -56,6 +58,10 @@ export async function runPipeline(
   inputs: WizardInputs,
   opts: { userId: string | null; studentGrade?: string } = { userId: null },
 ): Promise<PipelineResult> {
+  // Stamp the prompt-engineering version on every persisted row (all return paths
+  // below). A/B bucketing is a no-op today; seed by user so a future split stays
+  // stable per student. This identifies the prompt logic, not opus-vs-deterministic.
+  const templateVersion = getActiveTemplateVersion({ seed: opts.userId ?? undefined });
   const budgetOk = await budgetAvailable();
   let fallbackReason: PipelineResult['fallbackReason'];
 
@@ -85,6 +91,7 @@ export async function runPipeline(
         prompt: result.prompt,
         promptHash: promptHash(result.prompt),
         generator: 'opus',
+        templateVersion,
       };
     }
     fallbackReason = 'api-error';
@@ -97,6 +104,7 @@ export async function runPipeline(
     prompt,
     promptHash: promptHash(prompt),
     generator: 'deterministic',
+    templateVersion,
     fallbackReason,
   };
 }

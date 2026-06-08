@@ -24,6 +24,11 @@ export const generations = pgTable('generations', {
   provider: text('provider').notNull(),
   model: text('model').notNull(),
   fallbackReason: text('fallback_reason'),
+  // Prompt-engineering version that produced this row (instrumentation for A/B
+  // analysis). Nullable: existing rows are backfilled to 'v0-legacy' by migration;
+  // new rows are stamped by the app (currently always 'v1'). Distinct from
+  // `generator`, which records opus-vs-deterministic.
+  templateVersion: text('template_version'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => ({
   courseModeRecencyIdx: index('generations_course_mode_recency_idx').on(t.courseId, t.mode, t.createdAt),

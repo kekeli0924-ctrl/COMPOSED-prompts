@@ -48,6 +48,7 @@ describe('POST /api/generate', () => {
       prompt: 'test prompt with <material>fake</material> inside',
       promptHash: 'a'.repeat(64),
       generator: 'opus',
+      templateVersion: 'v1',
     });
     await resetAllTables();
   });
@@ -58,6 +59,7 @@ describe('POST /api/generate', () => {
     const body = await res.json();
     expect(body.prompt).toBeTruthy();
     expect(body.metadata.generator).toBe('opus');
+    expect(body.metadata.templateVersion).toBe('v1');
     expect(body.metadata.promptHash).toMatch(/^[a-f0-9]{64}$/);
     expect(body.metadata.generationId).toMatch(/^[0-9a-f-]{36}$/);
   });

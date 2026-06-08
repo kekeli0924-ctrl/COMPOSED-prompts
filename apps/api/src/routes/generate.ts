@@ -66,6 +66,7 @@ generate.post('/api/generate', async (c) => {
         provider: inputs.provider,
         model: inputs.model,
         fallbackReason: result.fallbackReason ?? null,
+        templateVersion: result.templateVersion,
       })
       .returning({ id: schema.generations.id });
 
@@ -75,6 +76,7 @@ generate.post('/api/generate', async (c) => {
         promptHash: result.promptHash,
         generator: result.generator,
         generationId: inserted!.id,
+        templateVersion: result.templateVersion,
         ...(result.fallbackReason ? { fallbackReason: result.fallbackReason } : {}),
       },
     };

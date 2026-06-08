@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import {
   findCourse,
   gradeFromGradYear,
+  getActiveTemplateVersion,
   redactMaterialForHistory,
   type WizardInputs,
   type SharpenResponse,
@@ -112,6 +113,9 @@ sharpen.post('/api/generate/sharpen', async (c) => {
     mode: row.mode,
     provider: row.provider,
     model: row.model,
+    // Sharpen also persists a generations row; stamp it with the active prompt
+    // version so analytics never sees a NULL bucket alongside v0-legacy / v1.
+    templateVersion: getActiveTemplateVersion({ seed: user.id }),
   });
 
   console.log('[sharpen] ok', { userId: user.id });
