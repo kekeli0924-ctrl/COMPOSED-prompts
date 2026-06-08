@@ -83,3 +83,7 @@ export type UpcomingAssessment = {
 export type CanvasStatus = { connected: boolean };
 export type CanvasConnectResponse = { connected: boolean; reason?: 'invalid-token' };
 export type CanvasUpcomingResponse = { connected: boolean; items: UpcomingAssessment[]; reason?: 'reconnect' | 'canvas-unavailable' };
+
+// POST /api/recap — session recap capture (signed-in only; PERSONAL-ONLY; never echoed back)
+export type RecapRequest = { generationId: string; text: string };
+export type RecapResponse = { ok: true; recapId: string };

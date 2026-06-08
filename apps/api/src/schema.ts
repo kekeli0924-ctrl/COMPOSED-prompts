@@ -65,3 +65,22 @@ export const dailySpend = pgTable('daily_spend', {
   cumulativeUsd: numeric('cumulative_usd', { precision: 10, scale: 4 }).notNull().default('0'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+// Session recaps a student pastes back after studying (recap capture loop, stage 1).
+// PERSONAL-ONLY: a recap belongs to exactly one student (user_id) and must NEVER enter
+// any collective/cross-student pool. `recap_text` is the minor's raw account of what
+// they got wrong — stored as-is (stage 2 feeds it into the student's OWN next
+// generation), never logged, never returned to anyone but its author. Retention is
+// enforced by `expires_at` (default now + 30d) via the purge job; rows also cascade
+// away when the user is deleted.
+export const recaps = pgTable('recaps', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  generationId: uuid('generation_id').references(() => generations.id, { onDelete: 'cascade' }),
+  recapText: text('recap_text').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+}, (t) => ({
+  userRecencyIdx: index('recaps_user_recency_idx').on(t.userId, t.createdAt),
+  expiresIdx: index('recaps_expires_idx').on(t.expiresAt),
+}));

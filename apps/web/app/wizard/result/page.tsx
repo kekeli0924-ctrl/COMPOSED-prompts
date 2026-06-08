@@ -6,10 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { PromptOutput } from '@/components/PromptOutput';
 import { FeedbackForm } from '@/components/FeedbackForm';
-import { SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignUpButton, SignInButton } from '@clerk/nextjs';
 import { describeAttachedKinds, type MaterialKind } from '@composed-prompts/shared';
 import { StudySchedule } from '@/components/StudySchedule';
 import { SharpenPanel } from '@/components/SharpenPanel';
+import { RecapForm } from '@/components/RecapForm';
 
 type LastResult = {
   prompt: string;
@@ -116,6 +117,18 @@ export default function ResultPage() {
           />
         </div>
       </div>
+
+      <SignedIn>
+        <div className="mt-6 rounded-2xl border border-border bg-card p-6">
+          <h2 className="font-serif font-semibold text-foreground">Paste your session recap</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            After you study, your AI ends by recapping what you got wrong and writing a follow-up prompt. Paste that here so Composed can pick up where you left off next time.
+          </p>
+          <div className="mt-4">
+            <RecapForm generationId={data.metadata.generationId} />
+          </div>
+        </div>
+      </SignedIn>
 
       <div className="mt-6 flex gap-3">
         <Link href="/wizard"><Button variant="outline">New prompt</Button></Link>
