@@ -69,10 +69,32 @@ describe('POST /api/generate', () => {
     expect(res.status).toBe(400);
   });
 
-  it('returns 429 when rate limited', async () => {
+  it('returns 429 with structured { error: rate_limited, scope: ip } for an anonymous request', async () => {
     mockCheckAndRecord.mockResolvedValueOnce({ allowed: false, remaining: 0 });
     const res = await post(makeApp(), validBody);
     expect(res.status).toBe(429);
+    const body = await res.json();
+    expect(body.error).toBe('rate_limited');
+    expect(body.scope).toBe('ip');
+  });
+
+  it('returns 429 with scope: user for an authenticated request', async () => {
+    const [u] = await db
+      .insert(schema.users)
+      .values({ email: 'rl@test.com', clerkUserId: 'clerk_rl', displayName: null })
+      .returning({ id: schema.users.id });
+    mockCheckAndRecord.mockResolvedValueOnce({ allowed: false, remaining: 0 });
+    const app = new Hono();
+    app.use('*', withUser({ id: u!.id, email: 'rl@test.com', displayName: null }));
+    app.route('/', generate);
+    const res = await app.request('/api/generate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+      body: JSON.stringify(validBody),
+    });
+    expect(res.status).toBe(429);
+    const body = await res.json();
+    expect(body.scope).toBe('user');
   });
 
   it('persists generation with redacted material in prompt_text', async () => {

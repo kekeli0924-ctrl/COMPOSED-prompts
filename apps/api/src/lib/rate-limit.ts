@@ -1,5 +1,5 @@
 import { db, schema } from './db.js';
-import { and, eq, gte, sql } from 'drizzle-orm';
+import { and, eq, gte, lt, sql } from 'drizzle-orm';
 
 export type RateLimitOptions = {
   limit: number;
@@ -57,7 +57,7 @@ export async function pruneOldRateLimitEntries(olderThanSeconds: number): Promis
   const cutoff = new Date(Date.now() - olderThanSeconds * 1000);
   const result = await db
     .delete(schema.rateLimitLog)
-    .where(sql`${schema.rateLimitLog.occurredAt} < ${cutoff}`)
+    .where(lt(schema.rateLimitLog.occurredAt, cutoff))
     .returning({ id: schema.rateLimitLog.id });
   return result.length;
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { checkAndRecord } from '@/lib/rate-limit';
+import { checkAndRecord, pruneOldRateLimitEntries } from '@/lib/rate-limit';
 import { resetRateLimitLog } from '../setup';
 
 describe('rate limit', () => {
@@ -49,5 +49,20 @@ describe('rate limit', () => {
     const r = await checkAndRecord('global:opus:x', { limit: 5, windowSeconds: 60, failClosed: true });
     expect(r.allowed).toBe(false);
     spy.mockRestore();
+  });
+
+  it('pruneOldRateLimitEntries deletes rows past the cutoff, keeping recent ones', async () => {
+    const { db, schema } = await import('@/lib/db');
+    const old = new Date(Date.now() - 49 * 60 * 60 * 1000);    // 49h ago — past 48h cutoff
+    const recent = new Date(Date.now() - 1 * 60 * 60 * 1000);  // 1h ago — kept
+    await db.insert(schema.rateLimitLog).values({ bucketKey: 'ip:prune-old', occurredAt: old });
+    await db.insert(schema.rateLimitLog).values({ bucketKey: 'ip:prune-recent', occurredAt: recent });
+
+    const deleted = await pruneOldRateLimitEntries(48 * 60 * 60);
+    expect(deleted).toBe(1);
+
+    const remaining = await db.select().from(schema.rateLimitLog);
+    expect(remaining.some((r) => r.bucketKey === 'ip:prune-old')).toBe(false);
+    expect(remaining.some((r) => r.bucketKey === 'ip:prune-recent')).toBe(true);
   });
 });

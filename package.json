@@ -9,6 +9,7 @@
   "scripts": {
     "web": "npm run dev --workspace=apps/web",
     "api": "npm run dev --workspace=apps/api",
+    "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {

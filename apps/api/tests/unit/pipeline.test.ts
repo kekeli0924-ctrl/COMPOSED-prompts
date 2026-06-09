@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { WizardInputs } from '@composed-prompts/shared';
 
 const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord } = vi.hoisted(() => ({
@@ -19,7 +19,7 @@ vi.mock('@/lib/budget', () => ({
 
 vi.mock('@/lib/rate-limit', () => ({ checkAndRecord: mockCheckAndRecord }));
 
-import { runPipeline, __resetGlobalOpusCounter } from '@/lib/pipeline';
+import { runPipeline, reserveGlobalOpusSlot, __resetGlobalOpusCounter } from '@/lib/pipeline';
 
 const inputs: WizardInputs = {
   provider: 'anthropic',
@@ -96,5 +96,27 @@ describe('runPipeline', () => {
     expect(second.generator).toBe('deterministic'); // in-memory backstop blocks
     expect(second.fallbackReason).toBe('budget-exhausted');
     expect(mockGenerateOpus).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('reserveGlobalOpusSlot — UTC-day rollover', () => {
+  beforeEach(() => {
+    __resetGlobalOpusCounter();
+    process.env.GLOBAL_OPUS_CALLS_PER_DAY = '3';
+  });
+  afterEach(() => {
+    delete process.env.GLOBAL_OPUS_CALLS_PER_DAY;
+    __resetGlobalOpusCounter();
+  });
+
+  it('frees slots again after the UTC day rolls over (injected clock)', () => {
+    const day1 = new Date('2026-06-08T12:00:00Z');
+    expect(reserveGlobalOpusSlot(day1)).toBe(true);
+    expect(reserveGlobalOpusSlot(day1)).toBe(true);
+    expect(reserveGlobalOpusSlot(day1)).toBe(true);
+    expect(reserveGlobalOpusSlot(day1)).toBe(false); // cap (3) hit on day 1
+
+    const day2 = new Date('2026-06-09T00:05:00Z');
+    expect(reserveGlobalOpusSlot(day2)).toBe(true);  // counter reset on the new UTC day
   });
 });

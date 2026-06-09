@@ -4,6 +4,7 @@ import {
   redactMaterialForHistory,
   gradeFromGradYear,
   type GenerateResponse,
+  type RateLimitedResponse,
 } from '@composed-prompts/shared';
 import { runPipeline } from '../lib/pipeline.js';
 import { checkAndRecord } from '../lib/rate-limit.js';
@@ -43,7 +44,9 @@ generate.post('/api/generate', async (c) => {
   const rlLimit = authedUser ? RATE_LIMIT_PER_USER_PER_DAY : RATE_LIMIT_PER_IP_PER_DAY;
   const limit = await checkAndRecord(rlBucket, { limit: rlLimit, windowSeconds: 24 * 60 * 60 });
   if (!limit.allowed) {
-    return c.json({ error: 'rate limit exceeded; try again tomorrow' }, 429);
+    // scope lets the web client show a shared-IP message ("sign in for your own limit")
+    // vs a personal daily-limit message. No limit values or IPs leave the API.
+    return c.json({ error: 'rate_limited', scope: authedUser ? 'user' : 'ip' } satisfies RateLimitedResponse, 429);
   }
 
   try {

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useAuth } from '@clerk/nextjs';
+import { WizardError } from '@/components/WizardError';
 import { ModelPicker } from '@/components/ModelPicker';
 import { CoursePicker } from '@/components/CoursePicker';
 import { ModePicker } from '@/components/ModePicker';
@@ -41,6 +42,14 @@ export default function WizardPage() {
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorScope, setErrorScope] = useState<'ip' | 'user' | null>(null);
+  const { isSignedIn } = useAuth();
+  // Clear any error when auth state flips (e.g. after the shared-IP sign-in prompt) so a
+  // freshly signed-in student isn't left staring at a stale message before they retry.
+  useEffect(() => {
+    setError(null);
+    setErrorScope(null);
+  }, [isSignedIn]);
 
   const [inputs, setInputs] = useState<PartialWizardState>({
     assessmentDate: today(),
@@ -69,6 +78,7 @@ export default function WizardPage() {
   const submit = async (): Promise<void> => {
     setSubmitting(true);
     setError(null);
+    setErrorScope(null);
 
     const payload: WizardInputs = {
       provider: inputs.provider!,
@@ -100,7 +110,19 @@ export default function WizardPage() {
     try {
       data = await apiPost<GenerateResponse>('/api/generate', payload);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'unknown error');
+      if (err instanceof ApiError && err.status === 429) {
+        const scope = (err.body as { scope?: 'ip' | 'user' } | null)?.scope;
+        if (scope === 'ip') {
+          setError("This network has hit today's shared limit. Sign in to get your own personal limit.");
+          setErrorScope('ip');
+        } else {
+          setError("You've hit today's daily limit — try again tomorrow.");
+          setErrorScope('user');
+        }
+      } else {
+        setError(err instanceof Error ? err.message : 'unknown error');
+        setErrorScope(null);
+      }
       setSubmitting(false);
       return;
     }
@@ -204,11 +226,7 @@ export default function WizardPage() {
         )}
       </div>
 
-      {error && (
-        <Alert className="mt-4">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      )}
+      {error && <WizardError message={error} showSignIn={errorScope === 'ip'} />}
 
       <div className="mt-6 flex justify-between">
         <Button variant="outline" disabled={step === 0 || submitting} onClick={() => setStep((s) => s - 1)}>

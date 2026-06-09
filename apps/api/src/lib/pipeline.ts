@@ -29,16 +29,16 @@ const globalOpusCap = (): number => {
   return Number.isFinite(n) && n > 0 ? n : 250;
 };
 
-const utcDay = (): string => {
-  const d = new Date();
-  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+const utcDay = (now: Date = new Date()): string => {
+  return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}-${String(now.getUTCDate()).padStart(2, '0')}`;
 };
 
 // DB-independent per-process backstop: bounds Opus spend even if every DB
-// control fails open. Resets on UTC-day rollover.
+// control fails open. Resets on UTC-day rollover. `now` is injectable so a test can
+// simulate a day rollover (default real clock → the two callers are unaffected).
 const inMemoryGlobalOpus = { day: '', count: 0 };
-export function reserveGlobalOpusSlot(): boolean {
-  const day = utcDay();
+export function reserveGlobalOpusSlot(now: Date = new Date()): boolean {
+  const day = utcDay(now);
   if (inMemoryGlobalOpus.day !== day) {
     inMemoryGlobalOpus.day = day;
     inMemoryGlobalOpus.count = 0;

@@ -57,6 +57,10 @@ export type HistoryResponse = {
 // Standard error response shape
 export type ErrorResponse = { error: string; issues?: Array<{ path: (string | number)[]; message: string }> };
 
+// POST /api/generate — 429 body. `scope` lets the client tell a shared-IP cap (many
+// students behind one campus NAT) apart from a signed-in user's own daily cap.
+export type RateLimitedResponse = { error: 'rate_limited'; scope: 'ip' | 'user' };
+
 // Unused so far; kept for parity with WizardInputs imports
 export type { WizardInputs };
 

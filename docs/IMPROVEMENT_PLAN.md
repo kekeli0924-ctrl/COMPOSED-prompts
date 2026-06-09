@@ -38,16 +38,18 @@ the actual latest number at the time you work, and use the next sequential numbe
 
 **Hard rules — never violate these:**
 
-1. **Never auto-run DB migrations.** Write SQL files into `apps/api/drizzle/` with the next
-   sequential number and matching Drizzle schema changes in `schema.ts`. Migrations are applied
-   manually in the Neon console by the human, before deploy. List them in your final checklist.
+1. **Never auto-run DB migrations against Neon/production. Throwaway CI or local test databases
+   are fine.** Write SQL files into `apps/api/drizzle/` with the next sequential number and matching
+   Drizzle schema changes in `schema.ts`. Migrations are applied manually in the Neon console by the
+   human, before deploy. List them in your final checklist.
 2. **Never log user content.** Material, understanding, confusion, recap bodies, weak spots,
    prompts — log lengths and counts only. This applies to new code paths you add, including error
    handlers.
 3. **Recaps are personal-only.** No query may ever read another user's recap, and recap content
    must never enter any collective/cross-student pool, shared RAG context, digest, or example set.
    Every recap read must filter by `user_id = <caller>`. Write a test that proves this for any new
-   recap read path.
+   recap read path. Aggregate COUNT-only queries that read no content columns are permitted for
+   ops/retention jobs.
 4. **Preserve the browser-safe barrel.** `packages/shared/src/index.ts` must contain no Node/SDK
    imports. Node-only modules (anything importing the Anthropic/OpenAI SDK or node builtins) are
    deep-imported (`@composed-prompts/shared/src/...`) and must be added to the package
