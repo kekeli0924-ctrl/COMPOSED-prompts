@@ -1,5 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Hono } from 'hono';
+import {
+  RECAP_START_MARKER,
+  RECAP_WEAK_SPOTS_MARKER,
+  RECAP_FOLLOW_UP_MARKER,
+  RECAP_END_MARKER,
+} from '@composed-prompts/shared';
 import { withUser } from '../helpers/with-user';
 import { db, schema } from '@/lib/db';
 import { resetAllTables } from '../setup';
@@ -90,7 +96,7 @@ describe('POST /api/recap', () => {
     const res = await post(appFor(u), { generationId: genId, text: SECRET });
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body).toEqual({ ok: true, recapId: expect.any(String) });
+    expect(body).toEqual({ ok: true, recapId: expect.any(String), parsed: false });
     // The recap body must never be echoed back in the response.
     expect(JSON.stringify(body)).not.toContain('mitosis');
 
@@ -99,8 +105,44 @@ describe('POST /api/recap', () => {
     expect(rows[0]!.userId).toBe(u.id);
     expect(rows[0]!.generationId).toBe(genId);
     expect(rows[0]!.recapText).toBe(SECRET);
+    expect(rows[0]!.weakSpotsJson).toBeNull(); // unstructured paste → no parsed fields
+    expect(rows[0]!.followUpPrompt).toBeNull();
     const exp = new Date(rows[0]!.expiresAt).getTime();
     const expected = before + 30 * 24 * 60 * 60 * 1000;
     expect(Math.abs(exp - expected)).toBeLessThan(60_000); // within a minute of now + 30d
+  });
+
+  it('parses a sentinel-format recap into structured fields and keeps raw text byte-identical', async () => {
+    const u = await seedUser('u@test.com', 'clerk_u');
+    const genId = await seedGeneration(u.id);
+    // Deliberately messy: prose around the block, odd casing, trailing whitespace —
+    // the raw text must round-trip EXACTLY as pasted, while the parser extracts fields.
+    const RAW = [
+      'Great session! Here is your recap:  ',
+      RECAP_START_MARKER.toLowerCase(),
+      RECAP_WEAK_SPOTS_MARKER,
+      '- Confused activation energy with enthalpy',
+      '* Forgot Le Chatelier shifts for pressure',
+      RECAP_FOLLOW_UP_MARKER,
+      'Drill me on equilibrium shifts with mixed MC + short answer.',
+      RECAP_END_MARKER,
+      'See you next time!',
+    ].join('\n');
+
+    const res = await post(appFor(u), { generationId: genId, text: RAW });
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body).toEqual({ ok: true, recapId: expect.any(String), parsed: true });
+    // Response must never carry recap content (weak spots included).
+    expect(JSON.stringify(body)).not.toContain('Chatelier');
+
+    const rows = await db.select().from(schema.recaps);
+    expect(rows.length).toBe(1);
+    expect(rows[0]!.recapText).toBe(RAW); // round-trip: raw stored byte-identical
+    expect(rows[0]!.weakSpotsJson).toEqual([
+      'Confused activation energy with enthalpy',
+      'Forgot Le Chatelier shifts for pressure',
+    ]);
+    expect(rows[0]!.followUpPrompt).toBe('Drill me on equilibrium shifts with mixed MC + short answer.');
   });
 });

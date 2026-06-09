@@ -53,17 +53,19 @@ describe('runPipeline', () => {
     });
     const r = await runPipeline(inputs);
     expect(r.generator).toBe('opus');
-    expect(r.templateVersion).toBe('v1'); // instrumentation: opus path stamps the active version
+    expect(r.templateVersion).toBe('v2'); // instrumentation: opus path stamps the active version
     expect(r.prompt).toBe('OPUS-WRITTEN PROMPT');
     expect(r.promptHash).toMatch(/^[a-f0-9]{64}$/);
     expect(mockBudgetRecord).toHaveBeenCalled();
+    // The version passed to the generator must match the stamped version.
+    expect(mockGenerateOpus.mock.calls[0]![3]).toBe('v2');
   });
 
   it('falls back to deterministic when budget exhausted', async () => {
     mockBudgetCheck.mockResolvedValueOnce(false);
     const r = await runPipeline(inputs);
     expect(r.generator).toBe('deterministic');
-    expect(r.templateVersion).toBe('v1'); // instrumentation: deterministic fallback also stamps the active version
+    expect(r.templateVersion).toBe('v2'); // instrumentation: deterministic fallback also stamps the active version
     expect(r.fallbackReason).toBe('budget-exhausted');
     expect(mockGenerateOpus).not.toHaveBeenCalled();
   });

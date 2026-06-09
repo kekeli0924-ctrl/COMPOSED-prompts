@@ -7,6 +7,7 @@ import {
   buildMaterialSection,
   buildGoalSection,
   buildSelfCheckSection,
+  CONFIDENCE_CALIBRATION_STYLE,
 } from '../templates/shared.js';
 import { formatAssembledPrompt, type Section } from './format-selector.js';
 
@@ -24,7 +25,9 @@ export function assembleSections(inputs: WizardInputs, opts: AssembleOptions = {
     { name: 'about_me', body: buildAboutMeSection(inputs, opts.studentGrade) },
     { name: 'material', body: buildMaterialSection(inputs) },
     { name: 'goal', body: buildGoalSection(inputs) },
-    { name: 'interaction_style', body: `Interaction style: ${interaction.replace(/^Interaction style:\s*/i, '')}` },
+    // Calibration is appended here (not per-mode) so every mode's interaction style
+    // carries it — the template-v2 mirror of the Opus system prompt's directive.
+    { name: 'interaction_style', body: `Interaction style: ${interaction.replace(/^Interaction style:\s*/i, '')} ${CONFIDENCE_CALIBRATION_STYLE}` },
     { name: 'output_spec', body: t.outputSpec(inputs) },
     { name: 'self_check', body: buildSelfCheckSection(inputs) },
   ];

@@ -4,10 +4,20 @@ import { STUDY_MODE_LABELS, STUDY_MODE_DESCRIPTIONS } from '../templates/index.j
 import { findCourse } from '../courses.js';
 import { getModelProfile } from '../model-profiles.js';
 import { describeAttachedKinds } from '../material-kinds.js';
+import {
+  RECAP_START_MARKER,
+  RECAP_WEAK_SPOTS_MARKER,
+  RECAP_FOLLOW_UP_MARKER,
+  RECAP_END_MARKER,
+} from '../recap-format.js';
+import { ACTIVE_TEMPLATE_VERSION, type TemplateVersionId } from './template-versions.js';
 
 export const OPUS_MODEL = 'claude-opus-4-8';
 
-export const OPUS_SYSTEM_PROMPT = `You are an expert prompt engineer creating customized study prompts for Pomfret School students. Your output is pasted verbatim into the student's chosen LLM (ChatGPT, Claude, or Gemini) for a study session — so write it AS the prompt the student will send, not ABOUT what such a prompt would look like.
+// v1 system prompt — FROZEN VERBATIM. Do not edit: rows stamped template_version 'v1'
+// were generated with exactly this text, and the eval harness (Phase 3) compares
+// versions against it. New prompt-engineering goes in a NEW version below.
+export const OPUS_SYSTEM_PROMPT_V1 = `You are an expert prompt engineer creating customized study prompts for Pomfret School students. Your output is pasted verbatim into the student's chosen LLM (ChatGPT, Claude, or Gemini) for a study session — so write it AS the prompt the student will send, not ABOUT what such a prompt would look like.
 
 # The Pomfret-Study framework
 
@@ -64,6 +74,56 @@ Stay consistent with the chosen format throughout.
 # Pomfret context
 
 Pomfret School is a U.S. boarding school. Course prefixes: ADV (Advanced), HON (Honors); otherwise Standard. The student will tell you the real course details — use them to ground the role/about-me sections.`;
+
+// v2 is derived from v1 by EXACTLY two anchored content changes (throws at module eval
+// if an anchor ever goes missing, so the derivation can never silently no-op):
+//   1. INTERACTION STYLE gains confidence calibration (rate sure/unsure/guessing before
+//      each reveal; confidently-wrong answers flagged as top priority).
+//   2. SELF-CHECK's session-closing recap must be emitted in the exact sentinel wire
+//      format from recap-format.ts, so Composed can parse it when pasted back.
+function mustReplace(haystack: string, anchor: string, replacement: string): string {
+  if (!haystack.includes(anchor)) {
+    throw new Error(`opus-full-prompt: v2 derivation anchor missing: "${anchor.slice(0, 60)}..."`);
+  }
+  return haystack.replace(anchor, replacement);
+}
+
+const V1_INTERACTION_ANCHOR =
+  'The tutor must LEAD WITH RETRIEVAL: open by asking the student to recall or attempt, and keep making the student do the thinking, before you explain.';
+
+const V1_SELF_CHECK_ANCHOR =
+  "End by telling the tutor that when the session is wrapping up (or the student signals they're done) it should CLOSE with two things: (a) a short, honest recap of the specific concepts the student got wrong or was shaky on, and (b) a tight, ready-to-paste follow-up prompt (a few sentences, not a whole new session) the student can drop into a fresh chat next time — one that assumes this first pass is done and goes straight to hard active recall on exactly those weak spots.";
+
+export const OPUS_SYSTEM_PROMPT_V2 = mustReplace(
+  mustReplace(
+    OPUS_SYSTEM_PROMPT_V1,
+    V1_INTERACTION_ANCHOR,
+    V1_INTERACTION_ANCHOR +
+      ' The tutor must also CALIBRATE CONFIDENCE: before revealing each answer, ask the student to rate how sure they are (sure / unsure / guessing), and when reviewing, explicitly flag confidently-wrong answers as the top priority to fix.',
+  ),
+  V1_SELF_CHECK_ANCHOR,
+  `End by telling the tutor that when the session is wrapping up (or the student signals they're done) it must CLOSE by emitting a session recap in EXACTLY this format — plain lines, markers verbatim, no code fences (fences get mangled when copied out of chat UIs):
+
+${RECAP_START_MARKER}
+${RECAP_WEAK_SPOTS_MARKER}
+- one bullet per weak spot: the specific concept + what went wrong (honest and concrete)
+${RECAP_FOLLOW_UP_MARKER}
+a tight, ready-to-paste follow-up prompt (a few sentences, not a whole new session) that assumes this first pass is done and goes straight to hard active recall on exactly those weak spots
+${RECAP_END_MARKER}
+
+After the recap, the tutor should tell the student they can paste this recap back into Composed to make their next study prompt smarter.`,
+);
+
+// Version → system prompt. Selection happens here (Node-only module); the browser-safe
+// template-versions.ts registry stores ids/descriptions ONLY, never prompt text.
+export const SYSTEM_PROMPTS: Record<TemplateVersionId, string> = {
+  v1: OPUS_SYSTEM_PROMPT_V1,
+  v2: OPUS_SYSTEM_PROMPT_V2,
+};
+
+// The active system prompt — kept under the original export name so existing imports
+// and the directive guard test always track what production actually runs.
+export const OPUS_SYSTEM_PROMPT = SYSTEM_PROMPTS[ACTIVE_TEMPLATE_VERSION];
 
 export type OpusFullPromptResult =
   | { ok: true; prompt: string; usage: { input_tokens: number; output_tokens: number } }
@@ -153,6 +213,9 @@ export async function generateFullPromptWithOpus(
   inputs: WizardInputs,
   ragContext: string = '',
   studentGrade?: string,
+  // The pipeline passes the version it stamps on the generations row, so the stored
+  // template_version always matches the system prompt actually used.
+  templateVersion: TemplateVersionId = ACTIVE_TEMPLATE_VERSION,
 ): Promise<OpusFullPromptResult> {
   const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = makeClient();
@@ -164,7 +227,7 @@ export async function generateFullPromptWithOpus(
       system: [
         {
           type: 'text',
-          text: OPUS_SYSTEM_PROMPT,
+          text: SYSTEM_PROMPTS[templateVersion],
           cache_control: { type: 'ephemeral' },
         },
       ],

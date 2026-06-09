@@ -78,6 +78,11 @@ export const recaps = pgTable('recaps', {
   userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
   generationId: uuid('generation_id').references(() => generations.id, { onDelete: 'cascade' }),
   recapText: text('recap_text').notNull(),
+  // Structured fields parsed from the sentinel wire format (recap-format.ts) when the
+  // paste matches it; null otherwise. Raw recap_text is ALWAYS stored unchanged — the
+  // stage-2 fallback needs it. Same personal-only invariant as recap_text.
+  weakSpotsJson: jsonb('weak_spots_json'),
+  followUpPrompt: text('follow_up_prompt'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
 }, (t) => ({

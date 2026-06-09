@@ -84,7 +84,9 @@ export async function runPipeline(
   if (opusAllowed) {
     const rag = await fetchRagContext({ userId: opts.userId, courseId: inputs.courseId, mode: inputs.mode });
     const ragText = buildRagContext(rag);
-    const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade);
+    // Pass the stamped version so the stored template_version always matches the
+    // system prompt actually used for this generation.
+    const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade, templateVersion);
     if (result.ok) {
       await recordSpend(estimateOpusSpendUsd(result.usage));
       return {

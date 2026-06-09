@@ -1,6 +1,17 @@
 import type { WizardInputs } from '../types.js';
 import { findCourse } from '../courses.js';
 import { describeAttachedKinds } from '../material-kinds.js';
+import {
+  RECAP_START_MARKER,
+  RECAP_WEAK_SPOTS_MARKER,
+  RECAP_FOLLOW_UP_MARKER,
+  RECAP_END_MARKER,
+} from '../recap-format.js';
+
+// Confidence calibration (template v2) — appended to every mode's interaction style by
+// the assembler. Confidently-wrong answers are the highest-value correction targets.
+export const CONFIDENCE_CALIBRATION_STYLE =
+  'Before revealing any answer, ask me to rate how sure I am (sure / unsure / guessing); when we review, flag the answers I was confident about but got wrong as my top priority.';
 
 const courseLabel = (inputs: WizardInputs): string => {
   if (inputs.courseId) {
@@ -110,8 +121,13 @@ export function buildSelfCheckSection(inputs: WizardInputs): string {
     "- Don't simply agree — explain your reasoning.",
     "- Adjust only if I'm correct or if I provide new information.",
     '',
-    "When we wrap up (or I tell you we're done for now), close the session by doing two things:",
-    '- Give me a short, honest recap of the specific concepts I got wrong or was shaky on.',
-    '- Then write me a short, ready-to-paste follow-up prompt (a few sentences) for my next session that skips the warm-up and drills exactly those weak spots with active recall.',
+    "When we wrap up (or I tell you we're done for now), close the session with a recap in EXACTLY this format — plain lines, markers verbatim, no code fences:",
+    RECAP_START_MARKER,
+    RECAP_WEAK_SPOTS_MARKER,
+    '- one bullet per weak spot: the specific concept + what I got wrong (honest and concrete)',
+    RECAP_FOLLOW_UP_MARKER,
+    'a short, ready-to-paste follow-up prompt (a few sentences) that skips the warm-up and drills exactly those weak spots with active recall',
+    RECAP_END_MARKER,
+    'Then remind me I can paste this recap back into Composed to make my next study prompt smarter.',
   ].join('\n');
 }

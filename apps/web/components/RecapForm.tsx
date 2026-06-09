@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useApi } from '@/lib/use-api';
+import { parseRecapText } from '@composed-prompts/shared';
 import type { RecapRequest, RecapResponse } from '@composed-prompts/shared';
 
 const MAX = 20000; // matches the server-side ceiling
@@ -15,6 +16,7 @@ export function RecapForm(props: { generationId: string }) {
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [weakSpotCount, setWeakSpotCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const submit = async (): Promise<void> => {
@@ -24,7 +26,12 @@ export function RecapForm(props: { generationId: string }) {
     setBusy(true);
     try {
       const payload: RecapRequest = { generationId: props.generationId, text: recap };
-      await apiPost<RecapResponse>('/api/recap', payload);
+      const res = await apiPost<RecapResponse>('/api/recap', payload);
+      // The server says WHETHER it parsed; the count comes from running the same
+      // shared parser locally (the response never carries recap content).
+      if (res.parsed) {
+        setWeakSpotCount(parseRecapText(recap)?.weakSpots.length ?? null);
+      }
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'failed to save');
@@ -36,7 +43,9 @@ export function RecapForm(props: { generationId: string }) {
   if (submitted) {
     return (
       <p className="text-sm text-green-700">
-        Saved — this recap is private to you and auto-deletes after ~30 days.
+        {weakSpotCount != null
+          ? `Got it — ${weakSpotCount} weak spot${weakSpotCount === 1 ? '' : 's'} captured. Private to you, auto-deletes after ~30 days.`
+          : 'Saved — this recap is private to you and auto-deletes after ~30 days.'}
       </p>
     );
   }

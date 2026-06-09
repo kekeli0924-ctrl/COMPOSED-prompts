@@ -12,7 +12,7 @@
  * here would only create drift.
  */
 
-export type TemplateVersionId = 'v1';
+export type TemplateVersionId = 'v1' | 'v2';
 
 export type TemplateVersion = {
   id: TemplateVersionId;
@@ -21,14 +21,10 @@ export type TemplateVersion = {
 };
 
 /**
- * The registered versions. Exactly ONE today.
- *
- * 'v1' = the current evidence-based 7-section "Pomfret-Study" framework: the
- * retrieval-first Opus system prompt (OPUS_SYSTEM_PROMPT) plus the current
- * deterministic fallback mode templates (templates/*). When you ship a new
- * prompt-engineering generation, register it here under a NEW id and add the
- * rollout policy in getActiveTemplateVersion — do not edit 'v1' in place, or you
- * break the meaning of every row already stamped 'v1'.
+ * The registered versions. Never edit an existing version's meaning in place — rows
+ * already stamped with its id were generated under it. Register a NEW id instead.
+ * (Ids/descriptions only — the version → system-prompt map lives in the Node-only
+ * generation/opus-full-prompt.ts.)
  */
 export const TEMPLATE_VERSIONS: Record<TemplateVersionId, TemplateVersion> = {
   v1: {
@@ -36,10 +32,15 @@ export const TEMPLATE_VERSIONS: Record<TemplateVersionId, TemplateVersion> = {
     description:
       'Evidence-based 7-section Pomfret-Study framework: retrieval-first Opus system prompt + deterministic fallback templates (initial instrumented version).',
   },
+  v2: {
+    id: 'v2',
+    description:
+      'v1 plus: session-closing recap emitted in the parseable sentinel wire format (paste-back capture), and confidence calibration (rate sure/unsure/guessing before reveals; confidently-wrong answers flagged top priority).',
+  },
 };
 
 /** The version every generation is stamped with today. */
-export const ACTIVE_TEMPLATE_VERSION: TemplateVersionId = 'v1';
+export const ACTIVE_TEMPLATE_VERSION: TemplateVersionId = 'v2';
 
 export type TemplateVersionSelectOpts = {
   /**
@@ -73,14 +74,17 @@ function abTestingEnabled(): boolean {
 
 /**
  * Pick the template version for a generation. Returns ACTIVE_TEMPLATE_VERSION
- * ('v1') by default.
+ * by default.
  *
- * A/B bucketing hook — DISABLED by default and a GUARANTEED NO-OP today: it only
- * diverges from the active version when ALL of these hold — the env flag
- * TEMPLATE_AB_ENABLED is '1', a stable `seed` is supplied, AND more than one
- * variant is registered. With only 'v1' registered the last condition is false, so
- * this can never return anything but 'v1'. When a second variant is registered,
- * this is the single place the rollout/split policy lives.
+ * A/B bucketing hook — DISABLED by default. It only diverges from the active version
+ * when ALL of these hold: the env flag TEMPLATE_AB_ENABLED is '1', a stable `seed` is
+ * supplied, AND more than one variant is registered. NOTE: with v1 AND v2 registered,
+ * the last condition now holds — so setting TEMPLATE_AB_ENABLED='1' in production
+ * would start a live 50/50 split. Leave the flag UNSET until a deliberate A/B
+ * (the offline eval harness is the intended comparison tool first). Also note: only
+ * the Opus system prompt is version-selected — the deterministic templates have no v1
+ * variant — so a v1 bucket that fell back to deterministic would emit v2 content
+ * stamped 'v1'. Resolve that before ever enabling a live split.
  */
 export function getActiveTemplateVersion(opts: TemplateVersionSelectOpts = {}): TemplateVersionId {
   const ids = Object.keys(TEMPLATE_VERSIONS) as TemplateVersionId[];

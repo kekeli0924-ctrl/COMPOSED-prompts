@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
-import type { RecapResponse } from '@composed-prompts/shared';
+import { parseRecapText, type RecapResponse } from '@composed-prompts/shared';
 import { checkAndRecord } from '../lib/rate-limit.js';
 import { db, schema } from '../lib/db.js';
 
@@ -56,21 +56,33 @@ recap.post('/api/recap', async (c) => {
 
   const expiresAt = new Date(Date.now() + RETENTION_DAYS * 24 * 60 * 60 * 1000);
 
+  // Structured extraction (v2 prompts emit the sentinel wire format). Raw text is
+  // stored unchanged either way — the stage-2 fallback needs it byte-identical.
+  const structured = parseRecapText(parsed.data.text);
+
   // PERSONAL-ONLY INVARIANT: this row is visible to and usable by ONLY this student.
   // It must NEVER be added to any collective/cross-student pool or shared RAG query.
-  // `recap_text` is stored raw because stage 2 feeds it back into the student's OWN
-  // next generation — the body is never logged and never returned to anyone but its author.
+  // `recap_text` (and the parsed fields) are stored raw because stage 2 feeds them back
+  // into the student's OWN next generation — the body is never logged and never
+  // returned to anyone but its author.
   const [row] = await db
     .insert(schema.recaps)
     .values({
       userId: user.id,
       generationId: parsed.data.generationId,
       recapText: parsed.data.text,
+      weakSpotsJson: structured?.weakSpots ?? null,
+      followUpPrompt: structured?.followUpPrompt ?? null,
       expiresAt,
     })
     .returning({ id: schema.recaps.id });
 
-  // Length only — never the recap body (mirrors canvas.ts's count-only logging).
-  console.log('[recap] stored', { userId: user.id, recapLen: parsed.data.text.length });
-  return c.json({ ok: true, recapId: row!.id } satisfies RecapResponse, 200);
+  // Counts/lengths only — never the recap body (mirrors canvas.ts's count-only logging).
+  console.log('[recap] stored', {
+    userId: user.id,
+    parsed: structured !== null,
+    weakSpotCount: structured?.weakSpots.length ?? 0,
+    textLength: parsed.data.text.length,
+  });
+  return c.json({ ok: true, recapId: row!.id, parsed: structured !== null } satisfies RecapResponse, 200);
 });

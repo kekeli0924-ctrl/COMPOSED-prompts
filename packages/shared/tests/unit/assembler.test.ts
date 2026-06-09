@@ -1,6 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { assembleDeterministicPrompt } from '@composed-prompts/shared';
-import type { WizardInputs } from '@composed-prompts/shared';
+import {
+  assembleDeterministicPrompt,
+  RECAP_START_MARKER,
+  RECAP_WEAK_SPOTS_MARKER,
+  RECAP_FOLLOW_UP_MARKER,
+  RECAP_END_MARKER,
+} from '@composed-prompts/shared';
+import type { WizardInputs, StudyMode } from '@composed-prompts/shared';
 
 const inputs: WizardInputs = {
   provider: 'anthropic',
@@ -46,5 +52,22 @@ describe('assembleDeterministicPrompt', () => {
   it('respects the chosen mode for the output spec', () => {
     const out = assembleDeterministicPrompt({ ...inputs, mode: 'practice-questions' });
     expect(out).toMatch(/multiple.choice|short.answer/i);
+  });
+
+  it('template v2 mirror: self-check carries the literal recap sentinel lines', () => {
+    const out = assembleDeterministicPrompt(inputs);
+    for (const marker of [RECAP_START_MARKER, RECAP_WEAK_SPOTS_MARKER, RECAP_FOLLOW_UP_MARKER, RECAP_END_MARKER]) {
+      expect(out).toContain(marker);
+    }
+    expect(out).toMatch(/paste this recap back into Composed/i);
+  });
+
+  it('template v2 mirror: every mode carries confidence calibration in the interaction style', () => {
+    const modes: StudyMode[] = ['cram-review', 'multi-day-plan', 'practice-questions', 'concept-clarification', 'essay-project'];
+    for (const mode of modes) {
+      const out = assembleDeterministicPrompt({ ...inputs, mode });
+      expect(out, mode).toMatch(/sure \/ unsure \/ guessing/);
+      expect(out, mode).toMatch(/confident about but got wrong/i);
+    }
   });
 });

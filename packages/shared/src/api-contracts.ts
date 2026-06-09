@@ -90,4 +90,6 @@ export type CanvasUpcomingResponse = { connected: boolean; items: UpcomingAssess
 
 // POST /api/recap — session recap capture (signed-in only; PERSONAL-ONLY; never echoed back)
 export type RecapRequest = { generationId: string; text: string };
-export type RecapResponse = { ok: true; recapId: string };
+// `parsed` = the paste matched the sentinel wire format (recap-format.ts) and
+// structured weak spots were extracted. Never echoes any recap content.
+export type RecapResponse = { ok: true; recapId: string; parsed: boolean };
