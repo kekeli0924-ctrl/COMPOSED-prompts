@@ -18,7 +18,9 @@ export const generations = pgTable('generations', {
   inputsJson: jsonb('inputs_json').notNull(),
   promptText: text('prompt_text').notNull(),
   promptHash: text('prompt_hash').notNull(),
-  generator: text('generator', { enum: ['opus', 'deterministic'] }).notNull(),
+  // Type-level enum only — the column is plain text with no DB CHECK constraint,
+  // so adding 'sonnet' required no migration.
+  generator: text('generator', { enum: ['opus', 'sonnet', 'deterministic'] }).notNull(),
   courseId: text('course_id'),
   mode: text('mode').notNull(),
   provider: text('provider').notNull(),

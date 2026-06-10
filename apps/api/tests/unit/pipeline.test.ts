@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { WizardInputs } from '@composed-prompts/shared';
 
-const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord, mockFindUsableRecap } = vi.hoisted(() => ({
+const { mockGenerateOpus, mockGenerateModel, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord, mockFindUsableRecap } = vi.hoisted(() => ({
   mockGenerateOpus: vi.fn(),
+  mockGenerateModel: vi.fn(),
   mockBudgetCheck: vi.fn(),
   mockBudgetRecord: vi.fn(),
   mockCheckAndRecord: vi.fn(),
@@ -11,6 +12,7 @@ const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord,
 
 vi.mock('@composed-prompts/shared/src/generation/opus-full-prompt.js', () => ({
   generateFullPromptWithOpus: mockGenerateOpus,
+  generateFullPromptWithModel: mockGenerateModel,
 }));
 
 vi.mock('@/lib/budget', () => ({
@@ -38,6 +40,7 @@ const inputs: WizardInputs = {
 describe('runPipeline', () => {
   beforeEach(() => {
     mockGenerateOpus.mockReset();
+    mockGenerateModel.mockReset();
     mockBudgetCheck.mockReset();
     mockBudgetRecord.mockReset();
     mockCheckAndRecord.mockReset();
@@ -82,27 +85,35 @@ describe('runPipeline', () => {
     expect(r.fallbackReason).toBe('api-error');
   });
 
-  it('falls back to deterministic when the global Opus DB cap is exceeded', async () => {
-    mockCheckAndRecord.mockResolvedValueOnce({ allowed: false, remaining: 0 });
+  it('falls back to deterministic when BOTH the Opus DB cap and the Sonnet cap are exceeded', async () => {
+    // Since Phase 3 an opus cap block engages the Sonnet tier — so cap both.
+    mockCheckAndRecord.mockImplementation(async (key: string) =>
+      String(key).startsWith('global:') ? { allowed: false, remaining: 0 } : { allowed: true, remaining: 100 },
+    );
     const r = await runPipeline(inputs);
     expect(r.generator).toBe('deterministic');
     expect(r.fallbackReason).toBe('budget-exhausted');
     expect(mockGenerateOpus).not.toHaveBeenCalled();
+    expect(mockGenerateModel).not.toHaveBeenCalled();
   });
 
-  it('falls back to deterministic once the in-memory global cap is hit', async () => {
+  it('falls back to deterministic once the in-memory cap is hit and sonnet is also capped', async () => {
     process.env.GLOBAL_OPUS_CALLS_PER_DAY = '1';
     mockGenerateOpus.mockResolvedValue({
       ok: true,
       prompt: 'OPUS',
       usage: { input_tokens: 10, output_tokens: 20 },
     });
+    mockCheckAndRecord.mockImplementation(async (key: string) =>
+      String(key).startsWith('global:sonnet') ? { allowed: false, remaining: 0 } : { allowed: true, remaining: 100 },
+    );
     const first = await runPipeline(inputs);
     expect(first.generator).toBe('opus'); // 1st call reserves the only slot
     const second = await runPipeline(inputs);
-    expect(second.generator).toBe('deterministic'); // in-memory backstop blocks
+    expect(second.generator).toBe('deterministic'); // in-memory backstop blocks; sonnet capped
     expect(second.fallbackReason).toBe('budget-exhausted');
     expect(mockGenerateOpus).toHaveBeenCalledTimes(1);
+    expect(mockGenerateModel).not.toHaveBeenCalled();
   });
 });
 
@@ -180,6 +191,125 @@ describe('runPipeline — stage-2 recap injection', () => {
     expect(r.generator).toBe('deterministic');
     expect(r.usedRecap).toBeUndefined(); // the produced prompt did not carry the recap
     expect(r.templateVersion).toBe('v2');
+  });
+});
+
+describe('runPipeline — Sonnet middle tier decision matrix', () => {
+  const OK_RESULT = { ok: true, prompt: 'MODEL PROMPT', usage: { input_tokens: 10, output_tokens: 20 } };
+
+  // checkAndRecord answers by bucket key: opus/sonnet caps are independently steerable.
+  const setCaps = (opus: boolean, sonnet: boolean): void => {
+    mockCheckAndRecord.mockImplementation(async (key: string) =>
+      key.startsWith('global:opus')
+        ? { allowed: opus, remaining: 0 }
+        : key.startsWith('global:sonnet')
+          ? { allowed: sonnet, remaining: 0 }
+          : { allowed: true, remaining: 100 },
+    );
+  };
+
+  beforeEach(() => {
+    mockGenerateOpus.mockReset();
+    mockGenerateModel.mockReset();
+    mockBudgetCheck.mockReset();
+    mockBudgetRecord.mockReset();
+    mockCheckAndRecord.mockReset();
+    mockFindUsableRecap.mockReset();
+    mockBudgetCheck.mockResolvedValue(true);
+    mockBudgetRecord.mockResolvedValue(undefined);
+    mockFindUsableRecap.mockResolvedValue(null);
+    mockGenerateOpus.mockResolvedValue(OK_RESULT);
+    mockGenerateModel.mockResolvedValue(OK_RESULT);
+    setCaps(true, true);
+    __resetGlobalOpusCounter();
+    delete process.env.GLOBAL_OPUS_CALLS_PER_DAY;
+    delete process.env.SONNET_MODEL;
+  });
+
+  it('opus OK → opus generates; sonnet is never attempted', async () => {
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('opus');
+    expect(mockGenerateModel).not.toHaveBeenCalled();
+    expect(mockCheckAndRecord.mock.calls.some(([k]) => String(k).startsWith('global:sonnet'))).toBe(false);
+  });
+
+  it('opus DB-capped + budget OK → sonnet runs with opus-capped recorded and spend tracked', async () => {
+    setCaps(false, true);
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('sonnet');
+    expect(r.fallbackReason).toBe('opus-capped');
+    expect(r.prompt).toBe('MODEL PROMPT');
+    expect(mockGenerateOpus).not.toHaveBeenCalled();
+    expect(mockGenerateModel.mock.calls[0]![0]).toBe('claude-sonnet-4-6'); // default model
+    expect(mockBudgetRecord).toHaveBeenCalled(); // sonnet spend recorded
+    // Sonnet's own cap is fail-closed like the opus DB cap.
+    const sonnetCall = mockCheckAndRecord.mock.calls.find(([k]) => String(k).startsWith('global:sonnet'));
+    expect(sonnetCall![1]).toMatchObject({ limit: 500, windowSeconds: 86400, failClosed: true });
+  });
+
+  it('opus capped via the IN-MEMORY slot also unlocks sonnet (either cap counts)', async () => {
+    process.env.GLOBAL_OPUS_CALLS_PER_DAY = '1';
+    await runPipeline(inputs); // consumes the only in-memory opus slot
+    mockGenerateModel.mockClear();
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('sonnet');
+    expect(mockGenerateModel).toHaveBeenCalledTimes(1);
+  });
+
+  it('budget exhausted → deterministic; sonnet is NOT consulted (budget is the hard stop)', async () => {
+    mockBudgetCheck.mockResolvedValueOnce(false);
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('deterministic');
+    expect(r.fallbackReason).toBe('budget-exhausted');
+    expect(mockGenerateModel).not.toHaveBeenCalled();
+    expect(mockCheckAndRecord.mock.calls.some(([k]) => String(k).startsWith('global:sonnet'))).toBe(false);
+  });
+
+  it('opus capped + sonnet capped → deterministic with budget-exhausted', async () => {
+    setCaps(false, false);
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('deterministic');
+    expect(r.fallbackReason).toBe('budget-exhausted');
+    expect(mockGenerateModel).not.toHaveBeenCalled();
+  });
+
+  it('sonnet API error → deterministic with api-error', async () => {
+    setCaps(false, true);
+    mockGenerateModel.mockResolvedValueOnce({ ok: false, error: 'api-error' });
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('deterministic');
+    expect(r.fallbackReason).toBe('api-error');
+  });
+
+  it('opus API ERROR (not a cap) → deterministic, never sonnet', async () => {
+    mockGenerateOpus.mockResolvedValueOnce({ ok: false, error: 'api-error' });
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('deterministic');
+    expect(r.fallbackReason).toBe('api-error');
+    expect(mockGenerateModel).not.toHaveBeenCalled();
+  });
+
+  it('the recap rides the sonnet path too (usedRecap on sonnet success)', async () => {
+    setCaps(false, true);
+    mockFindUsableRecap.mockResolvedValueOnce({
+      id: 'recap-uuid-2',
+      createdAt: new Date('2026-06-08T12:00:00Z'),
+      weakSpotsJson: ['weak spot'],
+      recapText: 'raw',
+    });
+    const r = await runPipeline(inputs, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(r.generator).toBe('sonnet');
+    expect(r.usedRecap).toEqual({ id: 'recap-uuid-2', createdAt: '2026-06-08T12:00:00.000Z' });
+    expect(mockGenerateModel.mock.calls[0]![5]).toContain('<last_session_recap'); // recapContext arg
+  });
+
+  it('respects SONNET_MODEL override', async () => {
+    process.env.SONNET_MODEL = 'claude-sonnet-4-7';
+    setCaps(false, true);
+    const r = await runPipeline(inputs);
+    expect(r.generator).toBe('sonnet');
+    expect(mockGenerateModel.mock.calls[0]![0]).toBe('claude-sonnet-4-7');
+    delete process.env.SONNET_MODEL;
   });
 });
 

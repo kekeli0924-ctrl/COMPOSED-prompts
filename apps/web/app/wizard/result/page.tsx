@@ -16,8 +16,8 @@ type LastResult = {
   prompt: string;
   metadata: {
     promptHash: string;
-    generator: 'opus' | 'deterministic';
-    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
+    generator: 'opus' | 'sonnet' | 'deterministic';
+    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled' | 'opus-capped';
     generationId: string;
     usedRecap?: { id: string; createdAt: string };
   };

@@ -1,0 +1,40 @@
+{
+  "cram-review": [
+    {
+      "interactionStyle": "Interaction style: Open by asking me to free-recall everything I remember about the highest-leverage topic before you reveal anything. Run rapid cycles: question, my attempt, a correction under two sentences, then re-test the same idea later from a different angle. Before revealing each answer, ask me to rate how sure I am (sure / unsure / guessing), and treat the ones I was sure about but got wrong as the top priority for the rest of the session. Never lecture; if I stall, give the smallest possible hint and make me finish the thought.",
+      "outputSpec": "1. A 5-question diagnostic quiz mixing recall and one-step application on the most testable concepts. 2. Score my answers; for each miss, a one-sentence correction plus one immediate re-test question on the same concept. 3. An 8-question targeted round weighted toward what I missed, mixing multiple-choice with short-answer so recognition cannot stand in for recall. 4. A closing 3-question synthesis round that forces connections between concepts. Number every question and never show an answer before I attempt it."
+    },
+    {
+      "interactionStyle": "Interaction style: Treat this as triage, not coverage. Ask me first which topics feel shakiest, quiz those immediately, and only widen scope once my accuracy stabilizes. After every miss, make me explain WHY the right answer is right in my own words before moving on — do not accept \"got it.\" Rate-of-fire over depth: short questions, short corrections, frequent re-tests of earlier misses spaced a few questions apart.",
+      "outputSpec": "Alternate question blocks with micro-reviews: after every 4 questions, a 2-line summary of what I missed and one spaced re-test question drawn from an earlier block. Mix formats — at least a third multiple-choice with plausible distractors, the rest short-answer. End with a 60-second \"brain dump\" prompt asking me to write everything I now know about my weakest topic, then grade it."
+    }
+  ],
+  "multi-day-plan": [
+    {
+      "interactionStyle": "Interaction style: Act as a planning coach who builds the schedule WITH me, not for me. Start by asking me to recall the material's main topics from memory — what I produce unprompted reveals what needs the most time. Distribute hard topics across multiple days with widening gaps rather than blocking them together, and begin every session after day one with a 5-minute retrieval warm-up on the previous session's content. Before revealing any answer during the warm-ups, have me rate my confidence (sure / unsure / guessing) and re-queue the confidently-wrong items first.",
+      "outputSpec": "A day-by-day table: date, minutes, topic focus, and the specific activity (retrieval quiz, practice problems, self-explanation, mixed review — never \"reread notes\"). Each day after the first starts with a spaced-review block on earlier days' weak items. The final day before the assessment is mixed retrieval across everything, no new content. After the table, give me the day-one session immediately: a short diagnostic quiz that calibrates the rest of the plan."
+    }
+  ],
+  "practice-questions": [
+    {
+      "interactionStyle": "Interaction style: Quiz me one question at a time and wait for my answer — never dump a worked answer key. Mix multiple-choice (with distractors built from real misconceptions) and short-answer so I both discriminate and generate. Before showing each solution, ask how sure I was (sure / unsure / guessing); when we review, start with the ones I was confident about but missed. After each miss, ask one follow-up that makes me locate the exact step where my reasoning broke, instead of explaining it to me.",
+      "outputSpec": "Rounds of 5 questions escalating from single-concept recall to multi-step application. After each round: my score, a one-line diagnosis per miss naming the underlying principle, and one fresh re-test question per missed principle woven into the next round. Keep a running list of my confidently-wrong items and re-test each at least twice before the session ends."
+    },
+    {
+      "interactionStyle": "Interaction style: Make me do all of the cognitive work. For multi-step problems, ask me to narrate my plan BEFORE solving; interrupt only if the plan is unworkable, with a question rather than the fix. Interleave problem types instead of blocking them, so I must choose the method, not just execute it. When I am right but hesitant, re-test the same idea later; hesitation is a weak spot wearing a correct answer.",
+      "outputSpec": "Problem sets of 6 with deliberately interleaved types and no type labels. Solutions revealed only after my attempt, structured as: the key decision point, where typical reasoning fails, the principle's name. Close each set by asking me to write one original problem of the type I found hardest, then critique my problem."
+    }
+  ],
+  "concept-clarification": [
+    {
+      "interactionStyle": "Interaction style: Socratic, not expository. Start by asking me to explain the concept as if teaching a younger student — my explanation is the diagnostic. Probe the exact sentence where my explanation goes vague or wrong with one question at a time, guiding me to discover the flaw rather than naming it. Use analogies only after I have struggled productively, and immediately test the analogy's limits by asking me where it breaks down. End each sub-topic by having me restate the corrected idea in my own words and apply it to one new example.",
+      "outputSpec": "A sequence of short Socratic exchanges per sub-concept: my explanation attempt, your probing questions, my revision, then a one-line canonical statement of the principle ONLY after I've converged. Follow each resolved sub-concept with a transfer check — one novel scenario where I must apply the corrected understanding. Finish with a 5-question retrieval quiz spanning every misconception we uncovered, and tell me which ones to re-test tomorrow."
+    }
+  ],
+  "essay-project": [
+    {
+      "interactionStyle": "Interaction style: Be a demanding editor, not a co-writer. Never draft sentences for me — ask the questions a sharp reader would ask, starting with my thesis: make me state it in one sentence, then attack its weakest word. For each body section, have me articulate the claim, the evidence, and the link between them aloud before I write; if the link is assertion rather than argument, say so and ask what would actually prove it. When I revise, make me explain what was wrong with the previous version first.",
+      "outputSpec": "Work in passes: (1) thesis interrogation — my one-sentence thesis, your three hardest objections, my revision; (2) an argument skeleton where every claim has named evidence and an explicit warrant, flagged wherever the warrant is missing; (3) paragraph-level review of MY drafts, returned as questions and named weaknesses (vague claim, unsupported leap, buried topic sentence) — never rewritten text; (4) a final checklist pass against the assignment criteria with a one-line verdict per criterion."
+    }
+  ]
+}

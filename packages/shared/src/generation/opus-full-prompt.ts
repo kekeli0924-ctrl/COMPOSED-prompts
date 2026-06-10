@@ -209,7 +209,11 @@ export function makeClient(): AnthropicLike {
   }
 }
 
-export async function generateFullPromptWithOpus(
+// Model-parameterized generation: same system prompt + user message, different Claude
+// model. The Sonnet middle tier (pipeline) calls this directly; the Opus export below
+// delegates here so all existing callers keep their signature.
+export async function generateFullPromptWithModel(
+  model: string,
   inputs: WizardInputs,
   ragContext: string = '',
   studentGrade?: string,
@@ -227,7 +231,7 @@ export async function generateFullPromptWithOpus(
       (ragContext ? `\n\n${ragContext}` : '') +
       (recapContext ? `\n\n${recapContext}` : '');
     const response = await client.messages.create({
-      model: OPUS_MODEL,
+      model,
       max_tokens: 4000,
       system: [
         {
@@ -259,7 +263,7 @@ export async function generateFullPromptWithOpus(
   } catch (err) {
     console.error('[opus-full-prompt] Anthropic call failed', {
       hasKey,
-      model: OPUS_MODEL,
+      model,
       message: err instanceof Error ? err.message : String(err),
       name: err instanceof Error ? err.name : undefined,
       // The SDK puts status/headers on the error object for HTTP-level failures
@@ -267,4 +271,14 @@ export async function generateFullPromptWithOpus(
     });
     return { ok: false, error: 'api-error' };
   }
+}
+
+export async function generateFullPromptWithOpus(
+  inputs: WizardInputs,
+  ragContext: string = '',
+  studentGrade?: string,
+  templateVersion: TemplateVersionId = ACTIVE_TEMPLATE_VERSION,
+  recapContext: string = '',
+): Promise<OpusFullPromptResult> {
+  return generateFullPromptWithModel(OPUS_MODEL, inputs, ragContext, studentGrade, templateVersion, recapContext);
 }

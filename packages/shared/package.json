@@ -10,7 +10,8 @@
     "./src/generation/revise-prompt.js": "./src/generation/revise-prompt.ts",
     "./src/storage/prompt-hash.js": "./src/storage/prompt-hash.ts",
     "./data/courses.json": "./data/courses.json",
-    "./data/model-profiles.json": "./data/model-profiles.json"
+    "./data/model-profiles.json": "./data/model-profiles.json",
+    "./data/golden-examples.json": "./data/golden-examples.json"
   },
   "scripts": {
     "test": "vitest run",

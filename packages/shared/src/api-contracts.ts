@@ -6,8 +6,9 @@ export type GenerateResponse = {
   prompt: string;
   metadata: {
     promptHash: string;
-    generator: 'opus' | 'deterministic';
-    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
+    generator: 'opus' | 'sonnet' | 'deterministic';
+    // 'opus-capped' appears on sonnet rows (why the middle tier ran), not only fallbacks.
+    fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled' | 'opus-capped';
     generationId: string;  // for use in feedback later
     templateVersion: string;  // prompt-engineering version that produced this (instrumentation)
     usedRecap?: { id: string; createdAt: string };  // recap injected into this prompt (id+date only, never content)

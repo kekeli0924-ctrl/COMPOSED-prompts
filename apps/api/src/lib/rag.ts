@@ -1,5 +1,6 @@
 import { db, schema } from './db.js';
-import { and, eq, gte, desc } from 'drizzle-orm';
+import { and, eq, gte, desc, inArray, type SQL } from 'drizzle-orm';
+import { findCourse, allCourses, goldenExamplesForMode, type GoldenExample } from '@composed-prompts/shared';
 
 export type RagExample = {
   promptText: string;
@@ -10,6 +11,9 @@ export type RagContext = {
   collective: RagExample[];
   personal: RagExample[];
   profile: string | null;
+  // Curated golden exemplars — the floor when every collective tier is empty
+  // (small-school cold start). Hand-written, never student content.
+  curated: GoldenExample[];
 };
 
 const extractKeySections = (promptText: string): string => {
@@ -33,12 +37,9 @@ const extractKeySections = (promptText: string): string => {
   return promptText.slice(0, 1000);
 };
 
-export async function queryCollectiveExamples(opts: {
-  courseId: string | null;
-  mode: string;
-  limit: number;
-}): Promise<RagExample[]> {
-  if (!opts.courseId) return [];
+// Shared core: high-rated generations matching `extra` predicates, key sections only.
+// Recaps are NEVER queried here — RAG reads generations+feedback exclusively.
+async function queryRatedExamples(extra: SQL[], limit: number): Promise<RagExample[]> {
   const rows = await db
     .select({
       promptText: schema.generations.promptText,
@@ -46,43 +47,55 @@ export async function queryCollectiveExamples(opts: {
     })
     .from(schema.generations)
     .innerJoin(schema.feedback, eq(schema.feedback.generationId, schema.generations.id))
-    .where(
-      and(
-        eq(schema.generations.courseId, opts.courseId),
-        eq(schema.generations.mode, opts.mode),
-        gte(schema.feedback.rating, 4),
-      ),
-    )
+    .where(and(gte(schema.feedback.rating, 4), ...extra))
     .orderBy(desc(schema.feedback.rating), desc(schema.generations.createdAt))
-    .limit(opts.limit);
+    .limit(limit);
   return rows.map((r) => ({ promptText: extractKeySections(r.promptText), rating: r.rating }));
 }
 
+// Collective examples, tiered so small-school data never starves the context.
+// Stops at the FIRST tier with results: (1) same course + mode, (2) same department +
+// mode (course list derived from the catalog), (3) same mode, any course. Free-text
+// courses (no catalog id) skip tiers 1-2 but still get tier 3.
+export async function queryCollectiveExamples(opts: {
+  courseId: string | null;
+  mode: string;
+  limit: number;
+}): Promise<RagExample[]> {
+  const mode = eq(schema.generations.mode, opts.mode);
+
+  if (opts.courseId) {
+    const tier1 = await queryRatedExamples([eq(schema.generations.courseId, opts.courseId), mode], opts.limit);
+    if (tier1.length > 0) return tier1;
+
+    const course = findCourse(opts.courseId);
+    if (course) {
+      const deptCourseIds = allCourses()
+        .filter((c) => c.department === course.department)
+        .map((c) => c.id);
+      const tier2 = await queryRatedExamples([inArray(schema.generations.courseId, deptCourseIds), mode], opts.limit);
+      if (tier2.length > 0) return tier2;
+    }
+  }
+
+  return queryRatedExamples([mode], opts.limit);
+}
+
+// Personal examples: same user + course + mode, falling back to same user + mode.
 export async function queryPersonalExamples(opts: {
   userId: string;
   courseId: string | null;
   mode: string;
   limit: number;
 }): Promise<RagExample[]> {
-  if (!opts.courseId) return [];
-  const rows = await db
-    .select({
-      promptText: schema.generations.promptText,
-      rating: schema.feedback.rating,
-    })
-    .from(schema.generations)
-    .innerJoin(schema.feedback, eq(schema.feedback.generationId, schema.generations.id))
-    .where(
-      and(
-        eq(schema.generations.userId, opts.userId),
-        eq(schema.generations.courseId, opts.courseId),
-        eq(schema.generations.mode, opts.mode),
-        gte(schema.feedback.rating, 4),
-      ),
-    )
-    .orderBy(desc(schema.feedback.rating), desc(schema.generations.createdAt))
-    .limit(opts.limit);
-  return rows.map((r) => ({ promptText: extractKeySections(r.promptText), rating: r.rating }));
+  const user = eq(schema.generations.userId, opts.userId);
+  const mode = eq(schema.generations.mode, opts.mode);
+
+  if (opts.courseId) {
+    const tier1 = await queryRatedExamples([user, eq(schema.generations.courseId, opts.courseId), mode], opts.limit);
+    if (tier1.length > 0) return tier1;
+  }
+  return queryRatedExamples([user, mode], opts.limit);
 }
 
 export async function queryPersonalProfile(userId: string): Promise<string | null> {
@@ -101,12 +114,22 @@ export function buildRagContext(ctx: RagContext): string {
   }
   if (ctx.collective.length > 0) {
     const examples = ctx.collective.map((e) => `- ${e.promptText}`).join('\n');
-    blocks.push(`What worked for OTHER students in this exact course + mode:\n${examples}`);
+    // Phrased to stay truthful for every tier — these rows may come from the exact
+    // course, the same department, or just the same study mode (closest match wins).
+    blocks.push(`What worked for OTHER students (closest available match — same course, same department, or same study mode):\n${examples}`);
+  }
+  if (ctx.curated.length > 0) {
+    // Marked as curated, NOT as another student's prompt — these are hand-written.
+    const examples = ctx.curated
+      .map((e) => `- Curated example (interaction style): ${e.interactionStyle}\n- Curated example (output spec): ${e.outputSpec}`)
+      .join('\n');
+    blocks.push(`Curated examples for this study mode (hand-written exemplars, not from students):\n${examples}`);
   }
   if (blocks.length === 0) return '';
   return [
     '---',
-    'Context from past generations that scored well:',
+    // Truthful for every combination — including the curated-exemplars-only case.
+    'Context to guide this generation (highly-rated past prompts and/or curated exemplars):',
     '',
     ...blocks,
     '',
@@ -126,5 +149,7 @@ export async function fetchRagContext(opts: {
       : Promise.resolve([]),
     opts.userId ? queryPersonalProfile(opts.userId) : Promise.resolve(null),
   ]);
-  return { collective, personal, profile };
+  // Golden-exemplar floor: only when every collective tier came back empty.
+  const curated = collective.length === 0 ? goldenExamplesForMode(opts.mode).slice(0, 2) : [];
+  return { collective, personal, profile, curated };
 }

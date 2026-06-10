@@ -103,3 +103,19 @@ Why the v2 split:
 - Backend: `fly deploy -c fly.toml --dockerfile apps/api/Dockerfile`
 
 Env vars are documented in each workspace's README.
+
+## Prompt eval workflow
+
+Before shipping any prompt change: register the new version in
+`packages/shared/src/generation/template-versions.ts` **and** the `SYSTEM_PROMPTS` map in
+`opus-full-prompt.ts`, then run the offline harness old-vs-new:
+
+```bash
+cd apps/api
+npx tsx scripts/eval-prompts.ts --versions v1,v2 --yes   # refuses without --yes (spends real API money)
+```
+
+It generates a prompt per fixture (16 inputs spanning all 5 modes) per version with the real
+Anthropic client — no DB writes, no budget gates — grades each output with Sonnet against a
+structural rubric, and writes raw prompts + `summary.md` (mean per version / criterion / mode)
+to `eval-output/<timestamp>/` (gitignored). Never run it in CI.

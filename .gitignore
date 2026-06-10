@@ -41,3 +41,6 @@ next-env.d.ts
 
 # superpowers brainstorm scratch (mockups, visual-companion state)
 .superpowers/
+
+# offline prompt-eval harness output (apps/api/scripts/eval-prompts.ts)
+eval-output/
