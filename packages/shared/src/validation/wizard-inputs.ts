@@ -29,7 +29,16 @@ export const WizardInputsSchema = z
     assessmentType: AssessmentTypeEnum,
     assessmentDate: z
       .string()
-      .regex(ISO_DATE_RE, 'must be YYYY-MM-DD'),
+      .regex(ISO_DATE_RE, 'must be YYYY-MM-DD')
+      // Format alone admits impossible dates ('2026-02-31'), which would blow up the
+      // generations.assessment_date::date insert. Round-trip through UTC Date — JS
+      // rolls invalid days over (Feb 31 → Mar 3), so equality pins calendar validity.
+      // NaN-guarded: Zod runs refinements even when the regex already failed, so this
+      // must never throw on arbitrary input.
+      .refine((s) => {
+        const t = new Date(`${s}T00:00:00Z`).getTime();
+        return Number.isFinite(t) && new Date(t).toISOString().slice(0, 10) === s;
+      }, 'must be a real calendar date'),
     hoursAvailable: z.number().positive().max(720),
     material: z.string().max(20000).optional(),
     attachedMaterialKinds: z

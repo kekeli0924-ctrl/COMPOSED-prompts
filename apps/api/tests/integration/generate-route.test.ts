@@ -69,6 +69,12 @@ describe('POST /api/generate', () => {
     expect(res.status).toBe(400);
   });
 
+  it('returns 400 on a format-valid but impossible calendar date', async () => {
+    // Would otherwise crash the generations.assessment_date::date insert with a 500.
+    const res = await post(makeApp(), { ...validBody, assessmentDate: '2026-02-31' });
+    expect(res.status).toBe(400);
+  });
+
   it('returns 429 with structured { error: rate_limited, scope: ip } for an anonymous request', async () => {
     mockCheckAndRecord.mockResolvedValueOnce({ allowed: false, remaining: 0 });
     const res = await post(makeApp(), validBody);
@@ -102,6 +108,7 @@ describe('POST /api/generate', () => {
     expect(res.status).toBe(200);
     const rows = await db.select().from(schema.generations);
     expect(rows.length).toBe(1);
+    expect(rows[0]!.assessmentDate).toBe(validBody.assessmentDate); // populated for the outcome check-in
     expect(rows[0]!.promptText).not.toContain('fake');
     expect(rows[0]!.promptText).toContain('[material redacted');
     const inputs = rows[0]!.inputsJson as Record<string, unknown>;

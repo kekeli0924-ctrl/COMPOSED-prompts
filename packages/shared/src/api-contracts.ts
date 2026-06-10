@@ -90,6 +90,22 @@ export type CanvasStatus = { connected: boolean };
 export type CanvasConnectResponse = { connected: boolean; reason?: 'invalid-token' };
 export type CanvasUpcomingResponse = { connected: boolean; items: UpcomingAssessment[]; reason?: 'reconnect' | 'canvas-unavailable' };
 
+// POST /api/outcome — one-tap post-assessment check-in (signed-in only; upserts so a
+// student can revise). 1=Rough … 5=Aced. Numbers only — no content anywhere.
+export type OutcomeRequest = { generationId: string; outcome: 1 | 2 | 3 | 4 | 5 };
+export type OutcomeResponse = { ok: true };
+
+// GET /api/me/pending-outcomes — the caller's recent past-assessment generations with
+// no outcome yet (deduped per course+date, max 3). courseId is resolved to a display
+// name client-side via the catalog.
+export type PendingOutcome = {
+  generationId: string;
+  courseId: string | null;
+  assessmentType: string | null;
+  assessmentDate: string; // YYYY-MM-DD
+};
+export type PendingOutcomesResponse = { items: PendingOutcome[] };
+
 // POST /api/recap — session recap capture (signed-in only; PERSONAL-ONLY; never echoed back)
 export type RecapRequest = { generationId: string; text: string };
 // `parsed` = the paste matched the sentinel wire format (recap-format.ts) and

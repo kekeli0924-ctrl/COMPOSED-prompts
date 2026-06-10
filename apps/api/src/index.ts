@@ -9,6 +9,7 @@ import { me } from './routes/me.js';
 import { canvas } from './routes/canvas.js';
 import { calendar } from './routes/calendar.js';
 import { recap } from './routes/recap.js';
+import { outcome } from './routes/outcome.js';
 import { corsMiddleware } from './middleware/cors.js';
 import { clerkAuthMiddleware } from './middleware/clerk-auth.js';
 
@@ -24,6 +25,7 @@ app.route('/', me);
 app.route('/', canvas);
 app.route('/', calendar);
 app.route('/', recap);
+app.route('/', outcome);
 app.get('/', (c) => c.text('Pomfret Prompt Generator API'));
 
 const port = parseInt(process.env.PORT ?? '8080', 10);

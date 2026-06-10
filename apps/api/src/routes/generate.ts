@@ -71,6 +71,7 @@ generate.post('/api/generate', async (c) => {
         fallbackReason: result.fallbackReason ?? null,
         templateVersion: result.templateVersion,
         usedRecapId: result.usedRecap?.id ?? null,
+        assessmentDate: inputs.assessmentDate, // queryable copy for the outcome check-in
       })
       .returning({ id: schema.generations.id });
 

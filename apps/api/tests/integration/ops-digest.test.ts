@@ -35,6 +35,8 @@ describe('buildDigest — counts only, no recap content', () => {
       expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
+    await db.insert(schema.assessmentOutcomes).values({ userId: u!.id, generationId: g1!.id, outcome: 4 });
+
     const d = await buildDigest();
 
     expect(d.generations.total).toBe(2);
@@ -44,6 +46,7 @@ describe('buildDigest — counts only, no recap content', () => {
     expect(d.feedback.count).toBe(1);
     expect(d.feedback.avgRating).toBe(4);
     expect(d.recapsSubmitted).toBe(1);
+    expect(d.outcomesSubmitted).toBe(1);
     expect(d.newUsers).toBe(1);
 
     // Personal-only: the digest must carry NO recap content anywhere in its output.

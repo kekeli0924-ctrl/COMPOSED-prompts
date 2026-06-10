@@ -11,6 +11,7 @@ export type OpsDigest = {
   spend: { todayUsd: number; yesterdayUsd: number };
   feedback: { count: number; avgRating: number | null };
   recapsSubmitted: number; // COUNT only — see invariant note below
+  outcomesSubmitted: number; // COUNT only (outcomes are 1-5 numbers, no content anyway)
   newUsers: number;
 };
 
@@ -66,6 +67,11 @@ export async function buildDigest(now: Date = new Date()): Promise<OpsDigest> {
     .from(schema.recaps)
     .where(gte(schema.recaps.createdAt, cutoff));
 
+  const [outcomes] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(schema.assessmentOutcomes)
+    .where(gte(schema.assessmentOutcomes.createdAt, cutoff));
+
   const [users] = await db
     .select({ count: sql<number>`count(*)::int` })
     .from(schema.users)
@@ -77,6 +83,7 @@ export async function buildDigest(now: Date = new Date()): Promise<OpsDigest> {
     spend: { todayUsd: spendByDay[today] ?? 0, yesterdayUsd: spendByDay[yesterday] ?? 0 },
     feedback: { count: fb?.count ?? 0, avgRating: fb?.avg != null ? Number(fb.avg) : null },
     recapsSubmitted: recap?.count ?? 0,
+    outcomesSubmitted: outcomes?.count ?? 0,
     newUsers: users?.count ?? 0,
   };
 }
@@ -90,6 +97,7 @@ export function formatDigest(d: OpsDigest): string {
     `spend USD: today ${d.spend.todayUsd.toFixed(2)}, yesterday ${d.spend.yesterdayUsd.toFixed(2)}`,
     `feedback: ${d.feedback.count}${d.feedback.avgRating != null ? ` (avg ${d.feedback.avgRating.toFixed(2)})` : ''}`,
     `recaps submitted: ${d.recapsSubmitted}`,
+    `outcomes submitted: ${d.outcomesSubmitted}`,
     `new users: ${d.newUsers}`,
   ].join('\n');
 }

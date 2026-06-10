@@ -7,6 +7,7 @@ import { useApi } from '@/lib/use-api';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { computeDashboardStats, type DashboardStats } from '@/lib/dashboard-stats';
+import { PendingOutcomes } from '@/components/PendingOutcomes';
 import { findCourse, type HistoryResponse, type HistoryEntry, type CanvasUpcomingResponse, type UpcomingAssessment } from '@composed-prompts/shared';
 
 const fmtDate = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
@@ -81,6 +82,10 @@ export default function DashboardPage() {
           </Card>
         ))}
       </div>
+
+      {/* Gate on auth state so the component never fires an unauthenticated fetch
+          during the pre-Clerk-load render (mirrors the canvas fetch guards). */}
+      {isSignedIn && <PendingOutcomes />}
 
       {canvasConnected && (
         <>

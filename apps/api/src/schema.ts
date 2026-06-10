@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index, numeric, type AnyPgColumn } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index, numeric, date, smallint, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -36,10 +36,15 @@ export const generations = pgTable('generations', {
   // The explicit AnyPgColumn return type breaks the generations ⇄ recaps type-inference
   // cycle (TS7022) created by the mutual FKs; runtime behavior is unchanged.
   usedRecapId: uuid('used_recap_id').references((): AnyPgColumn => recaps.id, { onDelete: 'set null' }),
+  // Promoted from inputs_json->>'assessmentDate' (NOT redacted there — only
+  // material/understanding/confusion are) so the outcome check-in can query by date.
+  // Backfilled by migration 0010; populated on every new row by the generate route.
+  assessmentDate: date('assessment_date'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => ({
   courseModeRecencyIdx: index('generations_course_mode_recency_idx').on(t.courseId, t.mode, t.createdAt),
   userRecencyIdx: index('generations_user_recency_idx').on(t.userId, t.createdAt),
+  userAssessmentIdx: index('generations_user_assessment_idx').on(t.userId, t.assessmentDate),
 }));
 
 export const feedback = pgTable('feedback', {
@@ -80,6 +85,18 @@ export const dailySpend = pgTable('daily_spend', {
 // generation), never logged, never returned to anyone but its author. Retention is
 // enforced by `expires_at` (default now + 30d) via the purge job; rows also cascade
 // away when the user is deleted.
+// One-tap post-assessment check-in ("How did it go?"): 1=Rough … 5=Aced. One row per
+// generation (unique), upserted so a student can revise. Numbers only — no content.
+export const assessmentOutcomes = pgTable('assessment_outcomes', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  generationId: uuid('generation_id').notNull().references(() => generations.id, { onDelete: 'cascade' }).unique(),
+  outcome: smallint('outcome').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => ({
+  outcomeRangeCheck: check('assessment_outcomes_outcome_check', sql`${t.outcome} >= 1 AND ${t.outcome} <= 5`),
+}));
+
 export const recaps = pgTable('recaps', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
