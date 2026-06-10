@@ -1,11 +1,12 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import type { WizardInputs } from '@composed-prompts/shared';
 
-const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord } = vi.hoisted(() => ({
+const { mockGenerateOpus, mockBudgetCheck, mockBudgetRecord, mockCheckAndRecord, mockFindUsableRecap } = vi.hoisted(() => ({
   mockGenerateOpus: vi.fn(),
   mockBudgetCheck: vi.fn(),
   mockBudgetRecord: vi.fn(),
   mockCheckAndRecord: vi.fn(),
+  mockFindUsableRecap: vi.fn(),
 }));
 
 vi.mock('@composed-prompts/shared/src/generation/opus-full-prompt.js', () => ({
@@ -18,6 +19,8 @@ vi.mock('@/lib/budget', () => ({
 }));
 
 vi.mock('@/lib/rate-limit', () => ({ checkAndRecord: mockCheckAndRecord }));
+
+vi.mock('@/lib/recaps', () => ({ findUsableRecap: mockFindUsableRecap }));
 
 import { runPipeline, reserveGlobalOpusSlot, __resetGlobalOpusCounter } from '@/lib/pipeline';
 
@@ -41,6 +44,8 @@ describe('runPipeline', () => {
     mockBudgetCheck.mockResolvedValue(true);
     mockBudgetRecord.mockResolvedValue(undefined);
     mockCheckAndRecord.mockResolvedValue({ allowed: true, remaining: 100 });
+    mockFindUsableRecap.mockReset();
+    mockFindUsableRecap.mockResolvedValue(null);
     __resetGlobalOpusCounter();
     delete process.env.GLOBAL_OPUS_CALLS_PER_DAY;
   });
@@ -98,6 +103,83 @@ describe('runPipeline', () => {
     expect(second.generator).toBe('deterministic'); // in-memory backstop blocks
     expect(second.fallbackReason).toBe('budget-exhausted');
     expect(mockGenerateOpus).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('runPipeline — stage-2 recap injection', () => {
+  const RECAP = {
+    id: 'recap-uuid-1',
+    createdAt: new Date('2026-06-08T12:00:00Z'),
+    weakSpotsJson: ['Confused mitosis with meiosis'],
+    followUpPrompt: 'stored follow-up (must never be injected)',
+    recapText: 'raw recap text',
+  };
+
+  beforeEach(() => {
+    // Sibling describe — set up ALL mocks (no inheritance from the runPipeline block,
+    // and the cap tests above leak env/counter state otherwise).
+    mockGenerateOpus.mockReset();
+    mockBudgetCheck.mockReset();
+    mockBudgetRecord.mockReset();
+    mockCheckAndRecord.mockReset();
+    mockFindUsableRecap.mockReset();
+    mockBudgetCheck.mockResolvedValue(true);
+    mockBudgetRecord.mockResolvedValue(undefined);
+    mockCheckAndRecord.mockResolvedValue({ allowed: true, remaining: 100 });
+    mockFindUsableRecap.mockResolvedValue(null);
+    __resetGlobalOpusCounter();
+    delete process.env.GLOBAL_OPUS_CALLS_PER_DAY;
+    mockGenerateOpus.mockResolvedValue({
+      ok: true,
+      prompt: 'OPUS PROMPT',
+      usage: { input_tokens: 10, output_tokens: 20 },
+    });
+  });
+
+  it('injects the delimited recap block and reports usedRecap (signed-in, catalog course)', async () => {
+    mockFindUsableRecap.mockResolvedValueOnce(RECAP);
+    const r = await runPipeline(inputs, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(mockFindUsableRecap).toHaveBeenCalledWith('00000000-0000-0000-0000-000000000001', inputs.courseId);
+    const recapArg = mockGenerateOpus.mock.calls[0]![4] as string;
+    expect(recapArg).toContain('<last_session_recap untrusted="true">');
+    expect(recapArg).toContain('- Confused mitosis with meiosis');
+    expect(recapArg).not.toContain('stored follow-up'); // never the follow-up prompt
+    expect(r.usedRecap).toEqual({ id: 'recap-uuid-1', createdAt: '2026-06-08T12:00:00.000Z' });
+  });
+
+  it('omits the recap when useRecap is false', async () => {
+    await runPipeline({ ...inputs, useRecap: false }, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(mockFindUsableRecap).not.toHaveBeenCalled();
+    expect(mockGenerateOpus.mock.calls[0]![4]).toBe('');
+  });
+
+  it('omits the recap for anonymous users', async () => {
+    await runPipeline(inputs); // no userId
+    expect(mockFindUsableRecap).not.toHaveBeenCalled();
+    expect(mockGenerateOpus.mock.calls[0]![4]).toBe('');
+  });
+
+  it('omits the recap for free-text courses (no catalog courseId)', async () => {
+    await runPipeline({ ...inputs, courseId: null, courseFreeText: 'Independent study' }, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(mockFindUsableRecap).not.toHaveBeenCalled();
+    expect(mockGenerateOpus.mock.calls[0]![4]).toBe('');
+  });
+
+  it('omits the recap when none is usable (stale/expired/none)', async () => {
+    mockFindUsableRecap.mockResolvedValueOnce(null);
+    const r = await runPipeline(inputs, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(mockGenerateOpus.mock.calls[0]![4]).toBe('');
+    expect(r.usedRecap).toBeUndefined();
+  });
+
+  it('deterministic fallback never claims recap use and still stamps template_version', async () => {
+    mockFindUsableRecap.mockResolvedValueOnce(RECAP);
+    mockGenerateOpus.mockReset();
+    mockGenerateOpus.mockResolvedValueOnce({ ok: false, error: 'api-error' });
+    const r = await runPipeline(inputs, { userId: '00000000-0000-0000-0000-000000000001' });
+    expect(r.generator).toBe('deterministic');
+    expect(r.usedRecap).toBeUndefined(); // the produced prompt did not carry the recap
+    expect(r.templateVersion).toBe('v2');
   });
 });
 

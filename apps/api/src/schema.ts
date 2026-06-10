@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index, numeric } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, integer, jsonb, bigserial, check, index, numeric, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
 export const users = pgTable('users', {
@@ -29,6 +29,11 @@ export const generations = pgTable('generations', {
   // new rows are stamped by the app (currently always 'v1'). Distinct from
   // `generator`, which records opus-vs-deterministic.
   templateVersion: text('template_version'),
+  // Stage 2 instrumentation: the recap injected into this generation, if any. SET NULL
+  // when the recap is purged/expires — the pointer dies with the recap (retention).
+  // The explicit AnyPgColumn return type breaks the generations ⇄ recaps type-inference
+  // cycle (TS7022) created by the mutual FKs; runtime behavior is unchanged.
+  usedRecapId: uuid('used_recap_id').references((): AnyPgColumn => recaps.id, { onDelete: 'set null' }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => ({
   courseModeRecencyIdx: index('generations_course_mode_recency_idx').on(t.courseId, t.mode, t.createdAt),

@@ -95,4 +95,27 @@ describe('generateFullPromptWithOpus', () => {
     const call = mockCreate.mock.calls[0]![0];
     expect(call.messages[0].content as string).toContain("Student's grade: Sophomore");
   });
+
+  it('appends the recap context block to the user message when provided', async () => {
+    mockCreate.mockResolvedValue({
+      content: [{ type: 'text', text: 'ok' }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    });
+    const block = '<last_session_recap untrusted="true">\n- weak spot x\n</last_session_recap>';
+    await generateFullPromptWithOpus(inputs, 'RAG CONTEXT', undefined, 'v2', block);
+    const userMsg = mockCreate.mock.calls[0]![0].messages[0].content as string;
+    expect(userMsg).toContain('RAG CONTEXT');
+    expect(userMsg).toContain('<last_session_recap untrusted="true">');
+    expect(userMsg.indexOf('RAG CONTEXT')).toBeLessThan(userMsg.indexOf('<last_session_recap')); // recap after RAG
+  });
+
+  it('omits the recap block entirely when recapContext is empty', async () => {
+    mockCreate.mockResolvedValue({
+      content: [{ type: 'text', text: 'ok' }],
+      usage: { input_tokens: 1, output_tokens: 1 },
+    });
+    await generateFullPromptWithOpus(inputs);
+    const userMsg = mockCreate.mock.calls[0]![0].messages[0].content as string;
+    expect(userMsg).not.toContain('last_session_recap');
+  });
 });

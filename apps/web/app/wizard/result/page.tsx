@@ -19,6 +19,7 @@ type LastResult = {
     generator: 'opus' | 'deterministic';
     fallbackReason?: 'budget-exhausted' | 'api-error' | 'feature-disabled';
     generationId: string;
+    usedRecap?: { id: string; createdAt: string };
   };
   entryId: string;
   attachedMaterialKinds?: MaterialKind[];
@@ -55,6 +56,12 @@ export default function ResultPage() {
       <p className="mt-2 text-muted-foreground">
         Copy it, paste it into your LLM, and run a real study session.
       </p>
+      {data.metadata.usedRecap && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          Personalized using your session recap from{' '}
+          {new Date(data.metadata.usedRecap.createdAt).toLocaleDateString()}.
+        </p>
+      )}
 
       {data.metadata.generator === 'deterministic' && (
         <Alert className="mt-4">

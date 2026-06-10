@@ -97,6 +97,7 @@ export default function WizardPage() {
       confidence: inputs.confidence,
       understanding: inputs.understanding.trim() || undefined,
       confusion: inputs.confusion.trim() || undefined,
+      useRecap: inputs.useRecap, // default-on; only meaningful when signed in
     };
 
     // Floor the loading-screen visibility so users always see at least one full
@@ -217,10 +218,12 @@ export default function WizardPage() {
             confidence={inputs.confidence}
             understanding={inputs.understanding}
             confusion={inputs.confusion}
+            useRecap={inputs.useRecap !== false}
             onChange={(p) => update({
               confidence: p.confidence as 1 | 2 | 3 | 4 | 5 | undefined,
               understanding: p.understanding,
               confusion: p.confusion,
+              useRecap: p.useRecap,
             })}
           />
         )}

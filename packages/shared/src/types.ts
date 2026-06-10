@@ -47,4 +47,8 @@ export type WizardInputs = {
   confidence?: 1 | 2 | 3 | 4 | 5;
   understanding?: string;    // max 2000 chars
   confusion?: string;        // max 2000 chars
+
+  // Stage 2: inject the student's own most recent session recap for this course into
+  // the generation (default true; only effective when signed in with a catalog course).
+  useRecap?: boolean;
 };

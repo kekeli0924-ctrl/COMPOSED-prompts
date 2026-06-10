@@ -128,6 +128,61 @@ describe('POST /api/generate', () => {
     expect(rows[0]!.userId).toBe(u!.id);
   });
 
+  it('stamps used_recap_id and surfaces metadata.usedRecap when the pipeline used a recap', async () => {
+    // Seed a REAL recap row — used_recap_id carries an FK to recaps(id).
+    const [u] = await db
+      .insert(schema.users)
+      .values({ email: 'r@test.com', clerkUserId: 'clerk_r', displayName: null })
+      .returning({ id: schema.users.id });
+    const [g] = await db
+      .insert(schema.generations)
+      .values({
+        userId: u!.id, inputsJson: {}, promptText: 'p', promptHash: 'b'.repeat(64),
+        generator: 'opus', mode: 'cram-review', provider: 'anthropic', model: 'claude-opus-4-8', templateVersion: 'v2',
+      })
+      .returning({ id: schema.generations.id });
+    const [recap] = await db
+      .insert(schema.recaps)
+      .values({
+        userId: u!.id, generationId: g!.id, recapText: 'raw',
+        expiresAt: new Date(Date.now() + 86400000),
+      })
+      .returning({ id: schema.recaps.id, createdAt: schema.recaps.createdAt });
+
+    mockRunPipeline.mockResolvedValueOnce({
+      prompt: 'recap-aware prompt',
+      promptHash: 'c'.repeat(64),
+      generator: 'opus',
+      templateVersion: 'v2',
+      usedRecap: { id: recap!.id, createdAt: recap!.createdAt.toISOString() },
+    });
+
+    const app = new Hono();
+    app.use('*', withUser({ id: u!.id, email: 'r@test.com', displayName: null }));
+    app.route('/', generate);
+    const res = await app.request('/api/generate', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': '1.2.3.4' },
+      body: JSON.stringify(validBody),
+    });
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.metadata.usedRecap).toEqual({ id: recap!.id, createdAt: recap!.createdAt.toISOString() });
+
+    const rows = await db.select().from(schema.generations);
+    const newRow = rows.find((r) => r.promptHash === 'c'.repeat(64));
+    expect(newRow!.usedRecapId).toBe(recap!.id);
+  });
+
+  it('leaves used_recap_id null and omits metadata.usedRecap when no recap was used', async () => {
+    const res = await post(makeApp(), validBody); // default mock: no usedRecap
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.metadata.usedRecap).toBeUndefined();
+    const rows = await db.select().from(schema.generations);
+    expect(rows[0]!.usedRecapId).toBeNull();
+  });
+
   it('keys the rate limit on the IP (limit 20) for anonymous requests', async () => {
     await post(makeApp(), validBody); // header x-forwarded-for: '1.2.3.4'
     expect(mockCheckAndRecord).toHaveBeenCalledWith(`ip:${hashIp('1.2.3.4')}`, {

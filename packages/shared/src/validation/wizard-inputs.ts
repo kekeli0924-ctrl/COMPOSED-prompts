@@ -56,6 +56,7 @@ export const WizardInputsSchema = z
       .optional(),
     understanding: z.string().max(2000).optional(),
     confusion: z.string().max(2000).optional(),
+    useRecap: z.boolean().optional(),
   })
   .superRefine((val, ctx) => {
     if (val.courseId === null && !val.courseFreeText) {

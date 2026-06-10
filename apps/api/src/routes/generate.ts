@@ -70,6 +70,7 @@ generate.post('/api/generate', async (c) => {
         model: inputs.model,
         fallbackReason: result.fallbackReason ?? null,
         templateVersion: result.templateVersion,
+        usedRecapId: result.usedRecap?.id ?? null,
       })
       .returning({ id: schema.generations.id });
 
@@ -80,6 +81,7 @@ generate.post('/api/generate', async (c) => {
         generator: result.generator,
         generationId: inserted!.id,
         templateVersion: result.templateVersion,
+        ...(result.usedRecap ? { usedRecap: result.usedRecap } : {}),
         ...(result.fallbackReason ? { fallbackReason: result.fallbackReason } : {}),
       },
     };

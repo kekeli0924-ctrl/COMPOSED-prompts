@@ -1,5 +1,6 @@
 'use client';
 
+import { SignedIn } from '@clerk/nextjs';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Slider } from '@/components/ui/slider';
@@ -16,7 +17,8 @@ export function AboutMeStep(props: {
   confidence: number | undefined;
   understanding: string;
   confusion: string;
-  onChange: (next: { confidence?: number; understanding?: string; confusion?: string }) => void;
+  useRecap: boolean;
+  onChange: (next: { confidence?: number; understanding?: string; confusion?: string; useRecap?: boolean }) => void;
 }) {
   const conf = props.confidence ?? 3;
   return (
@@ -61,6 +63,22 @@ export function AboutMeStep(props: {
           className="mt-2"
         />
       </div>
+      <SignedIn>
+        <label className="flex items-start gap-2 text-sm text-foreground">
+          <input
+            type="checkbox"
+            checked={props.useRecap}
+            onChange={(e) => props.onChange({ useRecap: e.target.checked })}
+            className="mt-0.5 h-4 w-4 rounded border-border accent-primary"
+          />
+          <span>
+            Use my last session recap for this class (if I&apos;ve pasted one)
+            <span className="block text-xs text-muted-foreground">
+              Your next prompt will re-test the weak spots from your previous session.
+            </span>
+          </span>
+        </label>
+      </SignedIn>
     </div>
   );
 }

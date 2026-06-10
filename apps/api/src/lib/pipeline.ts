@@ -1,6 +1,7 @@
 import {
   type WizardInputs,
   assembleDeterministicPrompt,
+  buildRecapContextBlock,
   getActiveTemplateVersion,
 } from '@composed-prompts/shared';
 import { generateFullPromptWithOpus } from '@composed-prompts/shared/src/generation/opus-full-prompt.js';
@@ -8,6 +9,7 @@ import { promptHash } from '@composed-prompts/shared/src/storage/prompt-hash.js'
 import { budgetAvailable, recordSpend } from './budget.js';
 import { checkAndRecord } from './rate-limit.js';
 import { fetchRagContext, buildRagContext } from './rag.js';
+import { findUsableRecap } from './recaps.js';
 
 const OPUS_INPUT_USD_PER_MTOK = 5.0;
 const OPUS_OUTPUT_USD_PER_MTOK = 25.0;
@@ -21,6 +23,9 @@ export type PipelineResult = {
   promptHash: string;
   generator: 'opus' | 'deterministic';
   templateVersion: string;
+  // Present ONLY when a recap was actually injected into the prompt that was produced
+  // (opus success). Id + timestamp only — never recap content.
+  usedRecap?: { id: string; createdAt: string };
   fallbackReason?: 'budget-exhausted' | 'api-error';
 };
 
@@ -84,9 +89,20 @@ export async function runPipeline(
   if (opusAllowed) {
     const rag = await fetchRagContext({ userId: opts.userId, courseId: inputs.courseId, mode: inputs.mode });
     const ragText = buildRagContext(rag);
+
+    // Stage 2: the student's OWN most recent recap for this course, injected as
+    // delimited untrusted data. Opus path only (deterministic templates are not
+    // recap-aware). Requires: opted in (default on), signed in, catalog course.
+    const useRecap = inputs.useRecap !== false;
+    const recap =
+      useRecap && opts.userId && inputs.courseId
+        ? await findUsableRecap(opts.userId, inputs.courseId)
+        : null;
+    const recapContext = recap ? buildRecapContextBlock(recap) : '';
+
     // Pass the stamped version so the stored template_version always matches the
     // system prompt actually used for this generation.
-    const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade, templateVersion);
+    const result = await generateFullPromptWithOpus(inputs, ragText, opts.studentGrade, templateVersion, recapContext);
     if (result.ok) {
       await recordSpend(estimateOpusSpendUsd(result.usage));
       return {
@@ -94,6 +110,8 @@ export async function runPipeline(
         promptHash: promptHash(result.prompt),
         generator: 'opus',
         templateVersion,
+        // Only the prompt that actually carried the recap claims it.
+        ...(recap ? { usedRecap: { id: recap.id, createdAt: recap.createdAt.toISOString() } } : {}),
       };
     }
     fallbackReason = 'api-error';

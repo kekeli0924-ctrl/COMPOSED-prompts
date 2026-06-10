@@ -216,11 +216,16 @@ export async function generateFullPromptWithOpus(
   // The pipeline passes the version it stamps on the generations row, so the stored
   // template_version always matches the system prompt actually used.
   templateVersion: TemplateVersionId = ACTIVE_TEMPLATE_VERSION,
+  // Pre-built, delimiter-escaped recap context block (buildRecapContextBlock), or ''.
+  recapContext: string = '',
 ): Promise<OpusFullPromptResult> {
   const hasKey = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = makeClient();
   try {
-    const userMessage = buildUserMessage(inputs, studentGrade) + (ragContext ? `\n\n${ragContext}` : '');
+    const userMessage =
+      buildUserMessage(inputs, studentGrade) +
+      (ragContext ? `\n\n${ragContext}` : '') +
+      (recapContext ? `\n\n${recapContext}` : '');
     const response = await client.messages.create({
       model: OPUS_MODEL,
       max_tokens: 4000,
